@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://human-defense.local/schema/map-pack.json",
+  "title": "Human Defense map content pack",
+  "type": "object",
+  "required": ["version", "map", "heroes", "units", "waves", "skills", "items", "buildings"],
+  "properties": {
+    "version": {"type": "string", "minLength": 1},
+    "map": {
+      "type": "object",
+      "required": ["width", "height", "path", "buildZones"],
+      "properties": {
+        "width": {"type": "number", "exclusiveMinimum": 0},
+        "height": {"type": "number", "exclusiveMinimum": 0},
+        "path": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/point"}},
+        "buildZones": {"type": "array", "items": {"type": "array", "items": {"$ref": "#/$defs/point"}}}
+      },
+      "additionalProperties": false
+    },
+    "heroes": {"$ref": "#/$defs/entities"},
+    "units": {"$ref": "#/$defs/entities"},
+    "waves": {"type": "array", "items": {"type": "object", "required": ["index", "groups"], "properties": {"index": {"type": "integer", "minimum": 1}, "groups": {"type": "array", "items": {"type": "object", "required": ["unit", "count"], "properties": {"unit": {"type": "string"}, "count": {"type": "integer", "minimum": 1}, "interval": {"type": "number", "minimum": 0}, "modifiers": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false}}}, "additionalProperties": false}},
+    "skills": {"$ref": "#/$defs/entities"},
+    "items": {"$ref": "#/$defs/entities"},
+    "buildings": {"$ref": "#/$defs/entities"},
+    "provenance": {"type": "object", "properties": {"sourceMap": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"}, "notes": {"type": "string"}}, "additionalProperties": false}
+  },
+  "$defs": {
+    "point": {"type": "object", "required": ["x", "y"], "properties": {"x": {"type": "number"}, "y": {"type": "number"}}, "additionalProperties": false},
+    "entities": {"type": "array", "items": {"type": "object", "required": ["id", "name"], "properties": {"id": {"type": "string", "pattern": "^[a-z0-9._-]+$"}, "name": {"type": "string", "minLength": 1}, "description": {"type": "string"}}, "additionalProperties": true}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,12 @@
+{
+  "name": "人族无敌III 3.0终极版",
+  "version": "3.0.0",
+  "description": "基于提供的地图归档提取原始职业、单位、技能、物品、波次、地形和JASS脚本。",
+  "sourceSha256": "e7740efca962ff58a192c5cf51eb02f8c73308375e32c991f1c8fdf955d27b8d",
+  "humanSlots": 4,
+  "waves": 56,
+  "classes": ["野蛮人", "猎人", "盗贼", "术士", "游侠", "魔剑士"],
+  "difficulties": ["简单", "普通", "困难", "专家", "天才"],
+  "normalWaves": 56,
+  "finalWave": 56
+}

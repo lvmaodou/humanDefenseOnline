@@ -1,0 +1,53 @@
+#app{position:fixed;inset:0;width:100%;height:100%;overflow:hidden}
+#battle{touch-action:none}
+.placement-controls{display:none}
+.mobile-unit-actions{display:none}
+
+/* A portrait phone still gets a landscape-sized game, even when the browser
+   does not permit the Screen Orientation API to lock the device. */
+@media (orientation:portrait) and (pointer:coarse){
+  #app{inset:auto;top:0;left:100vw;width:100vh;width:100dvh;height:100vw;transform-origin:top left;transform:rotate(90deg)}
+}
+
+@media (pointer:coarse) and (max-height:600px), (pointer:coarse) and (orientation:portrait) and (max-width:700px){
+  .topbar{height:46px;padding:0 10px}
+  .brand{font-size:13px;gap:6px}.brand small{font-size:7px}.crest{width:26px;height:30px}
+  .top-stats{gap:14px;margin-left:0}.top-stats div{min-width:0}.top-stats small{font-size:8px}.top-stats b{font-size:11px}
+  .connection{font-size:0}
+  .hud{inset:52px 8px 8px}
+  .left-panel{width:250px;max-width:40%;padding:8px;min-height:0}
+  .section-head h1{font-size:15px;margin:1px 0 0}.section-head small{font-size:8px}
+  .icon-button{width:42px;height:42px}.panel-tools{gap:4px}
+  .left-panel.is-collapsed{width:48px;min-width:48px;padding:3px}
+  .panel-content{overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y}
+  .panel-content>*{flex-shrink:0}
+  .resource{margin-top:5px;padding:5px 0}.resource strong{font-size:18px}
+  .tower-list{flex:0 0 auto;max-height:105px;margin-top:6px;touch-action:pan-y;overscroll-behavior:contain}
+  .tower{min-height:44px}.tower-icon{width:30px;height:30px;flex:none}
+  .ability-list{max-height:90px;flex:0 0 auto;touch-action:pan-y;overscroll-behavior:contain}
+  .ability-button{height:40px}.deploy-hint{margin:5px 0}.team-head{padding-top:5px}
+  .mobile-unit-actions:not([hidden]){display:flex;flex-direction:column;gap:5px;margin-top:6px}
+  .mobile-unit-actions button{min-height:40px;border:1px solid var(--line);background:#202a28;color:var(--bone);font-size:11px}
+  .mobile-item-list{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  .mobile-item-list button{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .players{gap:3px;min-height:0;margin-top:5px}.actions{flex-shrink:0;margin-top:3px;padding-top:6px}.actions button{height:42px}
+  .right-panel{width:0}.map-title,.legend{display:none}
+  .controls{right:0;bottom:0;gap:4px}.controls button{width:42px;height:42px}
+  .feed{position:absolute;right:0;bottom:56px;width:190px;font-size:9px}
+  footer{display:none}
+  .join-panel{width:min(370px,calc(100% - 24px));max-height:calc(100% - 12px);overflow-y:auto;overscroll-behavior:contain;padding:10px 20px}
+  .join-crest{width:26px;height:30px;margin-bottom:4px}.eyebrow{margin:4px 0}.join-panel h2{font-size:18px;margin:4px 0}.join-copy{margin-bottom:6px}
+  .join-panel label{margin-top:6px}.join-panel input{height:38px;margin-top:3px;font-size:16px}.join-button{height:42px;margin-top:10px}.network-note{margin-top:5px}
+  .game-dialog{width:min(430px,calc(100% - 24px));display:flex;flex-direction:column}
+  .dialog-options{min-height:0;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;margin-top:8px;gap:5px}.dialog-option{height:auto;min-height:44px;flex-shrink:0}
+  .inventory-panel{width:min(620px,calc(100% - 24px))}.inventory-panel .item-list{max-height:none}.item-actions button{min-height:38px;min-width:48px}
+  .close-button{top:8px;right:8px}
+  .placement-controls:not([hidden]){display:flex;position:absolute;left:50%;bottom:0;transform:translateX(-50%);gap:6px;pointer-events:auto}
+  .placement-controls button{min-height:42px;padding:0 12px;color:var(--bone);background:#202a28;border:1px solid #75827b;font-size:12px}
+  #toast{bottom:58px;max-width:70%;text-align:center}
+}
+
+/* The rotated view scrolls along the physical horizontal axis. */
+@media (orientation:portrait) and (pointer:coarse){
+  .panel-content,.tower-list,.ability-list,.dialog-options{touch-action:auto}
+}

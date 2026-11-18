@@ -1,0 +1,22 @@
+{
+  "name": "human-defense-online",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "reference": "node tools/build_reference.mjs",
+    "assets:original": "node tools/fetch_original_assets.mjs",
+    "visuals:original": "node tools/build_visuals.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "three": "^0.187.0",
+    "war3-model": "^4.0.1",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "implode-decoder": "^1.0.2"
+  }
+}

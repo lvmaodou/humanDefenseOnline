@@ -1,0 +1,204 @@
+{
+  "sha256": "e7740efca962ff58a192c5cf51eb02f8c73308375e32c991f1c8fdf955d27b8d",
+  "sourceBytes": 797017,
+  "archiveHeader": {
+    "magic": "4d50511a",
+    "header_size": 32,
+    "archive_size": 796505,
+    "format_version": 0,
+    "sector_size_shift": 11,
+    "hash_table_offset": 793897,
+    "block_table_offset": 795945,
+    "hash_table_entries": 128,
+    "block_table_entries": 35,
+    "offset": 0
+  },
+  "files": [
+    {
+      "name": "(listfile)",
+      "bytes": 694,
+      "sha256": "820efeee5c30bdd484bf8bb03dcf7c3b163d7c761f35218995713082f802a7ce"
+    },
+    {
+      "name": "loading-botleft.blp",
+      "bytes": 50606,
+      "sha256": "9650188ded778b01c21c64008d9705657de0f4abbbe1ef6133e2c9be359d1787"
+    },
+    {
+      "name": "loading-human-botright.blp",
+      "bytes": 46213,
+      "sha256": "857c98ea4cab8fa7cdc6c2717ddf9b45246db6ffa792bcb9ac669dd6da2c1a86"
+    },
+    {
+      "name": "loading-human-topright.blp",
+      "bytes": 119198,
+      "sha256": "f836837e31676ed3bf6bafe1bf9ac87341110989339843989ffb7b945081bdb3"
+    },
+    {
+      "name": "loading-topleft.blp",
+      "bytes": 159171,
+      "sha256": "222be2c7631db29a72a93a2945ce5d3e37b8be6b7c061863dd75ade5a0347f19"
+    },
+    {
+      "name": "textures\\laser1.blp",
+      "bytes": 23026,
+      "sha256": "57e18c9d76d031268d5e1a220c4eaf4d76155376f38c6612733064a289addfd6"
+    },
+    {
+      "name": "units\\abilitydata.slk",
+      "bytes": 296381,
+      "sha256": "2bd8da85bc790664a44b9c0b67e36c8c7a5924bd7de4d926b47f0f45e0417a5b"
+    },
+    {
+      "name": "units\\campaignabilitystrings.txt",
+      "bytes": 926576,
+      "sha256": "b6d076dafbc3db41af3165bcbafeee77a887ce18f92625feb18e4666ff991e43"
+    },
+    {
+      "name": "units\\campaignunitfunc.txt",
+      "bytes": 503676,
+      "sha256": "44c40af64edd2531ce84c432f092a128da77da655c7c6647d9cc5105372a02f0"
+    },
+    {
+      "name": "units\\itemdata.slk",
+      "bytes": 13411,
+      "sha256": "3c096abad27229e2109925cb25e6a4b2d8f6f5c0c4b1dce7e09189ad5fc74f38"
+    },
+    {
+      "name": "units\\itemfunc.txt",
+      "bytes": 87424,
+      "sha256": "34927e7b4f0325bd456d3ddc48cad124311bd894e6f5ba879b0aab41b531d66b"
+    },
+    {
+      "name": "units\\neutralupgradestrings.txt",
+      "bytes": 37465,
+      "sha256": "576d6171caf2b5de7ee4ac1759a94b878b3cec50b3f57d9cd5b7a9b1d7be5d99"
+    },
+    {
+      "name": "units\\unitabilities.slk",
+      "bytes": 30954,
+      "sha256": "8bf0a1b60919dbd240a8847369287785771f0eb206d15d880845bf7f611e3458"
+    },
+    {
+      "name": "units\\unitbalance.slk",
+      "bytes": 205496,
+      "sha256": "ae60e00597653b41ec34f3c98c2d892ccd79fad2ddcc0eec2aacec03dedbb1fc"
+    },
+    {
+      "name": "units\\unitdata.slk",
+      "bytes": 124924,
+      "sha256": "babb272ad973f5fc85284220264f26c26536151212e5271e92c2394226063127"
+    },
+    {
+      "name": "units\\unitui.slk",
+      "bytes": 220928,
+      "sha256": "025e2b9f0b1ec55f2bd2611ddea217217420ef12af4353210897b251e5dd9e0f"
+    },
+    {
+      "name": "units\\unitweapons.slk",
+      "bytes": 267060,
+      "sha256": "3cde07adf00a33dd265eefdc572ee645b648b2888003fd5551f48a5f5ef7433c"
+    },
+    {
+      "name": "units\\upgradedata.slk",
+      "bytes": 14979,
+      "sha256": "262f515a0ac70a2917d19c981b40ef1864b3617b9523e5747fc900c42bfd2be4"
+    },
+    {
+      "name": "war3map.doo",
+      "bytes": 13324,
+      "sha256": "ce70e0eaec0c6e71cda1b2b6536121d9476be6b21194f306441d49afbc2005b5"
+    },
+    {
+      "name": "war3map.imp",
+      "bytes": 1470,
+      "sha256": "6b712a6181ecddcbc94b63c4ab76bfbe8d3912ba6ea5a7951affa76c317ae171"
+    },
+    {
+      "name": "war3map.j",
+      "bytes": 448500,
+      "sha256": "ebfd228edfdf3b49560938b8a013e7e40ec918c93caf324b22b71e53a4cd6c5b"
+    },
+    {
+      "name": "war3map.mmp",
+      "bytes": 136,
+      "sha256": "5b4ce7bdf3eb0eb7e4373ccd937a343cf4a6e2295579c8d9bb10c20d0f2e19c4"
+    },
+    {
+      "name": "war3map.shd",
+      "bytes": 262144,
+      "sha256": "e896faaa1e8efd5df94b1a3516b2a08f76d0c08aa915a4dd4446c2ccf6a54140"
+    },
+    {
+      "name": "war3map.w3a",
+      "bytes": 160,
+      "sha256": "f7d3cb619814b81b2a2ba5d30099139552557c5d117936643765e8902d634398"
+    },
+    {
+      "name": "war3map.w3b",
+      "bytes": 210,
+      "sha256": "01810171c18fdfd2a7a35bad1531a6ff823368b1bc14e6026fd91031711e6b3a"
+    },
+    {
+      "name": "war3map.w3e",
+      "bytes": 116556,
+      "sha256": "fdf5533691067d6ed05bab54455d7756b4c49189bb46e28bb4704cbfc75238e9"
+    },
+    {
+      "name": "war3map.w3i",
+      "bytes": 1535,
+      "sha256": "ddb137481e883e4afe598cae163ccd9e0a0029bdafe62e1b154b5b6f99be0a01"
+    },
+    {
+      "name": "war3map.wpm",
+      "bytes": 262160,
+      "sha256": "ba746fa176d89509a262e2ec3436fb0afc8645854b54d099d3950ff3bcc9ffb6"
+    },
+    {
+      "name": "war3map.wts",
+      "bytes": 1128,
+      "sha256": "5ef2a3fb5ef0ef8478b33f09c3b63dbb6fe369add00338378e908765bf0dc2a0"
+    },
+    {
+      "name": "war3mapMap.blp",
+      "bytes": 13127,
+      "sha256": "78fc2ff0626d236fd5b6939ecffbcf0e4d7386705b7467b2b1bc770df1c7e7ba"
+    },
+    {
+      "name": "war3mapPreview.tga",
+      "bytes": 65580,
+      "sha256": "59d662c44699a69c4d8b0d2f6c7493ea48a7e208f95466061bc1764b485656b7"
+    },
+    {
+      "name": "war3mapimported\\laser.mdx",
+      "bytes": 7107,
+      "sha256": "d9d22009f3261446523c7d68a0b709cdb03fca143f05157332198187343b817e"
+    },
+    {
+      "name": "war3mapimported\\loadingscreen.mdx",
+      "bytes": 3108,
+      "sha256": "7a0efeddbb2ed9031736f4a14b08ef0d807bda754e5cb6e847e6aa2af5a991e8"
+    },
+    {
+      "name": "war3mapmap.blp",
+      "bytes": 13127,
+      "sha256": "78fc2ff0626d236fd5b6939ecffbcf0e4d7386705b7467b2b1bc770df1c7e7ba"
+    },
+    {
+      "name": "war3mapmisc.txt",
+      "bytes": 564,
+      "sha256": "ed8cc37cff0f9aa9777b550ef1ba472e58cc6a7edb8c93acaa790fa6635bdc90"
+    },
+    {
+      "name": "war3mappreview.tga",
+      "bytes": 65580,
+      "sha256": "59d662c44699a69c4d8b0d2f6c7493ea48a7e208f95466061bc1764b485656b7"
+    },
+    {
+      "name": "war3mapskin.txt",
+      "bytes": 291,
+      "sha256": "24b6c5ff330556173ebd04cd2729ceb00249428e03703439e463542c84f1ff60"
+    }
+  ],
+  "errors": []
+}

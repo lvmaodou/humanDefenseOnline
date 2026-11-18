@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>人族无敌 · 在线防线</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/items.css">
+  <link rel="stylesheet" href="/abilities.css">
+  <link rel="stylesheet" href="/mobile.css">
+  <script type="importmap">{"imports":{"three":"/vendor/three.module.js"}}</script>
+</head>
+<body>
+  <div id="app">
+  <canvas id="battle"></canvas>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="人族无敌在线"><span class="crest">H</span><span>人族无敌<small>ONLINE DEFENSE</small></span></a>
+    <div class="top-stats"><div><small>防线波次</small><b id="wave">待命</b></div><div><small>基地完整度</small><b id="base">20 / 20</b></div><div><small>战场房间</small><b id="room-label">未连接</b></div></div>
+    <div class="connection"><i id="link-dot"></i><span id="link-text">未连接</span></div>
+  </header>
+  <main class="hud">
+    <section class="left-panel" id="deploy-panel"><div class="section-head"><div class="panel-heading"><small>DEFENSE LINE</small><h1>战场部署</h1></div><div class="panel-tools"><button id="panel-toggle" class="icon-button panel-toggle" type="button" title="收起部署面板" aria-label="收起部署面板" aria-expanded="true" aria-controls="deploy-content">‹</button><button id="sound" class="icon-button" title="切换音效" aria-label="切换音效">♫</button></div></div>
+      <div class="panel-content" id="deploy-content">
+      <div class="resource"><span>队伍金币</span><strong id="gold">—</strong><span class="coin">●</span></div>
+      <div id="build-list" class="tower-list"></div>
+      <div id="ability-list" class="ability-list"></div>
+      <div id="mobile-unit-actions" class="mobile-unit-actions" hidden><button id="turn-unit" type="button">旋转选中单位 ↻</button><div id="unit-items" class="mobile-item-list"></div></div>
+      <div class="deploy-hint"><span class="pulse"></span><span id="hint">选择你的职业，建设防线</span></div>
+      <div class="team-head"><span>防守队员</span><span id="team-count">0 / 4</span></div><div id="players" class="players"></div>
+      <div class="actions"><button id="goods" class="secondary">装备图鉴</button><button id="sell" class="primary">出售选中 <span>↵</span></button></div>
+      </div>
+    </section>
+    <section class="right-panel"><div class="map-title"><span class="map-mark">⌖</span><div><b>王城北境</b><small>人族边境 · 防区 07</small></div><span class="live">实时战况</span></div>
+      <div class="legend"><span><i class="dot enemy"></i>敌军路线</span><span><i class="dot tower-dot"></i>防御设施</span><span id="clock">等待开战</span></div>
+      <div class="feed"><span class="feed-line"></span><span id="message">连接或创建一个房间，开始组队防守。</span></div>
+      <div class="controls"><button id="zoom-out" title="缩小视角" aria-label="缩小视角">−</button><span>视角</span><button id="zoom-in" title="放大视角" aria-label="放大视角">+</button><button id="center" title="重置视角" aria-label="重置视角">◎</button></div>
+    </section>
+    <div id="placement-controls" class="placement-controls" hidden><button id="rotate-build" type="button">旋转建筑 ↻</button><button id="cancel-build" type="button">取消建造</button></div>
+  </main>
+  <footer><span>王城防卫军 · 边境联防司令部</span><span>三维战场 <i></i> 服务器同步</span></footer>
+  <div id="lobby" class="overlay"><form id="join-form" class="join-panel"><div class="join-crest">H</div><p class="eyebrow">HUMAN DEFENSE · 3.0</p><h2>集结防卫军</h2><p class="join-copy">六大职业 · 56 波进攻 · 四路联防</p><label>你的代号<input id="nickname" maxlength="12" placeholder="边境守卫" required></label><label>战场房间码<input id="room-code" maxlength="8" placeholder="留空创建新房间"></label><button class="primary join-button">进入战场 <span>→</span></button><small class="network-note">人族无敌III 3.0终极版 · 最多4人</small></form></div>
+  <div id="dialog" class="overlay hidden"><section class="join-panel game-dialog"><p class="eyebrow">ORIGINAL MAP RULES</p><h2 id="dialog-title"></h2><div id="dialog-options" class="dialog-options"></div></section></div>
+  <div id="inventory" class="overlay hidden"><section class="join-panel inventory-panel"><button id="inventory-close" class="icon-button close-button">×</button><p class="eyebrow">ORIGINAL MAP ITEMS</p><h2>物品与装备</h2><input id="item-search" class="item-search" placeholder="搜索物品名称、类型或属性"><div id="item-list" class="item-list"></div></section></div>
+  <div id="toast" role="status"></div>
+  </div>
+  <script type="module" src="/game.js"></script>
+</body>
+</html>

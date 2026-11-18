@@ -26,11 +26,11 @@ export function installNatives(V){
     CreateNUnitsAtLoc:(count,id,p,loc,facing)=>{const list=[];for(let i=0;i<count;i++)list.push(V.createUnit(p,id,loc.x,loc.y,facing));G.bj_lastCreatedGroup=list;return list;},
     GetLastCreatedUnit:()=>G.bj_lastCreatedUnit,GetOwningPlayer:u=>u?.owner??V.players[15],GetUnitTypeId:u=>u?.type??0,GetUnitName:u=>V.data.units[u?.raw]?.Name||'',GetUnitLoc:u=>({x:u?.x||0,y:u?.y||0}),GetUnitFacing:u=>u?.facing??0,
     GetUnitUserData:u=>u?.data??0,SetUnitUserData:(u,n)=>{if(u)u.data=n;},GetUnitPointValue:u=>Number(V.data.units[u?.raw]?.points)||0,GetUnitFoodUsed:u=>u?.food||0,
-    SetUnitPositionLoc:(u,p)=>{if(u){u.x=p.x;u.y=p.y;V.enterRegions(u);}},SetUnitUseFoodBJ:(use,u)=>{if(u&&u.useFood!==use){u.owner.food+=use?u.food:-u.food;u.useFood=use;}},
+    SetUnitPositionLoc:(u,p)=>{if(u)V.moveUnit(u,p.x,p.y);},SetUnitUseFoodBJ:(use,u)=>{if(u&&u.useFood!==use){u.owner.food+=use?u.food:-u.food;u.useFood=use;}},
     GetUnitStateSwap:(state,u)=>state==='UNIT_STATE_LIFE'?u?.hp??0:state==='UNIT_STATE_MAX_LIFE'?u?.maxHp??0:state==='UNIT_STATE_MAX_MANA'?u?.maxMana??0:u?.mana??0,
     SetUnitManaBJ:(u,n)=>{if(u)u.mana=Math.min(u.maxMana,n);},SetUnitManaPercentBJ:(u,n)=>{if(u)u.mana=u.maxMana*n/100;},
     IsUnitAliveBJ:u=>!!u&&!u.death&&!u.removed,IsUnitHidden:u=>!!u?.hidden,IsUnitType:(u,t)=>!!u&&(t==='UNIT_TYPE_STRUCTURE'?u.building:t==='UNIT_TYPE_HERO'?u.raw[0]===u.raw[0].toUpperCase():t==='UNIT_TYPE_FLYING'?V.data.units[u.raw]?.movetp==='fly':false),
-    UnitAddAbility:(u,id)=>{if(u)u.abilities.set(id,1);return true;},UnitAddAbilityBJ:(id,u)=>N.UnitAddAbility(u,id),UnitRemoveAbilityBJ:(id,u)=>u?.abilities.delete(id),GetUnitAbilityLevel:(u,id)=>u?.abilities.get(id)||0,
+    UnitAddAbility:(u,id)=>{if(u){u.abilities.set(id,1);if(String(V.data.units[u.raw]?.auto||'_').split(',').includes(rawId(id)))u.autoCast?.add(id);}return true;},UnitAddAbilityBJ:(id,u)=>N.UnitAddAbility(u,id),UnitRemoveAbilityBJ:(id,u)=>u?.abilities.delete(id),GetUnitAbilityLevel:(u,id)=>u?.abilities.get(id)||0,
     RemoveUnit:u=>V.removeUnit(u),KillUnit:u=>V.kill(u),ExplodeUnitBJ:u=>{V.effect('explosion',u,u);V.kill(u);},
     UnitDamageTarget:(source,target,damage,attack,ranged,attackType,damageType)=>{V.damage(source,target,damage,attack,damageType,attackType);return true;},
     SetUnitOwner:(u,p)=>{if(!u)return;const previous=u.owner;if(u.useFood){previous.food-=u.food;p.food+=u.food;}u.owner=p;V.fire('EVENT_UNIT_CHANGE_OWNER',{unit:u,player:p,previousOwner:previous});},
@@ -71,6 +71,9 @@ export function installNatives(V){
   const presentation=['InitBlizzard','CreateFogModifierRectBJ','RemoveLocation','CinematicModeBJ','SetUserControlForceOff','TransmissionFromUnitWithNameBJ','PanCameraToTimedLocForPlayer','SetCameraTargetController','SetCameraBounds','SetDayNightModels','NewSoundEnvironment','SetAmbientDaySound','SetAmbientNightSound','SetMapMusic','PlayMusicBJ','SetGamePlacement','SetMapDescription','SetMapName','SetPlayers','SetTeams','DefineStartLocation','SetPlayerStartLocation','ForcePlayerStartLocation','SetPlayerColor','SetPlayerController','SetPlayerRacePreference','SetPlayerRaceSelectable','SetStartLocPrio','SetStartLocPrioCount','SetPlayerAllianceStateVisionBJ','SetPlayerAllianceStateAllyBJ','SetTextTagFadepoint','SetTextTagLifespan','SetTextTagPermanent','SetTextTagVelocityBJ','LeaderboardDisplayBJ'];
   for(const n of presentation)N[n]=noop;
   N.SetPlayerColor=(p,color)=>{if(p)p.color=color;};
+  N.DefineStartLocation=(index,x,y)=>{V.startLocations.set(index,{x,y});for(const player of V.players)if(player.startIndex===index){player.startX=x;player.startY=y;}};
+  N.SetPlayerStartLocation=(player,index)=>{if(!player)return;player.startIndex=index;const point=V.startLocations.get(index);if(point){player.startX=point.x;player.startY=point.y;}};
+  N.ForcePlayerStartLocation=N.SetPlayerStartLocation;
   N.PanCameraToTimedLocForPlayer=(player,point,duration)=>V.effect('camera',point,point,{player:player.id,duration,operation:'pan'});
   N.SetCameraTargetController=(unit,x,y,inherit)=>V.effect('camera',unit,unit,{player:C().player?.id??null,operation:'follow',offset:[x,y],inherit:!!inherit});
   N.SetCameraBounds=(...bounds)=>{V.cameraBounds=bounds;};

@@ -1,4 +1,4 @@
-#app{position:fixed;inset:0;width:100%;height:100%;overflow:hidden}
+#app{--game-height:100dvh;position:fixed;inset:0;width:100%;height:100%;overflow:hidden}
 #battle{touch-action:none}
 .placement-controls{display:none}
 .mobile-unit-actions{display:none}
@@ -6,7 +6,7 @@
 /* A portrait phone still gets a landscape-sized game, even when the browser
    does not permit the Screen Orientation API to lock the device. */
 @media (orientation:portrait) and (pointer:coarse){
-  #app{inset:auto;top:0;left:100vw;width:100vh;width:100dvh;height:100vw;transform-origin:top left;transform:rotate(90deg)}
+  #app{--game-height:100vw;inset:auto;top:0;left:100vw;width:100vh;width:100dvh;height:100vw;transform-origin:top left;transform:rotate(90deg)}
 }
 
 @media (pointer:coarse) and (max-height:600px), (pointer:coarse) and (orientation:portrait) and (max-width:700px){

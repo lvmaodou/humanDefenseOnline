@@ -8,7 +8,8 @@
     "reference": "node tools/build_reference.mjs",
     "assets:original": "node tools/fetch_original_assets.mjs",
     "visuals:original": "node tools/build_visuals.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "test:browser": "node tests/interaction-smoke.mjs"
   },
   "dependencies": {
     "three": "^0.187.0",

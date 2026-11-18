@@ -8,6 +8,18 @@ export function modelResource(value) {
   return !path || path === '_' ? null : /\.(mdx|mdl)$/.test(path) ? path.replace(/\.mdl$/, '.mdx') : `${path}.mdx`;
 }
 export const TEAM_COLORS = [0xff0303,0x0042ff,0x1ce6b9,0x540081,0xfffc01,0xfe8a0e,0x20c000,0xe55bb0,0x959697,0x7ebff1,0x106246,0x4e2a04,0x282828,0x282828,0x282828,0x282828];
+export function uploadModelTexture(modelRenderer, gl, path, image) {
+  // MDX UVs address the image from its top edge. An asynchronous image load can
+  // otherwise inherit Three's flipped terrain upload state on the shared GL.
+  const unpack = [gl.UNPACK_FLIP_Y_WEBGL, gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL];
+  const previous = unpack.map(parameter => gl.getParameter(parameter));
+  try {
+    for (const parameter of unpack) gl.pixelStorei(parameter, false);
+    modelRenderer.setTextureImage(path, image);
+  } finally {
+    unpack.forEach((parameter, index) => gl.pixelStorei(parameter, previous[index]));
+  }
+}
 export function selectSequence(sequences, requested, properties = '') {
   const tags = `${requested} ${properties}`.toLowerCase().replaceAll(',', ' ').split(/\s+/).filter(Boolean);
   const scored = sequences.map((sequence, index) => {
@@ -49,7 +61,7 @@ export class WarcraftAssets {
       prototype.rendererData.textures = this.textures;
       await Promise.all(model.Textures.filter(texture => texture.Image).map(async texture => {
         const image = await this.image(texture.Image);
-        if (image && !this.textures[texture.Image]) prototype.setTextureImage(texture.Image, image);
+        if (image && !this.textures[texture.Image]) uploadModelTexture(prototype, this.renderer.getContext(), texture.Image, image);
       }));
       this.renderer.resetState(); this.stats.loadedModels++;
       return { path: key, model, prototype };

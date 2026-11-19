@@ -2,6 +2,7 @@ import {fourCC,rawId} from './runtime.js';
 
 const orders={852089:'AHbz',852095:'AHtb',852096:'AHtc',852097:'AHwe',852119:'AOcl',852125:'AOsh',852128:'AOww',852164:'Aroa',852171:'AEer',852183:'Alsh',852218:'AUcs',852224:'AUin',852238:'ANrf',852526:'AEfk',852555:'AUim',852556:'AUls',852580:'ANbf',852583:'ANdo',852587:'ANfl',852588:'ANht',852591:'ANmo',852593:'ANst',852652:'ANcs',852658:'ANsy',852667:'ANlm'};
 const passiveCodes=new Set(['AHbh','AOcr','AEev','ANca','Afae','Avul','AInv','Aroc','Amgl','Afra','Afrz','Aven','Apxf','AIat','AIab','AIcb','AIfb','AIbl','AIva','AIas','Ablo','AHad','AHab','AEar','AOae','AUau','ANms','AIaa','Aloc']);
+const passiveItemCodes=new Set(['AIab','AIat','AIas','AIva','AIfb','AIcb','AIpb','Apo2','AIsb']);
 export function installCombat(V){
   const N=V.natives;
   const hasWeapon=d=>Boolean(d?.atkType1&&d.atkType1!=='_'&&d?.weapTp1&&d.weapTp1!=='_'&&Number.isFinite(Number(d.cool1)));
@@ -19,10 +20,11 @@ export function installCombat(V){
   V.ability=id=>{const key=rawId(id),raw=V.data.abilityData[key]||{},over=V.data.abilities[key];if(!over)return raw;const base={...V.data.abilityData[over.base],...raw};const map={anam:'Name',acdn:'Cool',amcs:'Cost',aare:'Area',aran:'Rng',adur:'Dur',ahdu:'HeroDur'};for(const [field,levels]of Object.entries(over.fields))for(const [level,value]of Object.entries(levels))base[(map[field]||field)+(level==='0'?'':level)]=value;return base;};
   V.near=(point,radius,team,enemy=true)=>(V.nearbyUnits?.(point,radius)||[...V.units.values()]).filter(u=>!u.death&&!u.removed&&(enemy?u.owner.team!==team:u.owner.team===team)&&Math.hypot(u.x-point.x,u.y-point.y)<=radius);
   V.randomItem=(level,kind)=>{const entries=Object.entries(V.data.items).filter(([id,d])=>Number(kind?d.Level:d.oldLevel)===level&&Number(d.pickRandom)===1&&(!kind||kind==='ITEM_TYPE_ANY'||d.class===kind));return entries.length?fourCC(entries[Math.floor(V.random()*entries.length)][0]):0;};
-  V.createItem=(type,p)=>{const id=rawId(type);if(!V.data.items[id])return null;const i=V.handle({type:fourCC(type),raw:id,x:p?.x||0,y:p?.y||0,charges:Number(V.data.items[id].uses)||1});V.items.set(i.hid,i);V.effect('drop',p,p,{item:id});return i;};
+  V.createItem=(type,p)=>{const id=rawId(type);if(!V.data.items[id])return null;const i=V.handle({type:fourCC(type),raw:id,x:p?.x||0,y:p?.y||0,charges:Number(V.data.items[id].uses)||0});V.items.set(i.hid,i);V.effect('drop',p,p,{item:id});return i;};
   V.removeItem=i=>{if(!i)return;const carrier=i.carrier;if(carrier){carrier.inventory=carrier.inventory.filter(x=>x!==i);i.carrier=null;V.refreshItemStats(carrier);}i.removed=true;V.items.delete(i.hid);};
   V.dropItem=(u,i)=>{if(!u||!i||i.carrier!==u||i.removed)return false;u.inventory=u.inventory.filter(x=>x!==i);i.carrier=null;i.x=u.x;i.y=u.y;if(u.pendingItemBuild?.item===i.hid){u.pendingItemBuild=null;u.move=null;}V.refreshItemStats(u);V.fire('EVENT_PLAYER_UNIT_DROP_ITEM',{unit:u,item:i,player:u.owner});return true;};
-  V.pickup=(u,i)=>{if(!u||u.removed||u.death||!i||i.carrier||i.removed||u.inventory.length>=6||Math.hypot(u.x-i.x,u.y-i.y)>Number(V.rules.PickupItemRange))return false;i.carrier=u;u.inventory.push(i);V.refreshItemStats(u);V.fire('EVENT_PLAYER_UNIT_PICKUP_ITEM',{unit:u,item:i,player:u.owner});return true;};
+  V.inventoryCapacity=u=>Math.max(0,...[...(u?.abilities||[])].map(([id,level])=>{const ability=V.ability(id);return ability.code==='AInv'?Number(ability[`DataA${level}`]??ability.DataA1)||0:0;}));
+  V.pickup=(u,i)=>{if(!u||u.removed||u.death||!i||i.carrier||i.removed||u.inventory.length>=V.inventoryCapacity(u)||Math.hypot(u.x-i.x,u.y-i.y)>Number(V.rules.PickupItemRange))return false;i.carrier=u;u.inventory.push(i);V.refreshItemStats(u);V.fire('EVENT_PLAYER_UNIT_PICKUP_ITEM',{unit:u,item:i,player:u.owner});return true;};
   V.buy=(slot,u,item)=>{if(!u||u.removed||u.death||!item||u.owner.id!==slot)throw new Error('该物品无法购买');const shops=[...V.units.values()].filter(s=>!s.removed&&!s.death&&s.owner.id>=8&&String(V.data.units[s.raw]?.Sellitems||'').split(',').includes(item.itemID));if(!shops.length)throw new Error('原图未设置出售此物品的商店，请通过掉落获取');const shop=shops.find(s=>Math.hypot(s.x-u.x,s.y-u.y)<=1200);if(!shop)throw new Error('请靠近出售此物品的商店');if(u.inventory.length>=6)throw new Error('物品栏已满');const cost=Number(item.goldcost)||0;if(u.owner.gold<cost)throw new Error('金币不足');u.owner.gold-=cost;const i=V.createItem(V.fourCC(item.itemID),u);V.pickup(u,i);return i;};
   V.itemStats=u=>{
     const stats={damage:0,lifeSteal:0,fireDamage:0,fireArea:0,poisonDamage:0,poisonDuration:0,poisonInterval:1,armorReduction:0,armorDuration:0,orbSlowChance:0,orbSlowFactor:0,orbSlowDuration:0,airAttack:false,attributes:{strength:0,agility:0,intelligence:0}};
@@ -34,10 +36,16 @@ export function installCombat(V){
   const mainHall=player=>[...V.units.values()].filter(unit=>unit.owner===player&&!unit.removed&&!unit.death&&mainHallRank[unit.raw]!==undefined).sort((a,b)=>mainHallRank[b.raw]-mainHallRank[a.raw])[0];
   const teleport=(unit,point)=>{if(!point||!Number.isFinite(point.x)||!Number.isFinite(point.y))return false;let destination=point;if(V.pathfinder){const index=V.pathfinder.nearestWalkable(point.x,point.y);if(index<0)return false;destination=V.pathfinder.center(index);}V.moveUnit(unit,destination.x,destination.y);unit.move=null;return true;};
   V.useItem=(u,i,p)=>{
-    if(!u||u.removed||u.death||!i||i.carrier!==u||i.removed||i.charges<=0)return false;const d=V.data.items[i.raw];let used=false;
+    if(!u||u.removed||u.death||!i||i.carrier!==u||i.removed)return false;const d=V.data.items[i.raw];if(Number(d.uses)>0&&i.charges<=0)return false;let used=false;
     if(V.equipment.some(set=>set.pieces.some(piece=>piece.item===i.raw)))return V.useBuildItem(u,i,p);
-    for(const id of String(d.abilList||'').split(',').filter(Boolean)){
+    const abilityIds=String(d.abilList||'').split(',').filter(Boolean);
+    // Passive inventory abilities are applied by itemStats/attackExtras.  They
+    // do not have a Warcraft "use" order and must not be consumed if a client
+    // sends an artificial item action for them (for example the story orb).
+    if(!abilityIds.some(id=>!passiveItemCodes.has(V.ability(id).code)))return false;
+    for(const id of abilityIds){
       const a=V.ability(id),code=a.code,get=key=>Number(a[`${key}1`]??a[key]??0),target=V.units.get(p?.targetId)||u,point=p||u;
+      if(passiveItemCodes.has(code))continue;
       if(code==='AIhe'){target.hp=Math.min(target.maxHp,target.hp+get('DataA'));V.effect('heal',u,target,{item:i.raw,value:get('DataA')});used=true;}
       else if(code==='AIma'){target.mana=Math.min(target.maxMana,target.mana+get('DataA'));V.effect('mana',u,target,{item:i.raw,value:get('DataA')});used=true;}
       else if(code==='AIha'){for(const friend of V.near(u,get('Area',600),u.owner.team,false)){friend.hp=Math.min(friend.maxHp,friend.hp+get('DataA'));V.effect('heal',u,friend,{item:i.raw,value:get('DataA')});}used=true;}
@@ -95,7 +103,7 @@ export function installCombat(V){
       }
       else used=V.cast(u,fourCC(id),null,point,true)||used;
     }
-    if(!used)return false;i.charges=Math.max(0,i.charges-1);if(i.charges===0&&d.perishable)V.removeItem(i);return true;
+    if(!used)return false;if(i.charges>0){i.charges--;if(i.charges===0&&d.perishable)V.removeItem(i);}return true;
   };
   V.cast=(u,id,target=null,point=null,force=false)=>{
     if(!u||u.removed||u.death)return false;const a=V.ability(id),level=u.abilities.get(id)||1,suffix=String(level),get=(key,fallback=0)=>Number(a[key+suffix]??a[key+'1']??fallback),code=a.code;const p=point||target||u;
@@ -130,7 +138,27 @@ export function installCombat(V){
     else if(['AHwe','ANlm','ANsy'].includes(code)){summon(a.UnitID1||a.DataA1,code==='AHwe'?get('DataA',1):1,duration||get('DataB',60));}
     else if(['Aroa','Ablo','Ainf'].includes(code)){for(const friend of V.near(u,area||500,u.owner.team,false))friend.buffs.push({kind:'power',damage:get('DataA'),speed:get('DataB'),until:V.time+duration});}
     else if(code==='ANht'){for(const e of V.near(u,area,u.owner.team))e.buffs.push({kind:'weaken',damage:get('DataA'),until:V.time+duration});}
-    else if(['Aslo','Acri','Acyc','Abli','Aens','Aprg','Afra','Afrz'].includes(code)){if(target)target.buffs.push({kind:code==='Acyc'?'stun':'slow',factor:1-get('DataA',.3),until:V.time+Math.max(duration,.25)});}
+    else if(code==='Afae'){
+      // Afae is also the map's generic trigger carrier for several profession
+      // skills (those variants use DataB).  Only the source Faerie Fire row
+      // with a real armor value should apply the native armor debuff.
+      const armorReduction=Number(a.DataA1);
+      if(target&&Number.isFinite(armorReduction)&&armorReduction>0&&!Number(a.DataB1))target.buffs.push({kind:'armor',amount:armorReduction,until:V.time+Math.max(duration,.1)});
+    }
+    else if(['Aslo','Acri','Acyc','Abli','Aens','Aprg','Afra','Afrz'].includes(code)){
+      if(target){
+        // These source abilities are target buffs, not generic damage spells.
+        // Keep their control behavior even when the map trigger only adds the
+        // native ability and issues the order (for example the ranger's frost
+        // and the destroyer's cripple).
+        const factor=code==='Acri'?Math.max(.05,1-get('DataA',.75)):code==='Aprg'?0.5:code==='Aens'?Math.max(.05,get('DataA',.6)):code==='Afrz'?Math.max(.05,1-get('DataA',.35)):Math.max(.05,1-get('DataA',.3));
+        target.buffs.push({kind:code==='Acyc'?'stun':code==='Aens'?'root':'slow',factor,until:V.time+Math.max(duration,.25)});
+        if(code==='Acri'){
+          target.buffs.push({kind:'attackSlow',factor:Math.max(.05,1-get('DataB',.5)),until:V.time+Math.max(duration,.25)});
+          target.buffs.push({kind:'damageDebuff',factor:Math.max(.05,1-get('DataC',.5)),until:V.time+Math.max(duration,.25)});
+        }
+      }
+    }
     else if(code==='AHds'){if(rawId(id)==='A096')u.facing=(u.facing+90)%360;}
     else if(code==='AEbl'){u.x=p.x;u.y=p.y;V.enterRegions(u);}
     return true;
@@ -143,7 +171,15 @@ export function installCombat(V){
     if(ability)return V.cast(u,ability,target,point);
     return false;
   };
-  N.IssueImmediateOrderById=(u,id)=>order(u,id);N.IssueTargetOrderById=(u,id,target)=>order(u,id,target);N.IssuePointOrderByIdLoc=(u,id,p)=>order(u,id,null,p);N.IssueNeutralTargetOrder=(player,u,name,target)=>{u.target=target;return true;};
+  N.IssueImmediateOrderById=(u,id)=>order(u,id);N.IssueTargetOrderById=(u,id,target)=>order(u,id,target);N.IssuePointOrderByIdLoc=(u,id,p)=>order(u,id,null,p);N.IssueNeutralTargetOrder=(player,u,name,target)=>{
+    // The original intro uses a neutral "smart" order to make each peasant
+    // pick up the story item immediately after it is created at that peasant.
+    // Treat item targets as pickup operations; storing an item in u.target
+    // would make combat target validation dereference unit-only fields.
+    if(target&&V.items?.get(target.hid)===target)return V.pickup(u,target);
+    if(u)u.target=target;
+    return true;
+  };
   const oldRemove=N.UnitRemoveAbilityBJ;N.UnitRemoveAbilityBJ=(id,u)=>{u?.castCooldown.delete(id);u?.autoCast?.delete(id);return oldRemove(id,u);};
   const attackExtras=(attacker,target,baseDamage,weapon,passives,bonus,now)=>{
     if(!target||target.death||target.removed)return;
@@ -245,18 +281,34 @@ export function installCombat(V){
         }
       }
       if(!hasWeapon(d)||u.removed)continue;
-      u.cooldown-=dt*(1+(u.auraAttackSpeed||0)+u.buffs.filter(b=>b.kind==='power').reduce((sum,b)=>sum+Math.max(0,b.speed||0),0));if(u.cooldown>0)continue;
+      const attackSpeedFactor=u.buffs.filter(b=>b.kind==='attackSlow').reduce((factor,b)=>factor*Math.max(.05,Number(b.factor)||1),1);
+      u.cooldown-=dt*(1+(u.auraAttackSpeed||0)+u.buffs.filter(b=>b.kind==='power').reduce((sum,b)=>sum+Math.max(0,b.speed||0),0))*attackSpeedFactor;if(u.cooldown>0)continue;
        const range=stats.attackRange||100;
-      let target=u.manualTarget||u.target;if(!canTarget(u,target,d)){if(target===u.target)u.target=null;u.manualTarget=null;target=null;}
-      if(target&&Math.hypot(target.x-u.x,target.y-u.y)>range){if(!u.manualTarget)target=null;else{u.target=target;if(!u.building&&!u.move&&(!u.manualTargetApproachAt||u.manualTargetApproachAt<=V.time)){const dx=target.x-u.x,dy=target.y-u.y,distance=Math.hypot(dx,dy)||1,stop=Math.max(40,range*.82);u.manualTargetApproachAt=V.time+1;V.setMove(u,{x:target.x-dx/distance*stop,y:target.y-dy/distance*stop});}continue;}}
-      if(!target)target=V.near(u,range,u.owner.team).filter(e=>canTarget(u,e,d)).sort((a,b)=>Math.hypot(a.x-u.x,a.y-u.y)-Math.hypot(b.x-u.x,b.y-u.y))[0];
+      // Warcraft separates weapon range from acquisition range.  Summoned
+      // units (and the hostile wave units) can notice a target before it is
+      // in weapon range, then walk into range instead of standing idle.
+      const acquire=Math.max(range,Number(d.acquire)||range),autonomous=Boolean(u.ai||u.summoner||u.owner.id>=8);
+      let target=u.manualTarget||u.target;
+      if(!canTarget(u,target,d)){if(target===u.target)u.target=null;u.manualTarget=null;target=null;}
+      if(!target)target=V.near(u,acquire,u.owner.team).filter(e=>canTarget(u,e,d)).sort((a,b)=>Math.hypot(a.x-u.x,a.y-u.y)-Math.hypot(b.x-u.x,b.y-u.y))[0];
       if(!target){u.target=null;continue;}
+      if(Math.hypot(target.x-u.x,target.y-u.y)>range){
+        if(!u.manualTarget&&!autonomous){u.target=null;continue;}
+        u.target=target;
+        if(!u.building&&!u.move&&(!u.autoApproachAt||u.autoApproachAt<=V.time)){
+          const dx=target.x-u.x,dy=target.y-u.y,distance=Math.hypot(dx,dy)||1,stop=Math.max(40,range*.82);
+          u.autoApproachAt=V.time+1;
+          V.setMove(u,{x:target.x-dx/distance*stop,y:target.y-dy/distance*stop});
+        }
+        continue;
+      }
+      u.autoApproachAt=0;
       if(u.manualTarget)u.manualTargetApproachAt=0;
       u.target=target;
       for(const id of [...u.abilities.keys()]){const a=V.ability(id);if(a.code==='Afae'&&u.autoCast?.has(id)&&(u.castCooldown.get(id)||0)<=V.time&&Math.hypot(target.x-u.x,target.y-u.y)<=Number(a.Rng1||Infinity))V.cast(u,id,target,null,true);}
       V.fire('EVENT_PLAYER_UNIT_ATTACKED',{unit:target,attacker:u,player:target.owner});V.fire('EVENT_UNIT_ATTACKED',{unit:target,attacker:u,player:target.owner});
       if(u.removed||target.removed||target.death)continue;let damage=weaponDamage(d);
-      for(const b of u.buffs)if(b.kind==='power')damage*=1+b.damage;
+      for(const b of u.buffs)if(b.kind==='power')damage*=1+b.damage;for(const b of u.buffs)if(b.kind==='damageDebuff')damage*=Math.max(0,Number(b.factor)||1);for(const b of u.buffs)if(b.kind==='weaken')damage*=Math.max(0,1-(Number(b.damage)||0));
       const passives=[...u.abilities.keys()].map(id=>V.ability(id));
       for(const a of passives)if(a.code==='ANba')damage+=Number(a.DataA1)||0;
       for(const a of passives)if(a.code==='AOcr'&&V.random()*100<Number(a.DataA1||0))damage*=Number(a.DataB1)||1;

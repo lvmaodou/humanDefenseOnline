@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { configureModels, getModelAssets, createUnitModel, animateUnit, cueUnitAnimation, releaseUnitModel, lowDetailResources } from './models.js';
+import { createItemModel, animateItem, releaseItemModel } from './item-models.js';
 import { TEAM_COLORS } from './warcraft.js';
 import { BattleEffects, effectStyle } from './effects.js';
 import { createWorldMaterials } from './surface.js';
@@ -32,6 +33,7 @@ const isPlayerWorker=unit=>unit?.owner===mySlot&&!unit.dead&&playerWorkerTypes.h
 const isMovableUnit=unit=>unit?.owner===mySlot&&!unit.dead&&!unit.building&&(unit.canMove??unit.moveSpeed>0);
 // A small vertical lift makes the map's single-level cliffs readable at game zoom.
 const TERRAIN_RELIEF=1.45;
+window.__itemVisualDebug=()=>[...objects.values()].filter(object=>object.userData.item).map(object=>({id:object.userData.item.id,type:object.userData.item.type,path:object.userData.itemModel,loaded:Boolean(object.userData.warcraft),frame:object.userData.warcraft?.renderer.getFrame()}));
 window.__originalVisualDebug=()=>{camera.updateMatrixWorld(true);return{assets:assets?.stats,effects:effects.stats(),modelLod:{simplified:[...objects.values()].filter(object=>object.userData.lowDetail).length,units:[...objects.values()].filter(object=>object.userData.entity).length},originalEffects:originalEffects?.stats(),originalDoodads:originalDoodads.length,terrainTexture:Boolean(worldMaterials.terrain.map),camera:{target:cameraTarget.toArray(),focus:cameraFocus.toArray(),position:camera.position.toArray(),zoom,far:camera.far,footprint:cameraGroundFootprint(camera,cameraTarget,cameraTarget.y),bounds:meta?.visuals?.camera?.bounds,projectedCorners:[[-64,64],[64,64],[-64,-64],[64,-64]].map(([x,z])=>new THREE.Vector3(x,0,z).project(camera).toArray())},units:[...objects.values()].filter(object=>object.userData.entity).slice(0,18).map(object=>({type:object.userData.entity.type,model:object.userData.style?.representation,path:object.userData.style?.sourceModel,source:meta?.units[object.userData.entity.type]?.file,available:assets?.has(meta?.units[object.userData.entity.type]?.file),scale:object.userData.baseScale})),renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles}};};
 window.__modelDistanceDebug=()=>{const distances=[...objects.values()].filter(object=>object.userData.entity?.owner>=4).map(object=>camera.position.distanceTo(object.position)).sort((a,b)=>a-b);return{min:distances[0]||0,median:distances[Math.floor(distances.length*.5)]||0,p90:distances[Math.floor(distances.length*.9)]||0,max:distances.at(-1)||0};};
 const dayBackground=new THREE.Color('#93a9b5'),nightBackground=new THREE.Color('#202b40'),dayFog=new THREE.Color('#93a9b5'),nightFog=new THREE.Color('#293448'),daySun=new THREE.Color('#ffe5c0'),nightSun=new THREE.Color('#9bb7e8');
@@ -90,7 +92,7 @@ function buildCliffs(groups){
 }
 function buildWater(data){const positions=[],indices=[];let vertex=0;for(let y=0;y<data.height-1;y++)for(let x=0;x<data.width-1;x++){const cells=[[y*data.width+x,(y)*data.width+x+1,(y+1)*data.width+x,(y+1)*data.width+x+1]];for(const corners of cells){if(!corners.every(index=>data.waterHeights?.[index]!==null&&data.waterHeights?.[index]!==undefined))continue;for(const index of corners){const sx=data.offset[0]+index%data.width*data.tileSize,sy=data.offset[1]+Math.floor(index/data.width)*data.tileSize,[wx,wz]=sourceToWorld(sx,sy);positions.push(wx,data.waterHeights[index]/128*TERRAIN_RELIEF+.018,wz);}indices.push(vertex,vertex+1,vertex+2,vertex+1,vertex+3,vertex+2);vertex+=4;}}if(!indices.length)return;const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geometry.setIndex(indices);geometry.computeVertexNormals();const water=new THREE.Mesh(geometry,new THREE.MeshPhongMaterial({color:0x859ea0,transparent:true,opacity:.48,shininess:75,side:THREE.DoubleSide,depthWrite:false}));water.renderOrder=2;scene.add(water);objects.set('water',water);}
 function updateObjects(){if(!state)return;unitsById.clear();for(const u of state.units)unitsById.set(u.id,u);const present=new Set(state.units.map(u=>'u'+u.id));for(const [key,obj]of objects)if(key.startsWith('u')&&!present.has(key)){releaseUnitModel(obj);objects.delete(key);}for(const u of state.units){const key='u'+u.id;let obj=objects.get(key);const definition=meta.units[u.type]||{};if(obj&&(obj.userData.entity?.type!==u.type||assets?.has(definition.file)&&obj.userData.style?.representation!=='original-mdx')){releaseUnitModel(obj);objects.delete(key);obj=null;}if(!obj){obj=meshEntity(u);scene.add(obj);objects.set(key,obj);}const [x,z]=pos(u.x,u.y),y=effects.ground(u.x,u.y),previous=obj.userData.entity;if(!previous){obj.position.set(x,y,z);obj.userData.remoteMove=null;}else if(previous.x!==u.x||previous.y!==u.y){obj.userData.remoteMove={from:obj.position.clone(),to:new THREE.Vector3(x,y,z),elapsed:0,duration:.1};}else if(!obj.userData.remoteMove)obj.position.set(x,y,z);obj.userData.rig.move=u.moving?Number(u.moveSpeed)||0:0;obj.rotation.y=u.facing*Math.PI/180;obj.userData.entity=u;obj.userData.selection.visible=u.id===selectedUnit&&u.owner===mySlot;obj.scale.setScalar(obj.userData.baseScale);if(u.dead&&!obj.userData.deathCue)cueUnitAnimation(obj,'death');}
-  const itemKeys=new Set(state.items.map(i=>'i'+i.id));for(const [key,obj]of objects)if(key.startsWith('i')&&!itemKeys.has(key)){scene.remove(obj);objects.delete(key);}for(const item of state.items){const key='i'+item.id;let obj=objects.get(key);if(!obj){obj=new THREE.Group();const gem=new THREE.Mesh(new THREE.OctahedronGeometry(.24,0),material('#dbbe72',.35));gem.position.y=.55;gem.castShadow=true;obj.add(gem);const ring=new THREE.Mesh(new THREE.TorusGeometry(.3,.025,5,16),new THREE.MeshBasicMaterial({color:'#ead497',transparent:true,opacity:.6}));ring.rotation.x=Math.PI/2;ring.position.y=.06;obj.add(ring);obj.userData.item=item;scene.add(obj);objects.set(key,obj);}const [x,z]=pos(item.x,item.y);obj.position.set(x,terrainHeight(item.x,item.y),z);obj.userData.item=item;}}
+  const itemKeys=new Set(state.items.map(i=>'i'+i.id));for(const [key,obj]of objects)if(key.startsWith('i')&&!itemKeys.has(key)){releaseItemModel(obj);objects.delete(key);}for(const item of state.items){const key='i'+item.id,definition=meta.items[item.type]||{};let obj=objects.get(key);if(obj&&!obj.userData.nativeRequested&&assets?.has(definition.model)){releaseItemModel(obj);objects.delete(key);obj=null;}if(!obj){obj=createItemModel(item,definition,assets);scene.add(obj);objects.set(key,obj);}const [x,z]=pos(item.x,item.y);obj.position.set(x,terrainHeight(item.x,item.y),z);obj.userData.item=item;}}
 function renderHud(){
   if(!state)return;
   updateEnvironment();
@@ -409,7 +411,7 @@ function resetBattle(){
   pendingBuild=null;pendingGift=null;buildingId=null;buildAreaOpen=false;dropBuildPreview();
   for(const [key,object]of objects){
     if(key.startsWith('u')){releaseUnitModel(object);objects.delete(key);}
-    else if(key.startsWith('i')){object.removeFromParent();objects.delete(key);}
+    else if(key.startsWith('i')){releaseItemModel(object);objects.delete(key);}
   }
   unitsById.clear();effects.dispose();effects=new BattleEffects(scene,{capacity:4096,ground:terrainHeight});
   originalEffects?.dispose();originalEffects=assets?new OriginalEffects(scene,assets,objects,{ground:terrainHeight}):null;
@@ -494,6 +496,7 @@ function advanceRemotePosition(obj,dt){const move=obj.userData.remoteMove;if(!mo
 function updateUnitViews(dt,time){
   let instances=0;
   for(const[key,obj]of objects){
+    if(key.startsWith('i')){animateItem(obj,dt);continue;}
     if(!key.startsWith('u'))continue;
     advanceRemotePosition(obj,dt);
     const unit=obj.userData.entity,selected=unit?.id===selectedUnit&&unit?.owner===mySlot;

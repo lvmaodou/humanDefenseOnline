@@ -59,7 +59,7 @@ export function installNatives(V){
     CreateLeaderboardBJ:(force,title)=>last('bj_lastCreatedLeaderboard',{title,entries:[]}),GetLastCreatedLeaderboard:()=>G.bj_lastCreatedLeaderboard,
     LeaderboardAddItemBJ:(p,board,label,value)=>board?.entries.push({player:p,label,value}),LeaderboardSetPlayerItemValueBJ:(p,b,v)=>{const row=b?.entries.find(e=>e.player===p);if(row)row.value=v;},LeaderboardGetIndexedPlayerBJ:(i,b)=>b?.entries[i-1]?.player||V.players[0],LeaderboardSortItemsBJ:(b,sort,asc)=>b?.entries.sort((a,b)=>(asc?1:-1)*(a.value-b.value)),
     CreateQuestBJ:(type,title,text,icon)=>{const q=V.handle({type,title:clean(title),text:clean(text),icon});V.quests.push(q);return q;},
-    CreateItemLoc:(id,p)=>V.createItem(id,p),GetItemTypeId:i=>i?.type??0,GetManipulatedItem:()=>C().item,RemoveItem:i=>V.removeItem(i),UnitDropItem:(u,id)=>V.createItem(id,u),WidgetDropItem:(u,id)=>V.createItem(id,u),
+    CreateItemLoc:(id,p)=>last('bj_lastCreatedItem',V.createItem(id,p)),GetItemTypeId:i=>i?.type??0,GetManipulatedItem:()=>C().item,RemoveItem:i=>V.removeItem(i),UnitDropItem:(u,id)=>V.createItem(id,u),WidgetDropItem:(u,id)=>V.createItem(id,u),
     EnumItemsInRectBJ:(r,fn)=>{for(const i of V.items.values())if(!i.removed&&!i.carrier&&V.inside(i,r))V.run(fn,[],{...C(),enumItem:i});},GetEnumItem:()=>C().enumItem,
     RandomDistReset:()=>V.dist=[],RandomDistAddItem:(id,chance)=>(V.dist||=[]).push({id,chance}),RandomDistChoose:()=>{let n=V.random()*(V.dist||[]).reduce((s,x)=>s+x.chance,0);for(const x of V.dist||[]){n-=x.chance;if(n<=0)return x.id;}return 0;},
     ChooseRandomItemBJ:level=>V.randomItem(level),ChooseRandomItemEx:(type,level)=>V.randomItem(level,type),

@@ -57,6 +57,9 @@ test('all six professions build three permanent item towers, upgrade them and tr
     for (const [position, piece] of set.pieces.entries()) {
       const point = { x: -3008, y: 2816 + position * 128 };game.moveUnit(worker, point.x + 64, point.y);
       const item = game.createItem(piece.item, worker);assert.equal(game.pickup(worker, item), true);
+      assert.equal(game.dropItem(worker, item), true);assert.equal(item.charges, 1);
+      assert.equal(game.snapshot().items.some(drop => drop.id === item.hid), true);
+      assert.equal(game.pickup(worker, item), true);
       assert.equal(game.action(0, { type: 'item', unit: worker.hid, item: item.hid, ...point }), true);
       const tower = [...game.units.values()].find(unit => unit.raw === piece.base && unit.owner.id === 0);towers.push(tower);
       assert.ok(tower);assert.equal(item.removed, true);assert.equal(tower.expires, undefined);
@@ -77,6 +80,22 @@ test('all six professions build three permanent item towers, upgrade them and tr
     game.chat(0, '-kaiqi');assert.equal(game.effects.filter(effect => effect.kind === 'lightning' && !effect.destroyed).length, 3);
     assert.deepEqual(game.errors, []);
   }
+});
+
+test('pickup capacity comes from the original inventory ability and buildings without inventory cannot take drops', () => {
+  const game = make();
+  for (const type of workers) {
+    const worker = game.createUnit(game.players[0], game.fourCC(type), -3008, 2560);
+    assert.equal(game.inventoryCapacity(worker), 6);
+    for (let index = 0; index < 6; index++) assert.equal(game.pickup(worker, game.createItem('I001', worker)), true);
+    assert.equal(game.pickup(worker, game.createItem('I001', worker)), false);
+  }
+  const tower = game.createUnit(game.players[0], game.fourCC('h05G'), -2752, 2816), item = game.createItem('I00B', tower);
+  assert.equal(game.inventoryCapacity(tower), 0);
+  assert.equal(game.action(0, { type: 'pickup', unit: tower.hid, item: item.hid }), false);
+  assert.equal(item.carrier, undefined);
+  const footman = game.createUnit(game.players[0], game.fourCC('hfoo'), -3008, 2560);
+  assert.equal(game.inventoryCapacity(footman), 2, 'stock transport inventories keep their source capacity');
 });
 
 test('set construction rejects blocked terrain without consuming equipment and approaches distant valid locations', () => {

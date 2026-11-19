@@ -23,6 +23,31 @@ test('original water elementals, treants, wolves, bears, lava spawns and inferna
   }
 });
 
+test('summoned melee and ranged units acquire targets before weapon range and attack automatically', () => {
+  const wide = () => new Runtime(data, [{ slot: 0, name: 'a' }, { slot: 1, name: 'b' }], 64, { offset: [0, 0], pathing: { width: 64, height: 64, cell: 32, flags: new Uint8Array(64 * 64) } }, rules);
+  const game = wide(), caster = game.createUnit(game.players[0], game.fourCC('h004'), 16, 16);
+  const treant = game.createUnit(game.players[0], game.fourCC('efon'), 16, 16);
+  treant.summoner = caster; treant.ai = true;
+  const meleeTarget = game.createUnit(game.players[8], game.fourCC('hfoo'), 500, 16);
+  meleeTarget.move = null; meleeTarget.hp = meleeTarget.maxHp = 1e9;
+  game.time += .05; game.updateCombat(.05);
+  assert.equal(treant.target, meleeTarget, 'acquisition uses the source 1500 range');
+  assert.ok(treant.move, 'a mobile melee summon approaches a target outside weapon range');
+  advance(game, 1);
+  assert.ok(meleeTarget.hp < 1e9, 'the melee summon attacks after reaching its 100 range');
+
+  const rangedGame = wide(), rangedCaster = rangedGame.createUnit(rangedGame.players[0], rangedGame.fourCC('h004'), 16, 300);
+  const water = rangedGame.createUnit(rangedGame.players[0], rangedGame.fourCC('hwat'), 16, 300);
+  water.summoner = rangedCaster; water.ai = true;
+  const rangedTarget = rangedGame.createUnit(rangedGame.players[8], rangedGame.fourCC('hfoo'), 1200, 300);
+  rangedTarget.move = null; rangedTarget.hp = rangedTarget.maxHp = 1e9;
+  rangedGame.time += .05; rangedGame.updateCombat(.05);
+  assert.equal(water.target, rangedTarget, 'the ranged summon notices targets inside acquisition range');
+  assert.ok(water.move, 'the ranged summon closes distance until its weapon can fire');
+  advance(rangedGame, 2);
+  assert.ok(rangedTarget.hp < 1e9, 'the ranged summon fires after reaching its 800 range');
+});
+
 test('ground summons obey walkability, flying summons cross ground obstacles and ground units, and no-fly barriers stay blocked', () => {
   const flags = new Uint8Array(49);for (let row = 0; row < 7; row++) flags[row * 7 + 3] = 2;
   const game = make(map(flags)), ground = game.createUnit(game.players[0], game.fourCC('ndr1'), 48, 112);

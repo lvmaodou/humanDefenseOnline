@@ -120,6 +120,65 @@ test('ground items use the source map pickup range',()=>{
   assert.equal(hero.inventory.length,1);
 });
 
+test('story passive items follow smart pickup orders and cannot be consumed as active items',()=>{
+  const game=makeGame([]),worker=game.createUnit(game.players[0],game.fourCC('h001'),0,0),item=game.natives.CreateItemLoc(game.fourCC('I000'),worker);
+  assert.equal(game.globals.bj_lastCreatedItem,item);
+  assert.equal(game.natives.IssueNeutralTargetOrder(game.players[0],worker,'smart',game.globals.bj_lastCreatedItem),true);
+  assert.equal(item.carrier,worker);
+  assert.equal(worker.target??null,null);
+  assert.equal(worker.itemStats.fireDamage,5);
+  assert.equal(game.action(0,{type:'item',unit:worker.hid,item:item.hid}),false);
+  assert.equal(item.carrier,worker);
+  assert.equal(item.charges,0,'the source passive orb has no consumable charges');
+  assert.equal(game.dropItem(worker,item),true);
+  assert.equal(worker.itemStats.fireDamage,0);
+  assert.equal(game.pickup(worker,item),true);
+  assert.equal(worker.itemStats.fireDamage,5);
+  game.tick(.05);assert.deepEqual(game.errors,[]);
+});
+
+test('real wave deaths follow the original drop rolls, cutoff and all eighteen item choices',()=>{
+  const game=makeGame();game.start();game.tick(1.05);game.tasks=[];game.timers=[];
+  const worker=game.createUnit(game.players[0],game.fourCC('h001'),-3008,2560);
+  const cases=[
+    {standard:true,wave:45,rolls:[[10,1],[20,2]],drop:1},
+    {standard:true,wave:45,rolls:[[10,1],[20,1]],drop:0},
+    {standard:true,wave:45,rolls:[[10,2]],drop:0},
+    {standard:false,wave:45,rolls:[[100,1]],drop:1},
+    {standard:false,wave:45,rolls:[[100,2]],drop:0},
+    {standard:true,wave:46,rolls:[],drop:0},
+    {standard:false,wave:46,rolls:[],drop:0}
+  ];
+  for(const sample of cases){
+    game.globals.udg_biaozhunwupin=sample.standard;game.globals.udg_waves=sample.wave;
+    const rolls=[...sample.rolls],before=game.items.size;
+    game.natives.GetRandomInt=(min,max)=>{const expected=rolls.shift();assert.ok(expected,'no extra drop roll');assert.deepEqual([min,max],[1,expected[0]]);return expected[1];};
+    const enemy=game.createUnit(game.players[8],game.fourCC('nanc'),-2752,2816);game.kill(enemy,worker);
+    assert.equal(game.items.size-before,sample.drop,JSON.stringify(sample));assert.equal(rolls.length,0);assert.equal(enemy.removed,true);
+  }
+  game.globals.udg_waves=1;game.globals.udg_biaozhunwupin=true;game.natives.GetRandomInt=(min,max)=>max===20?2:1;
+  const pool=Object.entries(data.items).filter(([,item])=>item.pickRandom===1&&item.oldLevel===10).map(([id])=>id),seen=new Set();
+  assert.equal(pool.length,18);
+  for(const [index,id]of pool.entries()){
+    game.random=()=> (index+.25)/pool.length;
+    const enemy=game.createUnit(game.players[8],game.fourCC('nanc'),-2752,2816);game.kill(enemy,worker);
+    const drop=[...game.items.values()].at(-1);assert.equal(drop.raw,id);assert.deepEqual([drop.x,drop.y],[enemy.x,enemy.y]);seen.add(drop.raw);
+  }
+  assert.equal(seen.size,18);assert.deepEqual(game.errors,[]);
+});
+
+test('the original neutral Jaina table makes eight independent half-chance drops only once',()=>{
+  for(const success of [false,true]){
+    const game=makeGame();game.start();game.tasks=[];game.timers=[];game.random=()=>success ? .25 : .75;
+    const jaina=game.globals.gg_unit_Hjai_0009,before=game.items.size;
+    game.natives.SetUnitOwner(jaina,game.players[0]);
+    assert.equal(game.items.size-before,success?8:0);
+    for(const item of game.items.values())assert.deepEqual([item.x,item.y],[jaina.x,jaina.y]);
+    game.kill(jaina);assert.equal(game.items.size-before,success?8:0,'the table trigger destroys itself after the first owner change/death');
+    assert.deepEqual(game.errors,[]);
+  }
+});
+
 test('rogue map triggers toggle the gold drain and blink moves to the chosen point',()=>{
   const game=makeGame();game.start();
   let dialog=game.snapshot().dialogs[0];game.choose(0,dialog.id,dialog.buttons[0].id);
@@ -642,7 +701,7 @@ test('targeted items, temporary buffs, resurrection and start-location travel fo
 
   const farTarget=game.createUnit(game.players[0],game.fourCC('hfoo'),1000,1000),farSanctuary=give(hero,'ssan');
   assert.equal(game.action(0,{type:'item',unit:hero.hid,item:farSanctuary.hid,target:farTarget.hid}),false);
-  assert.equal(farSanctuary.charges,1);
+  assert.equal(farSanctuary.charges,0,'the reusable source staff has no consumable charges');
 
   const returnScroll=give(hero,'stwp');
   hero.owner.startX=-3008;hero.owner.startY=2432;

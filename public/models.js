@@ -1,13 +1,22 @@
 import * as THREE from 'three';
 import * as fallback from './procedural-models.js';
-import { WarcraftAssets, modelResource, TEAM_COLORS } from './warcraft.js';
+import { WarcraftAssets, modelResource, normalizeResource, TEAM_COLORS } from './warcraft.js';
 
 let assets = null;
 export function configureModels(renderer, manifest) { assets = new WarcraftAssets(renderer, manifest); return assets; }
 export function getModelAssets() { return assets; }
+const MODEL_ALIASES = new Map([
+  ['units/nightelf/ent/ent', 'units/creeps/corruptedent/corruptedent']
+]);
+function resolvedModelPath(value) {
+  const source = modelResource(value);
+  if (!source || assets?.has(source)) return source;
+  const alias = MODEL_ALIASES.get(normalizeResource(value));
+  return alias && assets?.has(alias) ? alias : source;
+}
 export function describeModel(definition = {}, id = '') {
   const rawSource = definition.model || definition.file || '';
-  const source = modelResource(rawSource) ? rawSource : '';
+  const source = resolvedModelPath(rawSource) || '';
   const modelScale = Number(definition.modelScale ?? 1);
   return { ...fallback.describeModel({ ...definition, model: source }, id),
     sourceModel: modelResource(source), size: Number.isFinite(modelScale) && modelScale > 0 ? modelScale : 1,
@@ -46,7 +55,7 @@ export function createUnitModel(unit, definition = {}) {
   const health=makeBar(unit.owner>=8?0xdb2929:0x37ba27,width,.04/style.size,.002);
   const mana=makeBar(0x2367e3,width,.015/style.size,.003); mana.position.y=-.03/style.size;
   root.add(bar); root.userData.healthBar=bar; root.userData.health=health; root.userData.mana=mana; root.userData.barWidth=width;
-  if(style.sourceModel&&unit.owner>=4&&!unit.building)root.userData.lodProxy=true;
+  if(style.sourceModel&&assets?.has(style.sourceModel)&&unit.owner>=4&&!unit.building)root.userData.lodProxy=true;
   if (assets?.has(style.sourceModel)) {
     root.userData.ready=assets.attach(root,style.sourceModel,ownerDefinition(unit,definition)).then(instance=>{
       if(instance&&root.userData.deathCue)instance.cue('death');
@@ -74,7 +83,11 @@ export function animateUnit(root,dt,time,selected=false,camera=null,frustum=null
   const distanceSq=camera?camera.position.distanceToSquared(root.position):0;
   const pinned=selected||root.userData.forceDetail;
   if(root.userData.lodProxy){
-    const simplified=root.userData.lowDetail?distanceSq>12*12:distanceSq>16*16;
+    // Keep the authored Warcraft model visible throughout the play area.  The
+    // shared cylinder is only a far distance fallback for units outside the
+    // focus of the battle; using it at 12-16 world units made ordinary
+    // monsters look like red pillars as soon as they entered the camera.
+    const simplified=root.userData.lowDetail?distanceSq>30*30:distanceSq>40*40;
     root.userData.lowDetail=Boolean(!pinned&&!unit.dead&&simplified);
     if(root.userData.warcraft)root.userData.warcraft.coordinate.visible=!root.userData.lowDetail;
     if(root.userData.fallback)root.userData.fallback.visible=!root.userData.lowDetail;

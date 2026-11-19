@@ -39,7 +39,11 @@ export function describeModel(def={},id=''){
   else if(/rider|huntress|farseer|thrall|priestess|deathknight|banditlord|garithos/.test(f))family='mounted';
   else if(/meatwagon|cannon|ballista|demolisher/.test(f))family='siege';
   else if(/golem|mountaingiant|infernal/.test(f))family='golem';
-  else if(/elemental|voidwalker|ghost|vengeance|banshee|revenant|flamelord/.test(f))family='elemental';
+  else if(/\/ent\/|corruptedent|treant/.test(f))family='treant';
+  else if(/elemental|lavaspawn|voidwalker|ghost|vengeance|banshee|revenant|flamelord/.test(f))family='elemental';
+  else if(/scarab|locust|spider|serpentward|sentryward|healingward|stasistotem/.test(f))family='arachnid';
+  else if(/doomguard|felguard|felstalker|pitlord/.test(f))family='brute';
+  else if(/owlscout|hippogryph|albatross|vulture|flyingsheep/.test(f))family='dragon';
   else if(/wolf|bear|furbolg|ow[l]?bear|koto|lizard|felstalker/.test(f))family='beast';
   else if(/tower|guardian|hornof/.test(f))family='tower';
   else if(/archer|ranger|headhunter|runner|shandris|sylvanus/.test(f)){family='ranger';weaponType=/headhunter/.test(f)?'spear':'bow';}
@@ -77,11 +81,34 @@ function spider(root,rig,style){const b=rig.body=joint(root,'carapace',[0,.44,0]
 function dragon(root,rig,style){quadruped(root,rig,style);const b=rig.body;rig.wings=[];for(const side of [-1,1]){const wing=joint(b,'wing',[side*.26,.25,-.05]);const shape=new T.Shape();shape.moveTo(0,0);shape.lineTo(side*1.35,.38);shape.lineTo(side*1.13,-.48);shape.lineTo(side*.55,-.25);shape.lineTo(0,-.38);const membrane=new T.Mesh(new T.ShapeGeometry(shape),new T.MeshStandardMaterial({color:style.color,side:T.DoubleSide,roughness:1}));wing.add(membrane);rod(wing,[0,0,0],[side*1.35,.38,0],.04,C.bone);rig.wings.push({joint:wing,side});}for(let i=0;i<5;i++)mesh(b,'cone',C.bone,[0,.37,-.5+i*.19],[.10,.23,.12]);}
 function golem(root,rig,style){human(root,rig,{...style,family:'warrior',weapon:'hammer'});rig.weapon.visible=false;root.traverse(o=>{if(o.isMesh&&o.material.emissiveIntensity===0)o.material=mat(style.color);});for(const side of [-1,1])mesh(rig.body,'ball',style.color,[side*.40,.47,0],[.48,.46,.45]);for(let i=0;i<3;i++)mesh(rig.body,'crystal',0x9ce49d,[0,.16+i*.13,.16],[.07,.12,.05],undefined,1.2);rig.body.scale.set(1.3,1.13,1.25);}
 function elemental(root,rig,style){rig.body=joint(root,'vortex',[0,.1,0]);rig.rings=[];for(let i=0;i<5;i++){const ring=mesh(rig.body,'ring',style.color,[0,.15+i*.22,0],[.48+i*.12,.48+i*.12,.48+i*.12],[Math.PI/2,0,0],.6);rig.rings.push(ring);}mesh(rig.body,'crystal',style.color,[0,1.2,0],[.48,.68,.48],undefined,.9);for(const s of [-1,1])mesh(rig.body,'ball',0xd0f1ff,[s*.10,1.23,.21],[.065,.06,.04],undefined,1.5);}
+function treant(root,rig,style){
+  const trunk=rig.body=joint(root,'trunk',[0,.68,0]);
+  mesh(trunk,'cylinder',0x654735,[0,.36,0],[.36,.85,.36]);
+  mesh(trunk,'cylinder',0x7d573b,[0,.84,0],[.27,.55,.27]);
+  for(const side of [-1,1]){
+    const arm=joint(trunk,`branch${side}`,[side*.24,.67,0]);
+    rod(arm,[0,0,0],[side*.38,.35,.02],.09,0x66452f);
+    rod(arm,[side*.38,.35,.02],[side*.55,.62,.05],.06,0x805c3c);
+    const hand=joint(arm,`twig${side}`,[side*.55,.62,.05]);
+    for(const twig of [-1,1])rod(hand,[0,0,0],[side*.18,.25,twig*.12],.035,0x805c3c);
+    rig.arms??=[];rig.arms.push({joint:arm,elbow:hand,side});
+  }
+  for(const side of [-1,1]){
+    const rootLeg=joint(trunk,`root${side}`,[side*.15,.02,0]);
+    rod(rootLeg,[0,0,0],[side*.28,-.35,.05],.1,0x63432f);
+    rod(rootLeg,[side*.28,-.35,.05],[side*.4,-.55,.1],.07,0x805c3c);
+  }
+  const crown=joint(root,'crown',[0,1.65,0]);
+  mesh(crown,'ball',0x3c7e45,[0,.18,0],[.72,.55,.65]);
+  mesh(crown,'ball',0x57994e,[-.38,.02,.05],[.42,.38,.4]);
+  mesh(crown,'ball',0x6aaa52,[.35,.08,-.05],[.43,.4,.42]);
+  rig.cape=crown;
+}
 function siege(root,rig,style){rig.body=joint(root,'chassis',[0,.40,0]);mesh(rig.body,'box',C.wood,[0,0,0],[.85,.35,1.25]);rig.wheels=[];for(const z of [-.42,.42])for(const side of [-1,1]){const wheel=mesh(rig.body,'cylinder',C.iron,[side*.47,-.08,z],[.50,.12,.50],[0,0,Math.PI/2]);rig.wheels.push(wheel);}rig.turret=joint(rig.body,'turret',[0,.20,.1]);mesh(rig.turret,'cylinder',C.iron,[0,.10,.28],[.23,1.1,.23],[Math.PI/2-.2,0,0]);mesh(rig.turret,'box',style.color,[0,.1,-.1],[.54,.35,.45]);}
 function tower(root,rig,style){rig.body=joint(root,'tower',[0,0,0]);mesh(rig.body,'cylinder',C.stone,[0,.13,0],[1.0,.26,1.0]);mesh(rig.body,'cylinder',C.stone,[0,.8,0],[.65,1.2,.65]);mesh(rig.body,'cylinder',style.color,[0,1.5,0],[.90,.28,.90]);for(let i=0;i<6;i++){const a=i*Math.PI/3;mesh(rig.body,'box',C.stone,[Math.sin(a)*.35,1.76,Math.cos(a)*.35],[.2,.3,.2]);}rig.turret=joint(rig.body,'turret',[0,1.85,0]);mesh(rig.turret,'crystal',0x8dc7df,[0,0,0],[.32,.60,.32],undefined,.7);}
 export function createUnitModel(unit,def={}){
   const style=describeModel(def,unit.type),root=new T.Group(),rig={phase:(Number(unit.id)||0)*2.399,attack:0,cast:0,move:0,style};root.name=`model:${unit.type}`;root.userData.rig=rig;root.userData.entity=unit;root.userData.definition=def;root.userData.style=style;
-  switch(style.family){case 'arachnid':case 'crustacean':spider(root,rig,style);break;case 'dragon':dragon(root,rig,style);break;case 'beast':quadruped(root,rig,style);break;case 'golem':golem(root,rig,style);break;case 'elemental':elemental(root,rig,style);break;case 'siege':siege(root,rig,style);break;case 'tower':tower(root,rig,style);break;case 'mounted':case 'centaur':{quadruped(root,rig,{...style,color:0x655448});const mount=rig.body,legs=rig.legs;const rider=joint(root,'rider',[0,.55,-.05]),riderRig={};human(rider,riderRig,{...style,family:'knight'});rider.scale.setScalar(.8);rig.rider=riderRig;rig.body=mount;rig.legs=legs;break;}case 'hydra':{quadruped(root,rig,style);for(const s of [-1,1]){rod(rig.body,[s*.25,.12,.3],[s*.5,.75,.52],.14,style.color);mesh(rig.body,'ball',style.color,[s*.5,.8,.6],[.34,.33,.52]);}break;}default:human(root,rig,style);}
+  switch(style.family){case 'arachnid':case 'crustacean':spider(root,rig,style);break;case 'dragon':dragon(root,rig,style);break;case 'beast':quadruped(root,rig,style);break;case 'golem':golem(root,rig,style);break;case 'treant':treant(root,rig,style);break;case 'elemental':elemental(root,rig,style);break;case 'siege':siege(root,rig,style);break;case 'tower':tower(root,rig,style);break;case 'mounted':case 'centaur':{quadruped(root,rig,{...style,color:0x655448});const mount=rig.body,legs=rig.legs;const rider=joint(root,'rider',[0,.55,-.05]),riderRig={};human(rider,riderRig,{...style,family:'knight'});rider.scale.setScalar(.8);rig.rider=riderRig;rig.body=mount;rig.legs=legs;break;}case 'hydra':{quadruped(root,rig,style);for(const s of [-1,1]){rod(rig.body,[s*.25,.12,.3],[s*.5,.75,.52],.14,style.color);mesh(rig.body,'ball',style.color,[s*.5,.8,.6],[.34,.33,.52]);}break;}default:human(root,rig,style);}
   if(unit.building&&style.family!=='tower'){const base=mesh(root,'cylinder',C.stone,[0,.055,0],[1.10,.11,1.10]);base.castShadow=false;rig.platform=base;}
   const visualFactor=style.hero?1.7:unit.building?1.45:['dragon','hydra','golem','elemental','siege','tower'].includes(style.family)?1.25:1.4;style.size*=visualFactor;root.scale.setScalar(style.size);root.userData.baseScale=style.size;
   const selection=new T.Mesh(geo('ring'),new T.MeshBasicMaterial({color:unit.owner>=8?0xe1755b:0xaed88c,transparent:true,opacity:.9,depthWrite:false}));selection.rotation.x=Math.PI/2;selection.position.y=.04;selection.scale.setScalar(style.boss?1.35:1.05);selection.visible=false;root.add(selection);root.userData.selection=selection;

@@ -75,17 +75,26 @@ try {
   console.log('PASS: desktop and portrait teammates receive the exact gold/lumber gift');
 
   const worker = [...game.units.values()].find(unit => unit.owner.id === 0 && unit.raw === 'h002'), set = game.equipment[1];
-  const items = set.pieces.map((piece, index) => game.createItem(piece.item, { x: worker.x + 256, y: worker.y + 128 + index * 48 }));
+  const items = set.pieces.map((piece, index) => game.createItem(piece.item, { x: worker.x + 256, y: worker.y + 128 + index * 128 }));
   await host.page.waitForFunction(() => window.reviewState.items.length >= 3);await openDetails(host.page, '#ground-equipment');
-  for (const item of items) await host.page.locator(`[data-pickup="${item.hid}"]`).click();
+  await host.page.waitForFunction(ids => window.__itemVisualDebug?.().filter(item => ids.includes(item.id) && item.loaded).length === ids.length, items.map(item => item.hid));
+  assert.equal(await host.page.evaluate(() => window.__itemVisualDebug().every(item => item.path === 'objects/inventoryitems/treasurechest/treasurechest.mdx')), true);
+  await mkdir(new URL('../artifacts/', import.meta.url), { recursive: true });
+  await host.page.screenshot({ path: fileURLToPath(new URL('../artifacts/source-item-drops.png', import.meta.url)) });
+  const dropPoint = await project(host.page, items[0].x, items[0].y, .25);
+  await host.page.mouse.click(dropPoint.x, dropPoint.y);
+  await host.page.waitForFunction(id => window.reviewState.units.some(unit => unit.owner === window.reviewSlot && unit.items.some(item => item.id === id)), items[0].hid);
+  assert.equal(await host.page.evaluate(id => window.__itemVisualDebug().some(item => item.id === id), items[0].hid), false);
+  for (const item of items.slice(1)) await host.page.locator(`[data-pickup="${item.hid}"]`).click();
   await host.page.waitForFunction(() => document.querySelectorAll('[data-held-item]').length === 3);
   assert.equal(await host.page.locator('#unit-items').isVisible(), true, 'desktop has a visible six-slot inventory');
   await host.page.locator(`[data-drop-item="${items[0].hid}"]`).click();
+  await host.page.waitForFunction(id => window.__itemVisualDebug().some(item => item.id === id && item.loaded), items[0].hid);
   await guest.page.waitForFunction(id => window.reviewState.items.some(item => item.id === id), items[0].hid);await openDetails(guest.page, '#ground-equipment');
   await guest.page.locator(`[data-pickup="${items[0].hid}"]`).click();await guest.page.locator(`[data-drop-item="${items[0].hid}"]`).click();
   await host.page.locator(`[data-pickup="${items[0].hid}"]`).click();
   assert.equal(items[0].carrier, worker);assert.equal(items[0].charges, 1);
-  console.log('PASS: a ground item moves through pickup, drop, teammate pickup and return without duplication');
+  console.log('PASS: source chest models render, accept a ground click, disappear on pickup, return on drop and pass between teammates without duplication');
 
   for (let step = 0; step < 4; step++) await host.page.locator('#zoom-out').click();await host.page.waitForTimeout(1000);
   const sites = [[-3008, 2816], [-2752, 2816], [-2880, 3072]];

@@ -1,1 +1,4 @@
 .item-search{display:block;width:100%;height:38px;margin-top:16px;padding:0 10px;border:1px solid #47534d;background:#0e1414;color:var(--bone);outline:none}.item-actions{display:grid;gap:5px;justify-items:end}.item-actions button{border:1px solid #75827b;background:#28332d;color:#dce2d6;font-size:9px;padding:4px 7px;cursor:pointer}.item-actions button:disabled{opacity:.5;cursor:default}.item-row{grid-template-columns:29px minmax(0,1fr) 58px}.item-row>div:nth-child(2){min-width:0}.item-row small{overflow:hidden;text-overflow:ellipsis}.item-list{grid-template-columns:1fr 1fr}@media(max-width:600px){.item-list{grid-template-columns:1fr}}
+.inventory-note{color:#a7b59f;font-size:11px;line-height:1.6;margin:12px 0 0}
+.item-source{font-size:10px;color:#aac99a;text-align:right;line-height:1.5}
+.item-actions em{font-size:10px;white-space:nowrap}

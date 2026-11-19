@@ -19,9 +19,9 @@ class MinHeap{
 }
 
 export class PathingGrid{
-  constructor(terrain,{cacheLimit=256}={}){
+  constructor(terrain,{cacheLimit=256,blockedMask=2}={}){
     this.grid=terrain.pathing;this.offset=terrain.offset;this.cell=this.grid.cell||32;this.width=this.grid.width;this.height=this.grid.height;this.flags=this.grid.flags;this.cacheLimit=cacheLimit;this.cache=new Map();
-    this.walkable=new Uint8Array(this.flags.length);for(let i=0;i<this.flags.length;i++)this.walkable[i]=(this.flags[i]&2)?0:1;
+    this.walkable=new Uint8Array(this.flags.length);for(let i=0;i<this.flags.length;i++)this.walkable[i]=(this.flags[i]&blockedMask)?0:1;
   }
   index(x,y){return y*this.width+x;}
   cellAt(x,y){return [Math.floor((x-this.offset[0])/this.cell),Math.floor((y-this.offset[1])/this.cell)];}

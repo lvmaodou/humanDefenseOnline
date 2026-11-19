@@ -3,13 +3,33 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Runtime, rawId } from '../engine/runtime.js';
 import { PathingGrid } from '../engine/pathing.js';
-import { checkBuildPlacement } from '../public/placement.js';
+import { checkBuildPlacement, originalBuildBlockers } from '../public/placement.js';
+import { sampleTerrainHeight } from '../public/terrain-height.js';
+import { originalItemSources } from '../engine/item-sources.js';
 
 const root=new URL('../content/original-3.0/',import.meta.url);
 const data=JSON.parse(await readFile(new URL('data.json',root),'utf8'));
 const terrain=JSON.parse(await readFile(new URL('terrain.json',root),'utf8'));
+const world=JSON.parse(await readFile(new URL('../public/map/visuals.json',import.meta.url),'utf8'));
+terrain.buildBlockers=originalBuildBlockers(world.doodads);
+terrain.buildableTiles=terrain.tiles.map(id=>Number(world.terrainTileData[id]?.buildable)===1);
 const reference=JSON.parse(await readFile(new URL('gameplay.json',root),'utf8'));
 const makeGame=(members=[{slot:0,name:'守卫'}],seed=7)=>new Runtime(data,members,seed,terrain,reference.rules);
+
+test('original item purchases require real shop stock and the map only supplies its scripted items',async()=>{
+  const script=await readFile(new URL('script.j',root),'utf8'),sources=originalItemSources(data,script);
+  assert.equal(Object.values(sources).filter(item=>item.inMap).length,19);
+  assert.equal(Object.values(sources).some(item=>item.purchasable),false,'ngme exists in stock tables but is never placed by this map');
+  assert.deepEqual(sources.I001.sources,['击杀掉落']);assert.deepEqual(sources.I000.sources,['地图剧情']);
+  assert.equal(sources.stwp.inMap,false,'an unused stock item does not become a purchasable map item');
+  const game=makeGame();game.start();const worker=game.createUnit(game.players[0],game.fourCC('h002'),0,0);game.players[0].gold=10000;
+  assert.throws(()=>game.buy(0,worker,data.items.I001),/未设置/);assert.equal(worker.inventory.length,0);assert.equal(game.players[0].gold,10000);
+  const allowed=new Set(Object.keys(sources).filter(id=>sources[id].sources.includes('击杀掉落')));
+  for(let i=0;i<30;i++){
+    assert.ok(allowed.has(rawId(game.natives.ChooseRandomItemBJ(10))));
+    assert.ok(allowed.has(rawId(game.natives.ChooseRandomItemEx('ITEM_TYPE_ANY',8))));
+  }
+});
 
 test('generated reference pack retains imported source tables, map identity, and custom gameplay constants',()=>{
   assert.equal(reference.source.sha256,data.source.sha256);
@@ -153,6 +173,8 @@ test('building direction follows original hunter skills rather than a universal 
 });
 
 test('source pathing and 4x4 tower footprints apply without a player-start radius rule',()=>{
+  const classBuildings=['h001','h002','h000','h004','h003','h06C'].flatMap(id=>data.units[id].Builds.split(','));
+  assert.ok(classBuildings.every(id=>data.units[id].pathTex==='PathTextures\\4x4SimpleSolid.tga'&&data.units[id].preventPlace==='unbuildable'));
   const game=makeGame();game.start();
   for(let step=0;step<3;step++){
     const dialog=game.snapshot().dialogs.find(entry=>entry.players.includes(0));
@@ -175,6 +197,46 @@ test('source pathing and 4x4 tower footprints apply without a player-start radiu
   assert.equal(checkBuildPlacement(terrain,[],terrain.offset[0],terrain.offset[1]).valid,false,'the entire footprint must stay inside the map');
   assert.equal(checkBuildPlacement(terrain,[],terrain.offset[0]+64,terrain.offset[1]+64).reason,'地形不允许建造','source WPM still blocks unbuildable terrain');
   assert.equal(game.errors.length,0);
+});
+
+test('native WPM buildability and original tree footprints prevent construction on roads and decorations',()=>{
+  const pathing={width:8,height:8,cell:32,flags:new Array(64).fill(64)},map={width:3,height:3,offset:[0,0],tileSize:128,pathing};
+  assert.equal(checkBuildPlacement(map,[],128,128).valid,true);
+  pathing.flags[3*8+3]=64|4;
+  assert.equal(checkBuildPlacement(map,[],128,128).valid,true,'a no-fly flag alone does not prevent building');
+  pathing.flags[3*8+3]=64|8;
+  assert.equal(checkBuildPlacement(map,[],128,128).valid,false,'a single unbuildable square invalidates the full footprint');
+  const tree=world.doodads.find(placement=>placement.id==='LTlt');
+  assert.equal(checkBuildPlacement(terrain,[],tree.position[0],tree.position[1]).reason,'树木或装饰物占用此位置');
+  const game=makeGame(),builder=game.createUnit(game.players[0],game.fourCC('h002'),tree.position[0]+256,tree.position[1]);
+  game.players[0].gold=900;game.players[0].cap=65;
+  assert.ok(builder);
+  assert.throws(()=>game.canBuild(0,'h00L',tree.position[0],tree.position[1]),/树木或装饰物/);
+});
+
+test('grass footprints can sit flush with rendered cliffs while crossing footprints and explicit no-build cells stay blocked',()=>{
+  const game=makeGame();game.createUnit(game.players[0],game.fourCC('h002'),4096,-6208);
+  game.players[0].gold=900;game.players[0].cap=65;
+  for(const x of [4096,-4608]){
+    const y=-6400;
+    assert.equal(checkBuildPlacement(terrain,[],x,y).valid,true,'the full grass square touches the visible cliff without overhang');
+    assert.ok(game.canBuild(0,'h00L',x,y));
+    const towardsCliff=x>0?-64:64;
+    assert.equal(checkBuildPlacement(terrain,[],x+towardsCliff,y).valid,false,'moving half a square over the cliff is rejected');
+  }
+  const gold=game.players[0].gold,building=game.build(0,'h00L',4096,-6400);
+  assert.equal(building.x,4096);assert.equal(building.y,-6400);
+  assert.equal(game.players[0].gold,gold-data.units.h00L.goldcost);
+  assert.ok(game.canBuild(0,'h00L',4096,-6272),'edge-aligned buildings may touch without overlapping');
+  assert.throws(()=>game.canBuild(0,'h00L',4096,-6336),/重叠/);
+  const explicit={...terrain,pathing:{...terrain.pathing,flags:[...terrain.pathing.flags]}};
+  const column=(4096-48-terrain.offset[0])/32,row=(-6400-48-terrain.offset[1])/32;
+  explicit.pathing.flags[Math.floor(row)*explicit.pathing.width+Math.floor(column)]=8;
+  assert.equal(checkBuildPlacement(explicit,[],4096,-6400).valid,false,'an explicit forbidden cell is never treated as cliff clearance');
+  const rock={...terrain,buildableTiles:terrain.buildableTiles.map(()=>false)};
+  assert.equal(checkBuildPlacement(rock,[],4096,-6400).valid,false,'nonbuildable surface types cannot use cliff clearance');
+  assert.equal(sampleTerrainHeight(terrain,3968,-6400),-128);
+  assert.equal(checkBuildPlacement(terrain,[],3968,-6400).valid,false,'ravine roads remain unbuildable');
 });
 
 test('original weapon rows drive attacks on both teams with integer damage rolls',()=>{

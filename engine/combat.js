@@ -1,7 +1,7 @@
 import {fourCC,rawId} from './runtime.js';
 
 const orders={852089:'AHbz',852095:'AHtb',852096:'AHtc',852097:'AHwe',852119:'AOcl',852125:'AOsh',852128:'AOww',852164:'Aroa',852171:'AEer',852183:'Alsh',852218:'AUcs',852224:'AUin',852238:'ANrf',852526:'AEfk',852555:'AUim',852556:'AUls',852580:'ANbf',852583:'ANdo',852587:'ANfl',852588:'ANht',852591:'ANmo',852593:'ANst',852652:'ANcs',852658:'ANsy',852667:'ANlm'};
-const passiveCodes=new Set(['AHbh','AOcr','AEev','ANca','Afae','Avul','AInv','Aroc','Amgl','Afra','Afrz','Aven','Apxf','AIat','AIab','AIcb','AIfb','AIbl','AIva','AIas','Ablo','AHad','AEar','AOae','AUau','ANms','AIaa','Aloc']);
+const passiveCodes=new Set(['AHbh','AOcr','AEev','ANca','Afae','Avul','AInv','Aroc','Amgl','Afra','Afrz','Aven','Apxf','AIat','AIab','AIcb','AIfb','AIbl','AIva','AIas','Ablo','AHad','AHab','AEar','AOae','AUau','ANms','AIaa','Aloc']);
 export function installCombat(V){
   const N=V.natives;
   const hasWeapon=d=>Boolean(d?.atkType1&&d.atkType1!=='_'&&d?.weapTp1&&d.weapTp1!=='_'&&Number.isFinite(Number(d.cool1)));
@@ -18,12 +18,12 @@ export function installCombat(V){
   };
   V.ability=id=>{const key=rawId(id),raw=V.data.abilityData[key]||{},over=V.data.abilities[key];if(!over)return raw;const base={...V.data.abilityData[over.base],...raw};const map={anam:'Name',acdn:'Cool',amcs:'Cost',aare:'Area',aran:'Rng',adur:'Dur',ahdu:'HeroDur'};for(const [field,levels]of Object.entries(over.fields))for(const [level,value]of Object.entries(levels))base[(map[field]||field)+(level==='0'?'':level)]=value;return base;};
   V.near=(point,radius,team,enemy=true)=>(V.nearbyUnits?.(point,radius)||[...V.units.values()]).filter(u=>!u.death&&!u.removed&&(enemy?u.owner.team!==team:u.owner.team===team)&&Math.hypot(u.x-point.x,u.y-point.y)<=radius);
-  V.randomItem=(level,kind)=>{const entries=Object.entries(V.data.items).filter(([id,d])=>Number(d.oldLevel??d.Level)===level&&d.pickRandom!==0&&(!kind||kind==='ITEM_TYPE_ANY'||d.class===kind));return entries.length?fourCC(entries[Math.floor(V.random()*entries.length)][0]):0;};
+  V.randomItem=(level,kind)=>{const entries=Object.entries(V.data.items).filter(([id,d])=>Number(kind?d.Level:d.oldLevel)===level&&Number(d.pickRandom)===1&&(!kind||kind==='ITEM_TYPE_ANY'||d.class===kind));return entries.length?fourCC(entries[Math.floor(V.random()*entries.length)][0]):0;};
   V.createItem=(type,p)=>{const id=rawId(type);if(!V.data.items[id])return null;const i=V.handle({type:fourCC(type),raw:id,x:p?.x||0,y:p?.y||0,charges:Number(V.data.items[id].uses)||1});V.items.set(i.hid,i);V.effect('drop',p,p,{item:id});return i;};
   V.removeItem=i=>{if(!i)return;const carrier=i.carrier;if(carrier){carrier.inventory=carrier.inventory.filter(x=>x!==i);i.carrier=null;V.refreshItemStats(carrier);}i.removed=true;V.items.delete(i.hid);};
-  V.dropItem=(u,i)=>{if(!u||!i)return;u.inventory=u.inventory.filter(x=>x!==i);i.carrier=null;i.x=u.x;i.y=u.y;V.refreshItemStats(u);V.fire('EVENT_PLAYER_UNIT_DROP_ITEM',{unit:u,item:i,player:u.owner});};
-  V.pickup=(u,i)=>{if(!u||!i||i.carrier||i.removed||u.inventory.length>=6||Math.hypot(u.x-i.x,u.y-i.y)>Number(V.rules.PickupItemRange))return false;i.carrier=u;u.inventory.push(i);V.refreshItemStats(u);V.fire('EVENT_PLAYER_UNIT_PICKUP_ITEM',{unit:u,item:i,player:u.owner});return true;};
-  V.buy=(slot,u,item)=>{if(!u||!item||u.owner.id!==slot||!item.sellable)throw new Error('该物品无法购买');const shop=[...V.units.values()].find(s=>{const d=V.data.units[s.raw];return !s.removed&&s.owner.id>=8&&String(d.Sellitems||'').split(',').includes(item.itemID)&&Math.hypot(s.x-u.x,s.y-u.y)<=1200;});if(!shop)throw new Error('请靠近出售此物品的商店');if(u.inventory.length>=6)throw new Error('物品栏已满');const cost=Number(item.goldcost)||0;if(u.owner.gold<cost)throw new Error('金币不足');u.owner.gold-=cost;const i=V.createItem(V.fourCC(item.itemID),u);V.pickup(u,i);return i;};
+  V.dropItem=(u,i)=>{if(!u||!i||i.carrier!==u||i.removed)return false;u.inventory=u.inventory.filter(x=>x!==i);i.carrier=null;i.x=u.x;i.y=u.y;if(u.pendingItemBuild?.item===i.hid){u.pendingItemBuild=null;u.move=null;}V.refreshItemStats(u);V.fire('EVENT_PLAYER_UNIT_DROP_ITEM',{unit:u,item:i,player:u.owner});return true;};
+  V.pickup=(u,i)=>{if(!u||u.removed||u.death||!i||i.carrier||i.removed||u.inventory.length>=6||Math.hypot(u.x-i.x,u.y-i.y)>Number(V.rules.PickupItemRange))return false;i.carrier=u;u.inventory.push(i);V.refreshItemStats(u);V.fire('EVENT_PLAYER_UNIT_PICKUP_ITEM',{unit:u,item:i,player:u.owner});return true;};
+  V.buy=(slot,u,item)=>{if(!u||u.removed||u.death||!item||u.owner.id!==slot)throw new Error('该物品无法购买');const shops=[...V.units.values()].filter(s=>!s.removed&&!s.death&&s.owner.id>=8&&String(V.data.units[s.raw]?.Sellitems||'').split(',').includes(item.itemID));if(!shops.length)throw new Error('原图未设置出售此物品的商店，请通过掉落获取');const shop=shops.find(s=>Math.hypot(s.x-u.x,s.y-u.y)<=1200);if(!shop)throw new Error('请靠近出售此物品的商店');if(u.inventory.length>=6)throw new Error('物品栏已满');const cost=Number(item.goldcost)||0;if(u.owner.gold<cost)throw new Error('金币不足');u.owner.gold-=cost;const i=V.createItem(V.fourCC(item.itemID),u);V.pickup(u,i);return i;};
   V.itemStats=u=>{
     const stats={damage:0,lifeSteal:0,fireDamage:0,fireArea:0,poisonDamage:0,poisonDuration:0,poisonInterval:1,armorReduction:0,armorDuration:0,orbSlowChance:0,orbSlowFactor:0,orbSlowDuration:0,airAttack:false,attributes:{strength:0,agility:0,intelligence:0}};
     for(const item of u?.inventory||[]){const def=V.data.items[item.raw]||{};for(const rawIdValue of String(def.abilList||'').split(',').filter(Boolean)){const a=V.ability(rawIdValue),get=key=>Number(a[`${key}1`]??a[key]??0);if(a.code==='AIab'){stats.attributes.strength+=get('DataA');stats.attributes.agility+=get('DataB');stats.attributes.intelligence+=get('DataC');}else if(a.code==='AIva')stats.lifeSteal+=get('DataA');else if(a.code==='AIfb'){stats.fireDamage+=get('DataA');stats.fireArea=Math.max(stats.fireArea,get('Area'));stats.airAttack=true;}else if(a.code==='AIcb'){stats.damage+=get('DataA');stats.armorReduction+=get('DataB');stats.armorDuration=Math.max(stats.armorDuration,get('Dur'));stats.airAttack=true;}else if(a.code==='AIpb'){stats.damage+=get('DataA');stats.airAttack=true;}else if(a.code==='Apo2'){stats.poisonDamage+=get('DataA');stats.poisonDuration=Math.max(stats.poisonDuration,get('Dur'));stats.poisonInterval=Math.max(.1,get('DataD')||1);}else if(a.code==='AIsb'){stats.damage+=get('DataA');stats.orbSlowChance=Math.max(stats.orbSlowChance,get('DataB'));stats.orbSlowFactor=Math.max(stats.orbSlowFactor,Math.min(100,get('DataD'))/100);stats.orbSlowDuration=Math.max(stats.orbSlowDuration,get('DataC'));stats.airAttack=true;}}}
@@ -34,7 +34,8 @@ export function installCombat(V){
   const mainHall=player=>[...V.units.values()].filter(unit=>unit.owner===player&&!unit.removed&&!unit.death&&mainHallRank[unit.raw]!==undefined).sort((a,b)=>mainHallRank[b.raw]-mainHallRank[a.raw])[0];
   const teleport=(unit,point)=>{if(!point||!Number.isFinite(point.x)||!Number.isFinite(point.y))return false;let destination=point;if(V.pathfinder){const index=V.pathfinder.nearestWalkable(point.x,point.y);if(index<0)return false;destination=V.pathfinder.center(index);}V.moveUnit(unit,destination.x,destination.y);unit.move=null;return true;};
   V.useItem=(u,i,p)=>{
-    if(!u||!i||i.carrier!==u||i.removed)return false;const d=V.data.items[i.raw];let used=false;
+    if(!u||u.removed||u.death||!i||i.carrier!==u||i.removed||i.charges<=0)return false;const d=V.data.items[i.raw];let used=false;
+    if(V.equipment.some(set=>set.pieces.some(piece=>piece.item===i.raw)))return V.useBuildItem(u,i,p);
     for(const id of String(d.abilList||'').split(',').filter(Boolean)){
       const a=V.ability(id),code=a.code,get=key=>Number(a[`${key}1`]??a[key]??0),target=V.units.get(p?.targetId)||u,point=p||u;
       if(code==='AIhe'){target.hp=Math.min(target.maxHp,target.hp+get('DataA'));V.effect('heal',u,target,{item:i.raw,value:get('DataA')});used=true;}
@@ -104,7 +105,7 @@ export function installCombat(V){
     const ctx={unit:u,caster:u,ability:id,target,player:u.owner,point:p};
     V.fire('EVENT_PLAYER_UNIT_SPELL_CAST',ctx);V.fire('EVENT_PLAYER_UNIT_SPELL_EFFECT',ctx);u.casting=null;
     if(u.removed||u.death)return true;
-    const visual={...V.data.abilityStrings[code],...V.data.abilityStrings[rawId(id)]};V.effect('spell',u,p,{ability:rawId(id),code,area:get('Area'),duration:get('Dur'),visual,animationNames:visual.Animnames});
+    const visual={...V.data.abilityStrings[code],...V.data.abilityStrings[rawId(id)]};V.effect('spell',u,p,{ability:rawId(id),code,area:get('Area'),duration:get('Dur'),range:get('Rng'),lineLength:get('DataC',get('Rng',800)),missileSpeed:Number(visual.Missilespeed)||900,visual,animationNames:visual.Animnames});
     const dmg=get('DataA'),area=get('Area',200),duration=get('Dur'),enemies=()=>V.near(p,area,u.owner.team);
     const aoe=(center,radius,value,stun=0)=>{for(const e of V.near(center,radius,u.owner.team)){V.damage(u,e,value,false,'DAMAGE_TYPE_MAGIC','spells');if(stun)e.buffs.push({kind:'stun',until:V.time+stun});}};
     const summon=(type,count,life)=>{if(!type||!V.data.units[type])return;for(let i=0;i<count;i++){const s=V.createUnit(u.owner,fourCC(type),p.x+(i%3)*24,p.y+Math.floor(i/3)*24,u.facing);s.summoner=u;if(life)s.expires=V.time+life;s.useFood=false;s.owner.food-=s.food;s.food=0;s.target=target;s.ai=true;}};
@@ -218,30 +219,33 @@ export function installCombat(V){
   };
   V.updateCombat=dt=>{
     updateProjectiles();
+    V.updateEquipmentAuras();
     for(const zone of V.zones||[]){if(zone.count>0&&zone.next<=V.time){zone.next+=zone.interval;zone.count--;for(const e of V.near(zone.center,zone.radius,zone.source.owner.team))V.damage(zone.source,e,zone.damage,false,'DAMAGE_TYPE_MAGIC','spells');V.effect('area',zone.center,zone.center,{code:zone.kind,area:zone.radius});}}
     V.zones=(V.zones||[]).filter(z=>z.count>0);
     for(const u of [...V.units.values()]){
       if(u.removed||u.death)continue;if(u.expires&&u.expires<=V.time){V.kill(u);continue;}
+      V.updateItemBuild(u);
+      if(u.upgradeEnd){if(u.upgradeEnd>V.time)continue;V.finishEquipmentUpgrade(u);}
       if(u.constructEnd){if(u.constructEnd>V.time)continue;u.constructEnd=null;u.constructed=true;V.fire('EVENT_PLAYER_UNIT_CONSTRUCT_FINISH',{unit:u,player:u.owner});}
-      const d=V.data.units[u.raw],stats=u.stats||V.unitStats(u);u.buffs=u.buffs.filter(b=>b.until>V.time);u.hp=Math.min(u.maxHp,u.hp+(stats.hpRegen+u.buffs.filter(b=>b.kind==='regen').reduce((sum,b)=>sum+b.amount,0))*dt);u.mana=Math.min(u.maxMana,u.mana+(stats.manaRegen+u.buffs.filter(b=>b.kind==='mana-regen').reduce((sum,b)=>sum+b.amount,0))*dt);
+      const d=V.data.units[u.raw],stats=u.stats||V.unitStats(u);u.buffs=u.buffs.filter(b=>b.until>V.time);u.hp=Math.min(u.maxHp,u.hp+(stats.hpRegen+u.buffs.filter(b=>b.kind==='regen').reduce((sum,b)=>sum+b.amount,0))*dt);u.mana=Math.min(u.maxMana,u.mana+(stats.manaRegen+(u.auraMana||0)+u.buffs.filter(b=>b.kind==='mana-regen').reduce((sum,b)=>sum+b.amount,0))*dt);
       for(const sanctuary of u.buffs.filter(b=>b.kind==='sanctuary')){while(sanctuary.next<=V.time&&u.hp<u.maxHp){sanctuary.next+=1;const healed=Math.min(sanctuary.rate,u.maxHp-u.hp);u.hp+=healed;V.effect('heal',u,u,{value:healed,kind:'sanctuary'});}if(u.hp>=u.maxHp)u.buffs=u.buffs.filter(buff=>buff!==sanctuary);}
       for(const poison of u.buffs.filter(b=>b.kind==='poison'))if(poison.next<=V.time){poison.next+=poison.interval;V.damage(poison.source||null,u,poison.damage,false,'DAMAGE_TYPE_MAGIC','spells');}
       for(const burn of u.buffs.filter(b=>b.kind==='burn'))if(burn.next<=V.time){burn.next+=burn.interval;V.damage(burn.source||null,u,burn.damage,false,'DAMAGE_TYPE_FIRE','spells');}
       if(u.buffs.some(b=>b.kind==='stun'))continue;
       const haste=u.buffs.filter(b=>b.kind==='haste').reduce((n,b)=>Math.max(n,b.factor||1),1),baseSpeed=Math.min(Number(V.rules.MaxUnitSpeed)||522,V.moveSpeed(u)*haste),slow=u.buffs.filter(b=>b.kind==='slow').reduce((n,b)=>n*b.factor,1),movementSpeed=baseSpeed?Math.max(Number(V.rules.MinUnitSpeed)||100,baseSpeed*slow):0;
       if(u.move&&!u.buffs.some(b=>b.kind==='root')&&movementSpeed>0){
-        const movement=u.move;
-        if(!movement.path){const path=V.pathfinder?V.pathfinder.findPath(u,{x:movement.x,y:movement.y}):[{x:movement.x,y:movement.y}];if(!path?.length){u.move=null;continue;}movement.path=path;movement.index=0;movement.stalled=0;movement.escape=!!V.pathfinder&&!V.pathfinder.isWalkable(u.x,u.y);const end=path.at(-1);movement.x=end.x;movement.y=end.y;}
+        const movement=u.move,pathfinder=V.pathingFor(u),flying=V.isFlying(u);
+        if(!movement.path){const path=pathfinder?pathfinder.findPath(u,{x:movement.x,y:movement.y}):[{x:movement.x,y:movement.y}];if(!path?.length){u.move=null;continue;}movement.path=path;movement.index=0;movement.stalled=0;movement.escape=!!pathfinder&&!pathfinder.isWalkable(u.x,u.y);const end=path.at(-1);movement.x=end.x;movement.y=end.y;}
         const path=movement.path,step=movementSpeed*dt;let remaining=step;
         while(movement.index<path.length&&remaining>0){const waypoint=path[movement.index],dx=waypoint.x-u.x,dy=waypoint.y-u.y,distance=Math.hypot(dx,dy);if(distance<=Math.max(.001,remaining)){V.moveUnit(u,waypoint.x,waypoint.y);remaining-=distance;movement.index++;}else break;}
         if(movement.index>=path.length){V.moveUnit(u,movement.x,movement.y);u.move=null;}
         else if(remaining>0){const waypoint=path[movement.index],dx=waypoint.x-u.x,dy=waypoint.y-u.y,distance=Math.hypot(dx,dy)||1,nx=dx/distance,ny=dy/distance,amount=Math.min(remaining,distance),radius=Math.max(16,Number(u.collision)*16),candidateList=[[nx,ny],[(nx-ny*.55)/1.12,(ny+nx*.55)/1.12],[(nx+ny*.55)/1.12,(ny-nx*.55)/1.12],[-ny,nx],[ny,-nx]];let moved=false;
-          for(const [vx,vy]of candidateList){const x=u.x+vx*amount,y=u.y+vy*amount;if(V.pathfinder&&!movement.escape&&!V.pathfinder.segmentWalkable(u,{x,y}))continue;const blocked=V.nearbyUnits({x,y},radius+32).some(other=>other!==u&&!other.removed&&!other.death&&Math.hypot(other.x-x,other.y-y)<radius+Math.max(16,Number(other.collision)*16));if(blocked)continue;const oldX=u.x,oldY=u.y;V.moveUnit(u,x,y);if(V.pathfinder&&V.pathfinder.isWalkable(u.x,u.y))movement.escape=false;u.facing=Math.atan2(y-oldY,x-oldX)*180/Math.PI;moved=true;movement.stalled=0;break;}
-          if(!moved){movement.stalled=(movement.stalled||0)+dt;if(movement.stalled>.5){const path=V.pathfinder?.findPath(u,{x:movement.x,y:movement.y});if(path?.length){movement.path=path;movement.index=0;movement.stalled=0;}else u.move=null;}}
+          for(const [vx,vy]of candidateList){const x=u.x+vx*amount,y=u.y+vy*amount;if(pathfinder&&!movement.escape&&!pathfinder.segmentWalkable(u,{x,y}))continue;const blocked=V.nearbyUnits({x,y},radius+32).some(other=>other!==u&&!other.removed&&!other.death&&V.isFlying(other)===flying&&Math.hypot(other.x-x,other.y-y)<radius+Math.max(16,Number(other.collision)*16));if(blocked)continue;const oldX=u.x,oldY=u.y;V.moveUnit(u,x,y);if(pathfinder&&pathfinder.isWalkable(u.x,u.y))movement.escape=false;u.facing=Math.atan2(y-oldY,x-oldX)*180/Math.PI;moved=true;movement.stalled=0;break;}
+          if(!moved){movement.stalled=(movement.stalled||0)+dt;if(movement.stalled>.5){const path=pathfinder?.findPath(u,{x:movement.x,y:movement.y});if(path?.length){movement.path=path;movement.index=0;movement.stalled=0;}else u.move=null;}}
         }
       }
       if(!hasWeapon(d)||u.removed)continue;
-      u.cooldown-=dt*(1+u.buffs.filter(b=>b.kind==='power').reduce((sum,b)=>sum+Math.max(0,b.speed||0),0));if(u.cooldown>0)continue;
+      u.cooldown-=dt*(1+(u.auraAttackSpeed||0)+u.buffs.filter(b=>b.kind==='power').reduce((sum,b)=>sum+Math.max(0,b.speed||0),0));if(u.cooldown>0)continue;
        const range=stats.attackRange||100;
       let target=u.manualTarget||u.target;if(!canTarget(u,target,d)){if(target===u.target)u.target=null;u.manualTarget=null;target=null;}
       if(target&&Math.hypot(target.x-u.x,target.y-u.y)>range){if(!u.manualTarget)target=null;else{u.target=target;if(!u.building&&!u.move&&(!u.manualTargetApproachAt||u.manualTargetApproachAt<=V.time)){const dx=target.x-u.x,dy=target.y-u.y,distance=Math.hypot(dx,dy)||1,stop=Math.max(40,range*.82);u.manualTargetApproachAt=V.time+1;V.setMove(u,{x:target.x-dx/distance*stop,y:target.y-dy/distance*stop});}continue;}}

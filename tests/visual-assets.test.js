@@ -225,7 +225,7 @@ test('projectile visuals follow server corrections and end at their impact cue',
   assert.ok(object.position.x>startX);
   effects.consume([{id:2,kind:'projectile-update',projectileId:1,x:40,y:0,tx:800,ty:40,remaining:.8,height:90,impactZ:60}]);
   assert.ok(Math.abs(flight.position.x-40/128)<1e-9);
-  assert.ok(Math.abs(flight.target.z-40/128)<1e-9);
+  assert.ok(Math.abs(flight.target.z+40/128)<1e-9);
   effects.consume([{id:3,kind:'impact',projectileId:1,x:800,y:40,tx:800,ty:40}]);
   effects.update(.01);
   assert.equal(effects.projectiles.size,0);

@@ -1,1 +1,6 @@
 .ability-list{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-height:132px;overflow:auto;scrollbar-width:thin;scrollbar-color:#75836e transparent}.ability-title{grid-column:1/-1;color:#c4b17e;font-size:10px;padding:7px 0 2px}.ability-button{height:35px;min-width:0;display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:5px;padding:0 6px;background:#202a28;border:1px solid var(--line);color:var(--bone);text-align:left;cursor:pointer}.ability-button:hover{border-color:#b99a5c;background:#343b30}.ability-button span{display:grid;place-items:center;width:17px;height:17px;background:#85754b;color:#171a15;font:10px ui-monospace,monospace}.ability-button b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}.ability-button small{color:#9ca89a;font:9px ui-monospace,monospace}@media(max-width:700px){.ability-list{max-height:105px}.ability-button{height:32px}}
+.passive-list{display:grid;gap:5px;margin-top:7px}
+.passive-skill{border:1px solid var(--line);background:#17221f;padding:7px;color:#bdcbb7;font-size:10px}
+.passive-skill summary{cursor:pointer;line-height:1.5}
+.passive-skill summary small{display:block;margin-left:14px;color:#8fa78a;font-size:9px}
+.passive-skill p{font-size:10px;line-height:1.6;color:#9fae9d;margin:7px 0 0}

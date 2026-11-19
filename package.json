@@ -9,7 +9,12 @@
     "assets:original": "node tools/fetch_original_assets.mjs",
     "visuals:original": "node tools/build_visuals.mjs",
     "test": "node --test",
-    "test:browser": "node tests/interaction-smoke.mjs"
+    "test:browser": "node tests/interaction-smoke.mjs",
+    "test:team": "node tests/team-equipment-smoke.mjs",
+    "test:reconnect": "node tests/reconnect-smoke.mjs",
+    "test:summons": "node tests/summon-controls-smoke.mjs",
+    "test:economy": "node tests/wave-economy-smoke.mjs",
+    "test:build": "node tests/build-controls-smoke.mjs"
   },
   "dependencies": {
     "three": "^0.187.0",

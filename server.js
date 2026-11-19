@@ -35,7 +35,7 @@ const itemModelPath=item=>String(item?.file||'').replaceAll('\\','/').toLowerCas
 const routes=['a','b','c','d'].map(prefix=>Array.from({length:9},(_,i)=>{const r=gameData.rects[`gg_rct_${prefix}${i+1}`];return r?[(r[0]+r[2])/256,-(r[1]+r[3])/256]:null;}).filter(Boolean));
 const visualUnits=Object.fromEntries(Object.entries(gameData.units).map(([id,u])=>[id,{
   ...Object.fromEntries(Object.entries(u).filter(([key])=>/^(file|modelScale|scale|red|green|blue|teamColor|movetp|spd|moveHeight|moveFloor|launchX|launchY|launchZ|impactZ|walk|run|blend|propWin|orientInterp|death|unitShadow|shadowW|shadowH|shadowX|shadowY|Art|animProps|Attachmentanimprops|Boneprops|buildTime)$/i.test(key))),
-  name:displayText(u.Name),icon:u.Art||null,modelScale:Number(u.modelScale??1),selectionScale:Number(u.scale??1),cost:Number(u.goldcost)||0,lumberCost:Number(u.lumbercost)||0,food:Number(u.fused)||0,builds:u.Builds,isBuilding:Boolean(u.isbldg),tip:displayText(u.Tip),autocast:u.auto&&u.auto!=='_'?u.auto:null,upgradeTo:equipment.flatMap(set=>set.pieces).find(piece=>piece.base===id)?.unit,
+  name:displayText(u.Name),icon:u.Art||null,modelScale:Number(u.modelScale??1),selectionScale:Number(u.scale??1),cost:Number(u.goldcost)||0,lumberCost:Number(u.lumbercost)||0,food:Number(u.fused)||0,buildTime:Number(u.bldtm)||0,builds:u.Builds,isBuilding:Boolean(u.isbldg),tip:displayText(u.Tip),autocast:u.auto&&u.auto!=='_'?u.auto:null,upgradeTo:equipment.flatMap(set=>set.pieces).find(piece=>piece.base===id)?.unit,
   hp:Number(u.HP)||1,mana:Number(u.manaN??u.realM)||0,armor:Number(u.def)||0,attackMin:(Number(u.dmgplus1)||0)+(Number(u.dice1)||0),attackMax:(Number(u.dmgplus1)||0)+(Number(u.dice1)||0)*(Number(u.sides1)||1),attackRange:Number(u.rangeN1)||0,attackCooldown:Number(u.cool1)||0,weaponType:u.weapTp1||null,requires:String(u.Requires||'').split(',').filter(Boolean),
   abilities:[...new Set([...(u.abilList||'').split(','),...equipment.filter(set=>set.pieces.some(piece=>piece.unit===id)).map(set=>set.ability)])].filter(a=>a&&a!=='Avul').map(a=>{const def=gameData.abilityData[a]||{},strings=gameData.abilityStrings[a]||{},code=def.code||a,targets=String(def.targs1||'').split(',').filter(Boolean),unitTarget=targets.some(target=>['enemy','enemies','ally','neutral'].includes(target));return{id:a,code,name:displayText(strings.Name||def.Name||a),art:strings.Art||def.Art,description:displayText(strings.Ubertip||def.Ubertip||''),castable:!passiveAbilityCodes.has(code)&&!['AInv','Avul','Atau'].includes(code),targeting:a==='A04D'||code==='AEbl'?'point':a==='A07E'||unitTarget?(targets.some(target=>['ground','point'].includes(target))?'either':'unit'):'self'};})
 }]));
@@ -72,6 +72,9 @@ wss.on('connection',ws=>{let room=null,player=null;send(ws,{type:'map',meta:{nam
         sessions.publish(room);return;
       }
       if(!room||!player||player.ws!==ws)return;
+      if(m.type==='leave'){
+        sessions.leave(room,player,ws);room=null;player=null;send(ws,{type:'left'});return;
+      }
       if(m.type==='action'){
         const result=room.game.action(player.slot,m.action||{});
         if(result===false)send(ws,{type:'error',requestId:m.requestId,message:'操作无效或当前不可用'});

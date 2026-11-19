@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { configureModels, getModelAssets, createUnitModel, animateUnit, cueUnitAnimation, releaseUnitModel, lowDetailResources } from './models.js';
+import { configureModels, getModelAssets, createUnitModel, animateUnit, cueUnitAnimation, updateUnitConstruction, releaseUnitModel, lowDetailResources } from './models.js';
 import { createItemModel, animateItem, releaseItemModel } from './item-models.js';
 import { TEAM_COLORS } from './warcraft.js';
 import { BattleEffects, effectStyle } from './effects.js';
@@ -28,13 +28,14 @@ const initialViewport=viewportSize();
 function setPointerFromClient(clientX,clientY){const rect=canvas.getBoundingClientRect();if(getComputedStyle(app).transform!=='none')pointer.set((clientY-rect.top)/rect.height*2-1,(clientX-rect.left)/rect.width*2-1);else pointer.set((clientX-rect.left)/rect.width*2-1,1-(clientY-rect.top)/rect.height*2);}
 let meta=null,terrain=null,state=null,mySlot=-1,roomId='',selectedUnit=null,buildingId=null,buildAreaOpen=false,targetMode=false,mouseDown=null,cameraPanStart=null,cameraPanButton=null,zoom=1,followHero=true,previewObject=null,previewSourcePoint=null,dialogSignature='',buildSignature='',abilitySignature='',inspectorSignature='',assets=null,originalEffects=null,originalDoodads=[];
 let targetUnit=null,castingAbility=null,targetingItem=null,buildAnchor=null,pendingBuild=null,actionSequence=0,buildingItem=null,pendingGift=null;
+let resultDismissed=false;
 const playerWorkerTypes=new Set(['h001','h002','h000','h004','h003','h06C']);
 const isPlayerWorker=unit=>unit?.owner===mySlot&&!unit.dead&&playerWorkerTypes.has(unit.type);
 const isMovableUnit=unit=>unit?.owner===mySlot&&!unit.dead&&!unit.building&&(unit.canMove??unit.moveSpeed>0);
 // A small vertical lift makes the map's single-level cliffs readable at game zoom.
 const TERRAIN_RELIEF=1.45;
 window.__itemVisualDebug=()=>[...objects.values()].filter(object=>object.userData.item).map(object=>({id:object.userData.item.id,type:object.userData.item.type,path:object.userData.itemModel,loaded:Boolean(object.userData.warcraft),frame:object.userData.warcraft?.renderer.getFrame()}));
-window.__originalVisualDebug=()=>{camera.updateMatrixWorld(true);return{assets:assets?.stats,effects:effects.stats(),modelLod:{simplified:[...objects.values()].filter(object=>object.userData.lowDetail).length,units:[...objects.values()].filter(object=>object.userData.entity).length},originalEffects:originalEffects?.stats(),originalDoodads:originalDoodads.length,terrainTexture:Boolean(worldMaterials.terrain.map),camera:{target:cameraTarget.toArray(),focus:cameraFocus.toArray(),position:camera.position.toArray(),zoom,far:camera.far,footprint:cameraGroundFootprint(camera,cameraTarget,cameraTarget.y),bounds:meta?.visuals?.camera?.bounds,projectedCorners:[[-64,64],[64,64],[-64,-64],[64,-64]].map(([x,z])=>new THREE.Vector3(x,0,z).project(camera).toArray())},units:[...objects.values()].filter(object=>object.userData.entity).slice(0,18).map(object=>({type:object.userData.entity.type,model:object.userData.style?.representation,path:object.userData.style?.sourceModel,source:meta?.units[object.userData.entity.type]?.file,available:assets?.has(meta?.units[object.userData.entity.type]?.file),scale:object.userData.baseScale})),renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles}};};
+window.__originalVisualDebug=()=>{camera.updateMatrixWorld(true);return{assets:assets?.stats,effects:effects.stats(),modelLod:{simplified:[...objects.values()].filter(object=>object.userData.lowDetail).length,units:[...objects.values()].filter(object=>object.userData.entity).length},originalEffects:originalEffects?.stats(),originalDoodads:originalDoodads.length,terrainTexture:Boolean(worldMaterials.terrain.map),camera:{target:cameraTarget.toArray(),focus:cameraFocus.toArray(),position:camera.position.toArray(),zoom,far:camera.far,footprint:cameraGroundFootprint(camera,cameraTarget,cameraTarget.y),bounds:meta?.visuals?.camera?.bounds,projectedCorners:[[-64,64],[64,64],[-64,-64],[64,-64]].map(([x,z])=>new THREE.Vector3(x,0,z).project(camera).toArray())},units:[...objects.values()].filter(object=>object.userData.entity).slice(0,18).map(object=>({id:object.userData.entity.id,construction:object.userData.entity.construction,animation:object.userData.warcraft?{name:object.userData.warcraft.resource.model.Sequences[object.userData.warcraft.renderer.getSequence()]?.Name,frame:object.userData.warcraft.renderer.getFrame(),progress:object.userData.warcraft.construction?.progress}:null,type:object.userData.entity.type,model:object.userData.style?.representation,path:object.userData.style?.sourceModel,source:meta?.units[object.userData.entity.type]?.file,available:assets?.has(meta?.units[object.userData.entity.type]?.file),scale:object.userData.baseScale})),renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles}};};
 window.__modelDistanceDebug=()=>{const distances=[...objects.values()].filter(object=>object.userData.entity?.owner>=4).map(object=>camera.position.distanceTo(object.position)).sort((a,b)=>a-b);return{min:distances[0]||0,median:distances[Math.floor(distances.length*.5)]||0,p90:distances[Math.floor(distances.length*.9)]||0,max:distances.at(-1)||0};};
 const dayBackground=new THREE.Color('#93a9b5'),nightBackground=new THREE.Color('#202b40'),dayFog=new THREE.Color('#93a9b5'),nightFog=new THREE.Color('#293448'),daySun=new THREE.Color('#ffe5c0'),nightSun=new THREE.Color('#9bb7e8');
 const scene=new THREE.Scene();scene.background=dayBackground.clone();scene.fog=new THREE.Fog(dayFog,112,245);
@@ -91,7 +92,7 @@ function buildCliffs(groups){
   });
 }
 function buildWater(data){const positions=[],indices=[];let vertex=0;for(let y=0;y<data.height-1;y++)for(let x=0;x<data.width-1;x++){const cells=[[y*data.width+x,(y)*data.width+x+1,(y+1)*data.width+x,(y+1)*data.width+x+1]];for(const corners of cells){if(!corners.every(index=>data.waterHeights?.[index]!==null&&data.waterHeights?.[index]!==undefined))continue;for(const index of corners){const sx=data.offset[0]+index%data.width*data.tileSize,sy=data.offset[1]+Math.floor(index/data.width)*data.tileSize,[wx,wz]=sourceToWorld(sx,sy);positions.push(wx,data.waterHeights[index]/128*TERRAIN_RELIEF+.018,wz);}indices.push(vertex,vertex+1,vertex+2,vertex+1,vertex+3,vertex+2);vertex+=4;}}if(!indices.length)return;const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geometry.setIndex(indices);geometry.computeVertexNormals();const water=new THREE.Mesh(geometry,new THREE.MeshPhongMaterial({color:0x859ea0,transparent:true,opacity:.48,shininess:75,side:THREE.DoubleSide,depthWrite:false}));water.renderOrder=2;scene.add(water);objects.set('water',water);}
-function updateObjects(){if(!state)return;unitsById.clear();for(const u of state.units)unitsById.set(u.id,u);const present=new Set(state.units.map(u=>'u'+u.id));for(const [key,obj]of objects)if(key.startsWith('u')&&!present.has(key)){releaseUnitModel(obj);objects.delete(key);}for(const u of state.units){const key='u'+u.id;let obj=objects.get(key);const definition=meta.units[u.type]||{};if(obj&&(obj.userData.entity?.type!==u.type||assets?.has(definition.file)&&obj.userData.style?.representation!=='original-mdx')){releaseUnitModel(obj);objects.delete(key);obj=null;}if(!obj){obj=meshEntity(u);scene.add(obj);objects.set(key,obj);}const [x,z]=pos(u.x,u.y),y=effects.ground(u.x,u.y),previous=obj.userData.entity;if(!previous){obj.position.set(x,y,z);obj.userData.remoteMove=null;}else if(previous.x!==u.x||previous.y!==u.y){obj.userData.remoteMove={from:obj.position.clone(),to:new THREE.Vector3(x,y,z),elapsed:0,duration:.1};}else if(!obj.userData.remoteMove)obj.position.set(x,y,z);obj.userData.rig.move=u.moving?Number(u.moveSpeed)||0:0;obj.rotation.y=u.facing*Math.PI/180;obj.userData.entity=u;obj.userData.selection.visible=u.id===selectedUnit&&u.owner===mySlot;obj.scale.setScalar(obj.userData.baseScale);if(u.dead&&!obj.userData.deathCue)cueUnitAnimation(obj,'death');}
+function updateObjects(){if(!state)return;unitsById.clear();for(const u of state.units)unitsById.set(u.id,u);const present=new Set(state.units.map(u=>'u'+u.id));for(const [key,obj]of objects)if(key.startsWith('u')&&!present.has(key)){releaseUnitModel(obj);objects.delete(key);}for(const u of state.units){const key='u'+u.id;let obj=objects.get(key);const definition=meta.units[u.type]||{};if(obj&&(obj.userData.entity?.type!==u.type||assets?.has(definition.file)&&obj.userData.style?.representation!=='original-mdx')){releaseUnitModel(obj);objects.delete(key);obj=null;}if(!obj){obj=meshEntity(u);scene.add(obj);objects.set(key,obj);}const [x,z]=pos(u.x,u.y),y=effects.ground(u.x,u.y),previous=obj.userData.entity;if(!previous){obj.position.set(x,y,z);obj.userData.remoteMove=null;}else if(previous.x!==u.x||previous.y!==u.y){obj.userData.remoteMove={from:obj.position.clone(),to:new THREE.Vector3(x,y,z),elapsed:0,duration:.1};}else if(!obj.userData.remoteMove)obj.position.set(x,y,z);obj.userData.rig.move=u.moving?Number(u.moveSpeed)||0:0;obj.rotation.y=u.facing*Math.PI/180;obj.userData.entity=u;updateUnitConstruction(obj,u,meta.units[u.upgrade?.type]?.Animprops||'');obj.userData.selection.visible=u.id===selectedUnit&&u.owner===mySlot;obj.scale.setScalar(obj.userData.baseScale);if(u.dead&&!obj.userData.deathCue)cueUnitAnimation(obj,'death');}
   const itemKeys=new Set(state.items.map(i=>'i'+i.id));for(const [key,obj]of objects)if(key.startsWith('i')&&!itemKeys.has(key)){releaseItemModel(obj);objects.delete(key);}for(const item of state.items){const key='i'+item.id,definition=meta.items[item.type]||{};let obj=objects.get(key);if(obj&&!obj.userData.nativeRequested&&assets?.has(definition.model)){releaseItemModel(obj);objects.delete(key);obj=null;}if(!obj){obj=createItemModel(item,definition,assets);scene.add(obj);objects.set(key,obj);}const [x,z]=pos(item.x,item.y);obj.position.set(x,terrainHeight(item.x,item.y),z);obj.userData.item=item;}}
 function renderHud(){
   if(!state)return;
@@ -113,7 +114,18 @@ function renderHud(){
     targetMode=false;
   }
   renderBuildList(self);renderDialogs();updateObjects();renderUnitInspector();renderMobileUnitActions();renderPlayerControls();
+  renderBattleResult();
   if(previewSourcePoint){const [x,z]=sourceToWorld(previewSourcePoint.x,previewSourcePoint.y);positionBuildPreview(new THREE.Vector3(x,0,z));}
+}
+function renderBattleResult(){
+  const ended=['victory','defeat'].includes(state?.status),result=$('#battle-result');
+  result.classList.toggle('hidden',!ended||resultDismissed);
+  if(!ended)return;
+  $('#dialog').classList.add('hidden');$('#inventory').classList.add('hidden');
+  const won=state.status==='victory',self=state.players.find(player=>player.slot===mySlot),seconds=Math.floor(state.time);
+  $('#result-title').textContent=won?'守卫成功':'基地失守';
+  $('#result-description').textContent=won?'已击退本局敌军，感谢你的坚守。':'本局防守已结束，返回首页可以重新开始。';
+  $('#result-stats').innerHTML=[['防守波次',`${state.wave} / 56`],['战斗时间',`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`],['击杀',self?.kills||0]].map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join('');
 }
 function renderBuildList(self){
   const hero=state?.units.find(isPlayerWorker),list=$('#build-list');
@@ -124,7 +136,7 @@ function renderBuildList(self){
   if(signature!==buildSignature){
     buildSignature=signature;
     const scrollTop=list.scrollTop;
-    list.innerHTML=builds.map(id=>{const u=meta.units[id]||{},icon=assets?.url(u.icon);return `<button class="tower" data-unit="${id}"><span class="tower-icon">${icon?`<img src="${icon}" alt="">`:'⌂'}</span><span><b>${esc(u.name||id)}</b><small>${esc(u.tip||'防御建筑')} · 木材 ${u.lumberCost||0}</small><small class="build-requirement"></small></span><strong>${u.cost||0}</strong></button>`;}).join('');
+    list.innerHTML=builds.map(id=>{const u=meta.units[id]||{},icon=assets?.url(u.icon);return `<button class="tower" data-unit="${id}"><span class="tower-icon">${icon?`<img src="${icon}" alt="">`:'⌂'}</span><span><b>${esc(u.name||id)}</b><small>${esc(u.tip||'防御建筑')} · 木材 ${u.lumberCost||0}${u.buildTime?` · ${u.buildTime}秒`:""}</small><small class="build-requirement"></small></span><strong>${u.cost||0}</strong></button>`;}).join('');
     list.scrollTop=scrollTop;
     list.querySelectorAll('.tower').forEach(button=>button.onclick=()=>{
       if(pendingBuild)return;
@@ -157,6 +169,7 @@ function renderAbilities(){
   const autos=unit.abilities.filter(a=>a.level>0&&a.autocastSupported);
   const passives=unit.abilities.filter(a=>a.level>0&&definitions.has(a.id)&&(!definitions.get(a.id).castable||a.id==='A07F')&&!a.autocastSupported&&!['Avul','AInv','A00U'].includes(a.id));
   const goldDrain=Boolean(state.players.find(player=>player.slot===mySlot)?.goldDrain);
+  const busy=unit.construct>0||Boolean(unit.upgrade),busyText=unit.upgrade?'升级中':'建造中';
   const signature=`${unit.id}:${castingAbility}:${goldDrain}:${abilities.map(a=>`${a.id}.${a.level}`).join(',')}:${autos.map(a=>`${a.id}.${a.autocast}`).join(',')}:${passives.map(a=>`${a.id}.${a.level}`).join(',')}`;
   if(signature!==abilitySignature){
     abilitySignature=signature;
@@ -168,13 +181,14 @@ function renderAbilities(){
   }
   for(const ability of abilities){
     const button=list.querySelector(`[data-spell="${ability.id}"]`);
-    if(button){button.querySelector('small').textContent=ability.id==='A098'?(goldDrain?'已开启 · 每0.5秒扣1金':'已关闭 · 点击切换'):ability.cooldown>0?`${ability.cooldown.toFixed(1)}s`:`Lv ${ability.level}`;button.classList.toggle('toggle-active',ability.id==='A098'&&goldDrain);button.disabled=ability.cooldown>0;}
+    if(button){button.querySelector('small').textContent=busy?busyText:ability.id==='A098'?(goldDrain?'已开启 · 每0.5秒扣1金':'已关闭 · 点击切换'):ability.cooldown>0?`${ability.cooldown.toFixed(1)}s`:`Lv ${ability.level}`;button.classList.toggle('toggle-active',ability.id==='A098'&&goldDrain);button.disabled=busy||ability.cooldown>0;}
   }
+  autoList.querySelectorAll('button').forEach(button=>button.disabled=busy);
 }
 function renderUnitInspector(){
   const unit=state?.units.find(u=>u.id===selectedUnit&&u.owner===mySlot),panel=$('#unit-inspector'),context=$('#context-panel');
   panel.hidden=!unit;context.hidden=!unit&&!buildAreaOpen;
-  $('#sell').hidden=!unit?.abilities.some(ability=>ability.id==='A01H');$('#sell').disabled=$('#sell').hidden;
+  $('#sell').hidden=!unit?.abilities.some(ability=>ability.id==='A01H');$('#sell').disabled=$('#sell').hidden||unit.construct>0||Boolean(unit.upgrade);
   $('#goods').hidden=!isPlayerWorker(unit);$('#unit-actions').hidden=$('#goods').hidden&&$('#sell').hidden;
   if(!unit){inspectorSignature='';return;}
   const def=meta.units[unit.type]||{},target=state.units.find(entry=>entry.id===unit.target),signature=`${unit.type}:${unit.id}:${Boolean(unit.building)}:${unit.abilities.map(a=>`${a.id}.${a.level}.${a.autocast}`).join(',')}`;
@@ -183,9 +197,13 @@ function renderUnitInspector(){
   $('#unit-type').textContent=unit.building?(unit.upgrade?`升级中 ${unit.upgrade.remaining.toFixed(1)} 秒`:unit.construct>0?`建造中 ${unit.construct.toFixed(1)} 秒`:'防御建筑'):unit.itemBuild?'前往装备建造位置':(def.weaponType?'战斗单位':'可操作单位');
   const upgrade=meta.units[def.upgradeTo];$('#unit-upgrade').hidden=!upgrade;$('#unit-upgrade').disabled=Boolean(unit.upgrade)||unit.construct>0;
   if(upgrade)$('#unit-upgrade').textContent=unit.upgrade?`升级中 · ${unit.upgrade.remaining.toFixed(1)} 秒`:`升级为${upgrade.name} · ${upgrade.cost}金${upgrade.lumberCost?` / ${upgrade.lumberCost}木`:''} / ${upgrade.food}人口`;
+  const construction=unit.construction,busy=unit.construct>0||Boolean(unit.upgrade);
+  $('#construction-row').hidden=!construction;
+  if(construction){$('#unit-construction-label').textContent=construction.kind==='upgrade'?'升级进度':'建造进度';$('#unit-construction-text').textContent=`${Math.floor(construction.progress*100)}% · 剩余 ${construction.remaining.toFixed(1)} 秒`;$('#unit-construction-bar').style.width=`${construction.progress*100}%`;}
   $('#unit-health-text').textContent=`${Math.ceil(unit.hp)} / ${Math.ceil(unit.maxHp)}`;$('#unit-health-bar').style.width=`${Math.max(0,Math.min(100,unit.hp/Math.max(1,unit.maxHp)*100))}%`;$('#mana-row').hidden=unit.maxMana<=0;$('#unit-mana-text').textContent=`${Math.ceil(unit.mana)} / ${Math.ceil(unit.maxMana)}`;$('#unit-mana-bar').style.width=`${Math.max(0,Math.min(100,unit.mana/Math.max(1,unit.maxMana)*100))}%`;
   const stats=[['攻击',def.weaponType?`${def.attackMin}-${def.attackMax}`:'—'],['射程',unit.attackRange?Math.round(unit.attackRange):'—'],['护甲',Number(unit.armor??def.armor??0).toFixed(1)]];$('#unit-stats').innerHTML=stats.map(([name,value])=>`<div class="unit-stat">${name}<b>${esc(value)}</b></div>`).join('');
   $('#target-mode').classList.toggle('active',targetMode);$('#target-mode').textContent=targetMode?'点选敌方单位':'指定攻击目标';$('#clear-target').disabled=!unit.target;$('#unit-target').textContent=target?`当前目标：${meta.units[target.type]?.name||target.type}`:targetMode?'请选择一名敌方单位':'当前目标：自动选择';targetUnit=unit.target||null;
+  $('#target-mode').disabled=busy;$('#clear-target').disabled=busy||!unit.target;
 }
 function setBuildArea(open,point=null){
   buildAreaOpen=Boolean(open);buildAnchor=point?.clone()||null;buildingItem=null;
@@ -208,7 +226,7 @@ function buildCheck(id,x,y){
   return placement;
 }
 function positionBuildPreview(point){if(!buildingId||!point)return;const [sourceX,sourceY]=worldToSource(point.x,point.z),check=buildCheck(buildingId,sourceX,sourceY);previewSourcePoint={x:check.x??Math.round(sourceX/64)*64,y:check.y??Math.round(sourceY/64)*64,check};const [x,z]=sourceToWorld(previewSourcePoint.x,previewSourcePoint.y);ensureBuildPreview();if(!previewObject)return;previewObject.visible=true;previewObject.position.set(x,terrainHeight(previewSourcePoint.x,previewSourcePoint.y),z);previewObject.rotation.y=270*Math.PI/180;previewObject.traverse(object=>{if(!object.isMesh)return;for(const material of(Array.isArray(object.material)?object.material:[object.material]))material.color?.set(check.valid?'#91d684':'#e16c58');});const status=$('#placement-status');status.textContent=check.valid?'绿色位置可以建造':`不可建造：${check.reason}`;status.classList.toggle('invalid',!check.valid);}
-function activateAbility(id){const unit=unitsById.get(selectedUnit),ability=unit?.abilities.find(entry=>entry.id===id),definition=meta.units[unit?.type]?.abilities.find(entry=>entry.id===id);if(!unit||!ability||!definition?.castable)return;if(ability.cooldown>0){notify(`技能冷却中：${ability.cooldown.toFixed(1)} 秒`);return;}targetMode=false;if(definition.targeting==='unit'||definition.targeting==='point'||definition.targeting==='either'){castingAbility=id;$('#hint').textContent=definition.targeting==='unit'?'选择技能目标':'选择技能施放位置';renderAbilities();return;}act({type:'cast',unit:unit.id,ability:id});}
+function activateAbility(id){const unit=unitsById.get(selectedUnit),ability=unit?.abilities.find(entry=>entry.id===id),definition=meta.units[unit?.type]?.abilities.find(entry=>entry.id===id);if(!unit||!ability||!definition?.castable||unit.construct>0||unit.upgrade)return;if(ability.cooldown>0){notify(`技能冷却中：${ability.cooldown.toFixed(1)} 秒`);return;}targetMode=false;if(definition.targeting==='unit'||definition.targeting==='point'||definition.targeting==='either'){castingAbility=id;$('#hint').textContent=definition.targeting==='unit'?'选择技能目标':'选择技能施放位置';renderAbilities();return;}act({type:'cast',unit:unit.id,ability:id});}
 function groundAt(clientX,clientY){setPointerFromClient(clientX,clientY);camera.updateMatrixWorld(true);raycaster.setFromCamera(pointer,camera);const floor=objects.get('terrain');const hitGround=floor&&raycaster.intersectObject(floor,false)[0];if(hitGround)return hitGround.point.clone();return raycaster.ray.intersectPlane(groundPlane,new THREE.Vector3());}
 function panPointAt(clientX,clientY){setPointerFromClient(clientX,clientY);camera.updateMatrixWorld(true);raycaster.setFromCamera(pointer,camera);return raycaster.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),-cameraTarget.y),new THREE.Vector3());}
 function footprintAt(distance){cameraProbe.aspect=camera.aspect;cameraProbe.updateProjectionMatrix();cameraProbe.position.copy(cameraTarget).add(new THREE.Vector3(...cameraOffset(CLASSIC_CAMERA,distance)));cameraProbe.lookAt(cameraTarget);cameraProbe.updateMatrixWorld(true);return cameraGroundFootprint(cameraProbe,cameraTarget,cameraTarget.y);}
@@ -407,6 +425,7 @@ function act(action){const requestId=++actionSequence;return connection.send({ty
 let terrainLoading=null,connectionStatus='idle';
 let browserStorage;try{browserStorage=localStorage;}catch{}
 function resetBattle(){
+  resultDismissed=false;$('#battle-result').classList.add('hidden');
   state=null;selectedUnit=null;targetUnit=null;targetMode=false;targetingItem=null;buildingItem=null;
   pendingBuild=null;pendingGift=null;buildingId=null;buildAreaOpen=false;dropBuildPreview();
   for(const [key,object]of objects){
@@ -418,14 +437,28 @@ function resetBattle(){
   dialogSignature=buildSignature=abilitySignature=inspectorSignature=mobileUnitSignature=groundItemSignature=setProgressSignature=teamSignature='';
   followHero=true;$('#context-panel').hidden=true;updatePlacementControls();
 }
+function showLobby(message=''){
+  resetBattle();mySlot=-1;roomId='';mouseDown=null;cameraPanStart=null;cameraPanButton=null;
+  $('#lobby').classList.remove('hidden');$('#dialog').classList.add('hidden');$('#inventory').classList.add('hidden');
+  $('#leave-room').hidden=true;$('#cancel-reconnect').hidden=true;$('#network-status').hidden=true;
+  $('#room-code').value='';$('#session-status').textContent=message;
+  $('#wave').textContent='待命';$('#base').textContent='—';$('#room-label').textContent='未连接';
+  for(const id of ['gold','lumber','food'])$('#'+id).textContent='—';
+  $('#clock').textContent='等待开战';$('#message').textContent='连接或创建一个房间，开始组队防守。';
+}
+function returnHome(){
+  connection.leave();showLobby();$('#nickname').focus();
+}
 const connection=new BattleConnection({
   url:`${location.protocol==='https:'?'wss:':'ws:'}//${location.host}`,storage:browserStorage,
   onStatus(status,message){
     const lost=connectionStatus==='connected'&&status!=='connected';connectionStatus=status;
     $('.connection').classList.toggle('on',status==='connected');
-    $('#link-text').textContent=({connected:'联机正常',connecting:'连接中…',reconnecting:'正在重连…',replaced:'其他页面已连接',failed:'连接未恢复'})[status]||'未连接';
+    $('#link-text').textContent=({connected:'联机正常',connecting:'连接中…',reconnecting:'正在重连…',replaced:'其他页面已连接',failed:'连接未恢复',finished:'对局已结束'})[status]||'未连接';
     $('#reconnect').hidden=!['reconnecting','replaced'].includes(status);
     $('.join-button').disabled=['connecting','reconnecting'].includes(status);
+    $('#leave-room').hidden=mySlot<0;
+    $('#cancel-reconnect').hidden=mySlot>=0||!['connecting','reconnecting','replaced'].includes(status);
     $('#session-status').textContent=message||(status==='reconnecting'?`正在返回房间 ${connection.session?.room||''}…`:status==='connecting'?'正在连接战场…':'');
     const banner=$('#network-status');banner.hidden=!['reconnecting','replaced'].includes(status)||mySlot<0;
     banner.textContent=message||'连接中断，正在自动重连。全员离线时战场保留 30 分钟。';
@@ -435,7 +468,7 @@ const connection=new BattleConnection({
       if(state){setBuildArea(false);renderPlayerControls();}
     }
     if(status==='failed'){
-      $('#lobby').classList.remove('hidden');$('#dialog').classList.add('hidden');$('#inventory').classList.add('hidden');
+      showLobby(message);
     }
   },
   onMessage(m){
@@ -447,6 +480,7 @@ const connection=new BattleConnection({
     }else if(m.type==='joined'){
       if(mySlot>=0&&!m.resumed)resetBattle();
       mySlot=m.slot;roomId=m.room;$('#lobby').classList.add('hidden');
+      $('#leave-room').hidden=false;$('#cancel-reconnect').hidden=true;
     }else if(m.type==='state'){state=m.state;renderHud();}
     else if(m.type==='action-result'){
       if(pendingBuild?.requestId===m.requestId){const worker=buildingItem&&unitsById.get(buildingItem.unit);pendingBuild=null;if(worker){buildingItem=null;selectUnit(worker);}else setBuildArea(false);}
@@ -464,6 +498,9 @@ function connect(name,room){
   connection.start({name,room,...(saved?.room===room&&saved.name===name?{resumeToken:saved.resumeToken}:{})});
 }
 $('#reconnect').onclick=()=>connection.retry();
+$('#leave-room').onclick=returnHome;$('#result-home').onclick=returnHome;$('#settings-home').onclick=returnHome;$('#cancel-reconnect').onclick=returnHome;
+$('#result-review').onclick=()=>{resultDismissed=true;$('#battle-result').classList.add('hidden');};
+$('.brand').addEventListener('click',event=>{event.preventDefault();returnHome();});
 addEventListener('online',()=>{if(connectionStatus==='reconnecting')connection.retry();});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&connectionStatus==='reconnecting')connection.retry();});
 addEventListener('pagehide',()=>connection.stop());
@@ -519,7 +556,7 @@ function updateUnitViews(dt,time){
 let lastFrame=performance.now(),gameClock=0;
 function frame(){
   requestAnimationFrame(frame);
-  const now=performance.now(),dt=Math.min(.05,(now-lastFrame)/1000);lastFrame=now;gameClock+=dt;
+  const now=performance.now(),dt=Math.min(.25,(now-lastFrame)/1000);lastFrame=now;gameClock+=dt;
   const offset=new THREE.Vector3(...cameraOffset(CLASSIC_CAMERA,zoom)),blend=1-Math.exp(-dt*5);
   cameraFocus.lerp(cameraTarget,blend);camera.position.lerp(cameraTarget.clone().add(offset),blend);camera.lookAt(cameraFocus);camera.updateMatrixWorld();
   frameProjection.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse);frameFrustum.setFromProjectionMatrix(frameProjection);
@@ -532,8 +569,9 @@ function frame(){
         }
         return true;
       }
+      if(fx.kind==='build')return true;
       const object=objects.get(`u${fx.sourceId}`);
-      if(object&&['projectile','spell','death','build'].includes(fx.kind))cueUnitAnimation(object,fx.kind==='projectile'?'attack':fx.kind==='spell'?'spell':fx.kind,fx.animationNames||'');
+      if(object&&['projectile','spell','death'].includes(fx.kind))cueUnitAnimation(object,fx.kind==='projectile'?'attack':fx.kind==='spell'?'spell':fx.kind,fx.animationNames||'');
       return originalEffects?.handle(fx)||false;
     });
     updateUnitViews(dt,gameClock);effects.update(dt,state.effects);originalEffects?.update(dt,objects,state.effects);

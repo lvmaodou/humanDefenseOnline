@@ -55,6 +55,9 @@ export class PathingGrid{
     if(!start||!destination||![start.x,start.y,destination.x,destination.y].every(Number.isFinite))return null;
     const startIndex=this.nearestWalkable(start.x,start.y),goalIndex=this.nearestWalkable(destination.x,destination.y);if(startIndex<0||goalIndex<0)return null;
     const cacheKey=[startIndex,goalIndex,start.x,start.y,destination.x,destination.y].join(':'),cached=this.cache.get(cacheKey);if(cached){this.cache.delete(cacheKey);this.cache.set(cacheKey,cached);return cached.map(point=>({...point}));}
+    // Most flying wave orders and straight lane segments need no grid search.
+    // Keep exact endpoints while avoiding full-map A* buffers for these paths.
+    if(this.isWalkable(start.x,start.y)&&this.segmentWalkable(start,destination)){const path=[{x:destination.x,y:destination.y}];this.remember(cacheKey,path);return path;}
     if(startIndex===goalIndex){const path=this.segmentWalkable(start,destination)?[{x:destination.x,y:destination.y}]:[this.center(goalIndex)];this.remember(cacheKey,path);return path.map(point=>({...point}));}
     const total=this.width*this.height,costs=new Float64Array(total);costs.fill(Infinity);const parents=new Int32Array(total);parents.fill(-1);const closed=new Uint8Array(total),open=new MinHeap();
     const gx=goalIndex%this.width,gy=Math.floor(goalIndex/this.width),heuristic=(x,y)=>{const dx=Math.abs(gx-x),dy=Math.abs(gy-y),diagonal=Math.min(dx,dy);return 10*Math.max(dx,dy)+4*diagonal;};

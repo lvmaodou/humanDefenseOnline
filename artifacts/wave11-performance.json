@@ -1,0 +1,18 @@
+{
+  "wave": 11,
+  "profession": "swordsman",
+  "units": 299,
+  "towers": 12,
+  "flyingEnemies": 72,
+  "advanced": 72,
+  "attacksInFiveSeconds": 91,
+  "tickP95Ms": 12.03,
+  "tickMaxMs": 15.62,
+  "fps": 38,
+  "p95FrameMs": 50,
+  "packets": 67,
+  "p95PacketGapMs": 134,
+  "calls": 45,
+  "modelFailures": [],
+  "errors": []
+}

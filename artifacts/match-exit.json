@@ -1,0 +1,23 @@
+{
+  "results": [
+    {
+      "device": "desktop",
+      "defeatExit": true,
+      "victoryExit": true,
+      "freshMatch": true,
+      "staleSession": true,
+      "explicitExit": true,
+      "cancelReconnect": true
+    },
+    {
+      "device": "portrait",
+      "defeatExit": true,
+      "victoryExit": true,
+      "freshMatch": true,
+      "staleSession": true,
+      "explicitExit": true,
+      "cancelReconnect": true
+    }
+  ],
+  "errors": []
+}

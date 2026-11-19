@@ -106,7 +106,7 @@ export function installCombat(V){
     if(!used)return false;if(i.charges>0){i.charges--;if(i.charges===0&&d.perishable)V.removeItem(i);}return true;
   };
   V.cast=(u,id,target=null,point=null,force=false)=>{
-    if(!u||u.removed||u.death)return false;const a=V.ability(id),level=u.abilities.get(id)||1,suffix=String(level),get=(key,fallback=0)=>Number(a[key+suffix]??a[key+'1']??fallback),code=a.code;const p=point||target||u;
+    if(!u||u.removed||u.death||!force&&(!u.constructed||u.upgradeEnd))return false;const a=V.ability(id),level=u.abilities.get(id)||1,suffix=String(level),get=(key,fallback=0)=>Number(a[key+suffix]??a[key+'1']??fallback),code=a.code;const p=point||target||u;
     if(!force&&((u.castCooldown.get(id)||0)>V.time||u.mana<get('Cost')))return false;
     if(u.casting===id)return false;
     if(!force)u.mana-=get('Cost');u.castCooldown.set(id,V.time+get('Cool'));u.casting=id;
@@ -262,22 +262,24 @@ export function installCombat(V){
       if(u.removed||u.death)continue;if(u.expires&&u.expires<=V.time){V.kill(u);continue;}
       V.updateItemBuild(u);
       if(u.upgradeEnd){if(u.upgradeEnd>V.time)continue;V.finishEquipmentUpgrade(u);}
-      if(u.constructEnd){if(u.constructEnd>V.time)continue;u.constructEnd=null;u.constructed=true;V.fire('EVENT_PLAYER_UNIT_CONSTRUCT_FINISH',{unit:u,player:u.owner});}
+      if(u.constructEnd){if(u.constructEnd>V.time)continue;u.constructEnd=null;u.constructStart=null;u.constructed=true;V.fire('EVENT_PLAYER_UNIT_CONSTRUCT_FINISH',{unit:u,player:u.owner});}
       const d=V.data.units[u.raw],stats=u.stats||V.unitStats(u);u.buffs=u.buffs.filter(b=>b.until>V.time);u.hp=Math.min(u.maxHp,u.hp+(stats.hpRegen+u.buffs.filter(b=>b.kind==='regen').reduce((sum,b)=>sum+b.amount,0))*dt);u.mana=Math.min(u.maxMana,u.mana+(stats.manaRegen+(u.auraMana||0)+u.buffs.filter(b=>b.kind==='mana-regen').reduce((sum,b)=>sum+b.amount,0))*dt);
       for(const sanctuary of u.buffs.filter(b=>b.kind==='sanctuary')){while(sanctuary.next<=V.time&&u.hp<u.maxHp){sanctuary.next+=1;const healed=Math.min(sanctuary.rate,u.maxHp-u.hp);u.hp+=healed;V.effect('heal',u,u,{value:healed,kind:'sanctuary'});}if(u.hp>=u.maxHp)u.buffs=u.buffs.filter(buff=>buff!==sanctuary);}
       for(const poison of u.buffs.filter(b=>b.kind==='poison'))if(poison.next<=V.time){poison.next+=poison.interval;V.damage(poison.source||null,u,poison.damage,false,'DAMAGE_TYPE_MAGIC','spells');}
       for(const burn of u.buffs.filter(b=>b.kind==='burn'))if(burn.next<=V.time){burn.next+=burn.interval;V.damage(burn.source||null,u,burn.damage,false,'DAMAGE_TYPE_FIRE','spells');}
       if(u.buffs.some(b=>b.kind==='stun'))continue;
-      const haste=u.buffs.filter(b=>b.kind==='haste').reduce((n,b)=>Math.max(n,b.factor||1),1),baseSpeed=Math.min(Number(V.rules.MaxUnitSpeed)||522,V.moveSpeed(u)*haste),slow=u.buffs.filter(b=>b.kind==='slow').reduce((n,b)=>n*b.factor,1),movementSpeed=baseSpeed?Math.max(Number(V.rules.MinUnitSpeed)||100,baseSpeed*slow):0;
+      const movementSpeed=V.movementSpeed(u);
       if(u.move&&!u.buffs.some(b=>b.kind==='root')&&movementSpeed>0){
         const movement=u.move,pathfinder=V.pathingFor(u),flying=V.isFlying(u);
         if(!movement.path){const path=pathfinder?pathfinder.findPath(u,{x:movement.x,y:movement.y}):[{x:movement.x,y:movement.y}];if(!path?.length){u.move=null;continue;}movement.path=path;movement.index=0;movement.stalled=0;movement.escape=!!pathfinder&&!pathfinder.isWalkable(u.x,u.y);const end=path.at(-1);movement.x=end.x;movement.y=end.y;}
         const path=movement.path,step=movementSpeed*dt;let remaining=step;
-        while(movement.index<path.length&&remaining>0){const waypoint=path[movement.index],dx=waypoint.x-u.x,dy=waypoint.y-u.y,distance=Math.hypot(dx,dy);if(distance<=Math.max(.001,remaining)){V.moveUnit(u,waypoint.x,waypoint.y);remaining-=distance;movement.index++;}else break;}
-        if(movement.index>=path.length){V.moveUnit(u,movement.x,movement.y);u.move=null;}
-        else if(remaining>0){const waypoint=path[movement.index],dx=waypoint.x-u.x,dy=waypoint.y-u.y,distance=Math.hypot(dx,dy)||1,nx=dx/distance,ny=dy/distance,amount=Math.min(remaining,distance),radius=Math.max(16,Number(u.collision)*16),candidateList=[[nx,ny],[(nx-ny*.55)/1.12,(ny+nx*.55)/1.12],[(nx+ny*.55)/1.12,(ny-nx*.55)/1.12],[-ny,nx],[ny,-nx]];let moved=false;
-          for(const [vx,vy]of candidateList){const x=u.x+vx*amount,y=u.y+vy*amount;if(pathfinder&&!movement.escape&&!pathfinder.segmentWalkable(u,{x,y}))continue;const blocked=V.nearbyUnits({x,y},radius+32).some(other=>other!==u&&!other.removed&&!other.death&&V.isFlying(other)===flying&&Math.hypot(other.x-x,other.y-y)<radius+Math.max(16,Number(other.collision)*16));if(blocked)continue;const oldX=u.x,oldY=u.y;V.moveUnit(u,x,y);if(pathfinder&&pathfinder.isWalkable(u.x,u.y))movement.escape=false;u.facing=Math.atan2(y-oldY,x-oldX)*180/Math.PI;moved=true;movement.stalled=0;break;}
-          if(!moved){movement.stalled=(movement.stalled||0)+dt;if(movement.stalled>.5){const path=pathfinder?.findPath(u,{x:movement.x,y:movement.y});if(path?.length){movement.path=path;movement.index=0;movement.stalled=0;}else u.move=null;}}
+        while(u.move===movement&&movement.index<path.length&&remaining>0){const waypoint=path[movement.index],dx=waypoint.x-u.x,dy=waypoint.y-u.y,distance=Math.hypot(dx,dy);if(distance<=Math.max(.001,remaining)){V.moveUnit(u,waypoint.x,waypoint.y);remaining-=distance;movement.index++;}else break;}
+        if(u.move===movement&&movement.index>=path.length){V.moveUnit(u,movement.x,movement.y);if(u.move===movement)u.move=null;}
+        else if(u.move===movement&&remaining>0){const waypoint=path[movement.index],dx=waypoint.x-u.x,dy=waypoint.y-u.y,distance=Math.hypot(dx,dy)||1,nx=dx/distance,ny=dy/distance,amount=Math.min(remaining,distance),radius=Math.max(16,Number(u.collision)*16),candidateList=[[nx,ny],[(nx-ny*.55)/1.12,(ny+nx*.55)/1.12],[(nx+ny*.55)/1.12,(ny-nx*.55)/1.12],[-ny,nx],[ny,-nx]];let moved=false,terrainOpen=false;
+          for(const [vx,vy]of candidateList){const x=u.x+vx*amount,y=u.y+vy*amount;if(pathfinder&&!movement.escape&&!pathfinder.segmentWalkable(u,{x,y}))continue;terrainOpen=true;const blocked=V.nearbyUnits({x,y},radius+32).some(other=>{if(other===u||other.removed||other.death||V.isFlying(other)!==flying)return false;const separation=radius+Math.max(16,Number(other.collision)*16),before=Math.hypot(other.x-u.x,other.y-u.y),after=Math.hypot(other.x-x,other.y-y);return after<separation&&(before>=separation||after<=before+.001);});if(blocked)continue;const oldX=u.x,oldY=u.y;V.moveUnit(u,x,y);if(pathfinder&&pathfinder.isWalkable(u.x,u.y))movement.escape=false;if(u.move===movement)u.facing=Math.atan2(y-oldY,x-oldX)*180/Math.PI;moved=true;movement.stalled=0;break;}
+          // Waiting for another unit is not a failed terrain path. Keep the
+          // route and retry steering; rerunning the same A* cannot clear a crowd.
+          if(!moved){movement.stalled=(movement.stalled||0)+dt;if(!terrainOpen&&movement.stalled>.5&&pathfinder&&(movement.repathAt||0)<=V.time){movement.repathAt=V.time+1;const path=pathfinder.findPath(u,{x:movement.x,y:movement.y});if(path?.length){movement.path=path;movement.index=0;movement.stalled=0;}else u.move=null;}}
         }
       }
       if(!hasWeapon(d)||u.removed)continue;

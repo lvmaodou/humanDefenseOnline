@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'human-defense.session.v1';
-const terminalCodes = new Set(['SESSION_EXPIRED', 'SESSION_INVALID', 'GAME_STARTED', 'ROOM_FULL']);
+const terminalCodes = new Set(['SESSION_EXPIRED', 'SESSION_INVALID', 'GAME_FINISHED', 'GAME_STARTED', 'ROOM_FULL']);
 
 export function readSession(storage) {
   try {
@@ -16,16 +16,23 @@ export class BattleConnection {
 
   save() {
     try {
-      if (this.session?.resumeToken) this.storage.setItem(STORAGE_KEY, JSON.stringify(this.session));
-      else this.storage.removeItem(STORAGE_KEY);
+      if (this.session?.resumeToken && !this.finished) this.storage.setItem(STORAGE_KEY, JSON.stringify(this.session));
+      else this.clearSavedSession();
     } catch { /* Private browsing may disable storage; in-page reconnect still works. */ }
+  }
+
+  clearSavedSession() {
+    try {
+      const saved = readSession(this.storage);
+      if (!saved || saved.resumeToken === this.session?.resumeToken) this.storage.removeItem(STORAGE_KEY);
+    } catch { /* Leave and match completion also work without browser storage. */ }
   }
 
   start({ name, room, resumeToken } = this.session || {}) {
     if (!name && !resumeToken) return;
     this.stop();
     this.session = { name, room, ...(resumeToken ? { resumeToken } : {}) };
-    this.stopped = false;this.attempt = 0;this.open();
+    this.finished = false;this.stopped = false;this.attempt = 0;this.open();
   }
 
   open() {
@@ -54,9 +61,12 @@ export class BattleConnection {
         this.save();this.joined = true;this.attempt = 0;this.onStatus('connected');
       } else if (message.type === 'error' && !this.joined) {
         if (terminalCodes.has(message.code) || !message.requestId) {
-          if (message.code === 'SESSION_EXPIRED' || message.code === 'SESSION_INVALID') { this.session = null;this.save(); }
+          if (['SESSION_EXPIRED', 'SESSION_INVALID', 'GAME_FINISHED'].includes(message.code)) { this.clearSavedSession();this.session = null; }
           this.stop();this.onStatus('failed', message.message);
         }
+      }
+      if (message.type === 'state' && !this.finished && ['victory', 'defeat'].includes(message.state?.status)) {
+        this.finished = true;this.save();
       }
       this.onMessage(message);
     };
@@ -76,13 +86,14 @@ export class BattleConnection {
 
   schedule() {
     if (this.stopped) return;
+    if (this.finished) { this.stop();this.onStatus('finished');return; }
     this.onStatus('reconnecting');
     const delay = Math.min(8000, 500 * 2 ** Math.min(this.attempt++, 4));
     this.retryTimer = setTimeout(() => this.open(), delay);
   }
 
   retry() {
-    if (!this.session) return;
+    if (!this.session || this.finished) return;
     const session = this.session;this.start(session);
   }
 
@@ -95,5 +106,10 @@ export class BattleConnection {
     this.stopped = true;this.joined = false;
     clearTimeout(this.retryTimer);clearTimeout(this.handshakeTimer);clearInterval(this.watchdog);
     const socket = this.socket;this.socket = null;socket?.close();
+  }
+
+  leave() {
+    this.send({ type: 'leave' });
+    this.stop();this.clearSavedSession();this.session = null;this.finished = false;this.onStatus('idle');
   }
 }

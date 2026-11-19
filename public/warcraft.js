@@ -112,13 +112,38 @@ export class WarcraftInstance {
   cue(kind, animationNames = '') {
     const action = kind in cueAliases ? cueAliases[kind] : kind;
     if (!action || this.dead) return;
+    if (this.construction && action !== 'death') return;
     if (action === 'death') this.dead = true;
     const requested = animationNames ? animationNames.replaceAll(',', ' ').split(/\s+/)[0] : action;
     const properties = animationNames || this.definition.Animprops || '';
     const sequence = this.play(requested, properties, true);
     this.hold = sequence ? (sequence.Interval[1] - sequence.Interval[0]) / 1000 : .4;
   }
+  setConstruction(phase) {
+    if (this.dead) return;
+    if (!phase) {
+      if (this.construction) { this.construction = null;this.pending = 0;this.hold = 0;this.play('stand', this.definition.Animprops || '', true); }
+      return;
+    }
+    if (this.construction?.kind !== phase.kind || this.construction?.properties !== phase.properties) {
+      // "Upgrade" on a combat unit's Stand/Attack is a weapon variant, not
+      // a construction animation. Only use an actual Birth sequence here.
+      const sequences = this.resource.model.Sequences;
+      const candidates = sequences.map((sequence, index) => ({ ...sequence, index })).filter(sequence => /^birth(?:\s|$)/i.test(sequence.Name) && (phase.kind !== 'upgrade' || /\bupgrade\b/i.test(sequence.Name)));
+      const selected = selectSequence(candidates, 'birth', phase.properties || '');
+      this.constructionSequence = selected >= 0 ? candidates[selected].index : -1;
+      this.pending = 0;this.hold = 0;
+      if (this.constructionSequence >= 0) { this.renderer.setSequence(this.constructionSequence);this.action = 'birth'; }
+      else this.play('stand', this.definition.Animprops || '', true);
+    }
+    this.construction = phase;
+  }
   advance(dt, movement = 0) {
+    if (this.construction && !this.dead) {
+      const sequence = this.resource.model.Sequences[this.constructionSequence];
+      this.pending += dt * 1000 * (sequence ? (sequence.Interval[1] - sequence.Interval[0]) / (this.construction.duration * 1000) : 1);
+      return;
+    }
     if (!this.dead) {
       this.hold = Math.max(0, this.hold - dt);
       if (this.hold <= 0) this.play(movement > .01 ? 'walk' : 'stand', this.definition.Animprops || '');
@@ -141,7 +166,14 @@ export class WarcraftInstance {
     this.renderer.setLightColor([(Number(this.definition.red) || 255) / 255, (Number(this.definition.green) || 255) / 255, (Number(this.definition.blue) || 255) / 255]);
     lightPosition.set(-4000, -6000, 10000); this.renderer.setLightPosition(lightPosition.toArray());
     const sequence = this.resource.model.Sequences[this.renderer.getSequence()];
-    const delta = sequence?.NonLooping ? Math.min(this.pending, Math.max(0, sequence.Interval[1] - this.renderer.getFrame() - .01)) : this.pending;
+    let delta;
+    if (this.construction && !this.dead && this.constructionSequence >= 0) {
+      // Seek from server progress, including after a reconnect or a late MDX
+      // download. Keep emitter updates running at the same animation speed.
+      const start = sequence.Interval[0], span = Math.max(0, sequence.Interval[1] - start - .01);
+      const frame = start + span * Math.max(0, Math.min(1, this.construction.progress));
+      delta = Math.min(this.pending, frame - start);this.renderer.setFrame(frame - delta);
+    } else delta = sequence?.NonLooping ? Math.min(this.pending, Math.max(0, sequence.Interval[1] - this.renderer.getFrame() - .01)) : this.pending;
     this.renderer.update(Math.max(0, delta)); this.pending = 0;
     this.renderer.render(modelView.elements, camera.projectionMatrix.elements, {});
     this.library.stats.rendered++; renderer.resetState();

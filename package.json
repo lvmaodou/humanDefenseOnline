@@ -12,6 +12,7 @@
     "test:browser": "node tests/interaction-smoke.mjs",
     "test:team": "node tests/team-equipment-smoke.mjs",
     "test:reconnect": "node tests/reconnect-smoke.mjs",
+    "test:exit": "node tests/match-exit-smoke.mjs",
     "test:summons": "node tests/summon-controls-smoke.mjs",
     "test:economy": "node tests/wave-economy-smoke.mjs",
     "test:build": "node tests/build-controls-smoke.mjs"

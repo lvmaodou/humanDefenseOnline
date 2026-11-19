@@ -15,7 +15,7 @@ export function installActions(V,terrain){
     if(p.food+Number(d.fused||0)>Math.min(Number(V.rules.FoodCeiling)||65,p.cap))throw new Error('人口不足');
     return {x,y,builder,definition:d};
   };
-  V.build=(slot,id,x,y)=>{const check=V.canBuild(slot,id,x,y),p=V.players[slot],d=check.definition;p.gold-=Number(d.goldcost||0);p.lumber-=Number(d.lumbercost||0);const u=V.createUnit(p,fourCC(id),check.x,check.y,270);u.constructed=false;u.constructEnd=V.time+(Number(d.bldtm)||.1);V.effect('build',u,u,{unit:id});return u;};
+  V.build=(slot,id,x,y)=>{const check=V.canBuild(slot,id,x,y),p=V.players[slot],d=check.definition;p.gold-=Number(d.goldcost||0);p.lumber-=Number(d.lumbercost||0);const u=V.createUnit(p,fourCC(id),check.x,check.y,270);V.startConstruction(u,d.bldtm);V.effect('build',u,u,{unit:id});return u;};
   V.action=(slot,m)=>{
     if(m.type==='choose')return V.choose(slot,m.dialog,m.button);
     if(m.type==='chat'){V.chat(slot,m.text);return true;}
@@ -31,6 +31,7 @@ export function installActions(V,terrain){
     }
     const unit=V.units.get(m.unit),p=V.players[slot];if(!unit||unit.owner!==p)throw new Error('只能操作自己的单位');
     if(unit.removed||unit.death)throw new Error('该单位当前无法操作');
+    if((!unit.constructed||unit.upgradeEnd)&&['cast','autocast','target'].includes(m.type))throw new Error(unit.upgradeEnd?'建筑升级中，完工后可操作':'建筑建造中，完工后可操作');
     if(m.type==='upgrade')return V.upgradeEquipment(unit,m.to);
     if(m.type==='autocast'){const id=fourCC(m.ability);if(!unit.abilities.has(id)||!String(V.data.units[unit.raw]?.auto||'_').split(',').includes(rawId(id)))throw new Error('该单位没有这个自动施法技能');if(m.enabled)unit.autoCast.add(id);else unit.autoCast.delete(id);return true;}
     if(m.type==='move'){if(unit.building)throw new Error('建筑不能移动');if(!V.canMove(unit))throw new Error('该单位不能移动');if(!Number.isFinite(m.x)||!Number.isFinite(m.y))return false;unit.pendingItemBuild=null;unit.manualTarget=null;unit.target=null;unit.manualTargetApproachAt=0;return V.setMove(unit,{x:Math.max(-7800,Math.min(7800,m.x)),y:Math.max(-7800,Math.min(7800,m.y))},851986);}

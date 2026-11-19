@@ -60,7 +60,7 @@ try {
     const worker = [...game.units.values()].find(unit => unit.owner.id === 0 && unit.raw === 'h002');
     const item = game.createItem('I00B', worker);game.pickup(worker, item);
     const tower = game.createUnit(player, game.fourCC('h05G'), -3008, 2816);
-    await page.waitForFunction(id => window.reviewState.units.some(unit => unit.items.some(item => item.id === id)), item.hid);
+    await page.waitForFunction(id => window.reviewState.units.some(unit => unit.items?.some(item => item.id === id)), item.hid);
     const identity = await page.evaluate(() => ({ id: window.reviewJoined.id, slot: window.reviewJoined.slot, doodads: window.__originalVisualDebug().originalDoodads, actions: window.reviewActions.length }));
 
     await context.setOffline(true);member.ws.terminate();

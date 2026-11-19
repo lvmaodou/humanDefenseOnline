@@ -12,11 +12,17 @@ export class RoomSessions {
   }
 
   connected(room) { return [...room.players.values()].some(player => player.ws?.readyState === 1); }
+  finished(room) { return ['victory', 'defeat'].includes(room.game.status); }
+  remove(room) {
+    clearInterval(room.timer);room.timer = null;
+    if (this.rooms.get(room.id) === room) this.rooms.delete(room.id);
+  }
 
   join(ws, request) {
     const id = String(request.room || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8) || randomBytes(3).toString('hex').toUpperCase();
     this.sweep();
     let room = this.rooms.get(id), player;
+    if (room && this.finished(room)) throw failure('GAME_FINISHED', '这场对局已结束，请创建新房间开始下一局');
     const resumed = Boolean(request.resumeToken);
     if (resumed) {
       if (!room) throw failure('SESSION_EXPIRED', '战场已过期或服务器已重启，请重新进入房间');
@@ -79,16 +85,31 @@ export class RoomSessions {
     if (player.ws !== ws) return;
     player.ws = null;
     room.game.players[player.slot].connected = false;
+    if (this.finished(room)) {
+      if (!this.connected(room)) this.remove(room);
+      return;
+    }
     room.game.message(`${player.name} 连接中断，等待重连`);
     if (!this.connected(room)) this.pause(room);
     else this.publish(room);
   }
 
+  leave(room, player, ws) {
+    if (player.ws !== ws) return false;
+    player.ws = null;room.players.delete(player.id);
+    const participant = room.game.players[player.slot];participant.connected = false;participant.active = false;
+    room.game.message(`${player.name} 已退出对局`);
+    if (!room.players.size || this.finished(room) && !this.connected(room)) {
+      this.remove(room);
+    } else if (!this.connected(room)) this.pause(room);
+    else this.publish(room);
+    return true;
+  }
+
   sweep() {
-    for (const [id, room] of this.rooms) {
-      if (room.idleSince !== null && this.now() - room.idleSince >= this.retentionMs && !this.connected(room)) {
-        clearInterval(room.timer);
-        this.rooms.delete(id);
+    for (const room of this.rooms.values()) {
+      if (!this.connected(room) && (this.finished(room) || room.idleSince !== null && this.now() - room.idleSince >= this.retentionMs)) {
+        this.remove(room);
       }
     }
   }

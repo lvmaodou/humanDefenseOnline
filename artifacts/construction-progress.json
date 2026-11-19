@@ -1,0 +1,111 @@
+{
+  "build": {
+    "id": 435,
+    "construction": {
+      "kind": "build",
+      "duration": 5,
+      "remaining": 2.5,
+      "progress": 0.5
+    },
+    "animation": {
+      "name": "Birth",
+      "frame": 30596.39489831118,
+      "progress": 0.509939999961853
+    },
+    "type": "h007",
+    "model": "original-mdx",
+    "path": "buildings/human/humantower/humantower.mdx",
+    "source": "buildings\\human\\HumanTower\\HumanTower",
+    "available": true,
+    "scale": 1
+  },
+  "ordinary": {
+    "id": 431,
+    "construction": {
+      "kind": "build",
+      "duration": 10,
+      "remaining": 7.5,
+      "progress": 0.25
+    },
+    "animation": {
+      "name": "Stand",
+      "frame": 238.29999923706055,
+      "progress": 0.25712999992370605
+    },
+    "type": "h03J",
+    "model": "original-mdx",
+    "path": "units/nightelf/archer/archer.mdx",
+    "source": "units\\nightelf\\Archer\\Archer.mdl",
+    "available": true,
+    "scale": 0.8
+  },
+  "reconnected": {
+    "id": 435,
+    "construction": {
+      "kind": "build",
+      "duration": 5,
+      "remaining": 2.5,
+      "progress": 0.5
+    },
+    "animation": {
+      "name": "Birth",
+      "frame": 30220.794970066454,
+      "progress": 0.5036800001144409
+    },
+    "type": "h007",
+    "model": "original-mdx",
+    "path": "buildings/human/humantower/humantower.mdx",
+    "source": "buildings\\human\\HumanTower\\HumanTower",
+    "available": true,
+    "scale": 1
+  },
+  "upgrade": {
+    "id": 435,
+    "construction": {
+      "kind": "upgrade",
+      "duration": 9.999999999999998,
+      "remaining": 6,
+      "progress": 0.3999999999999999
+    },
+    "animation": {
+      "name": "Birth Upgrade First Second third",
+      "frame": 107514.19596865558,
+      "progress": 0.4030199999809264
+    },
+    "type": "h007",
+    "model": "original-mdx",
+    "path": "buildings/human/humantower/humantower.mdx",
+    "source": "buildings\\human\\HumanTower\\HumanTower",
+    "available": true,
+    "scale": 1
+  },
+  "finished": {
+    "id": 435,
+    "animation": {
+      "name": "Stand Upgrade First Ready Attack",
+      "frame": 146683.79999923706
+    },
+    "type": "h052",
+    "model": "original-mdx",
+    "path": "buildings/human/humantower/humantower.mdx",
+    "source": "buildings\\human\\HumanTower\\HumanTower",
+    "available": true,
+    "scale": 1
+  },
+  "worker": {
+    "id": 429,
+    "animation": {
+      "name": "Stand",
+      "frame": 655.3999996185303
+    },
+    "type": "h003",
+    "model": "original-mdx",
+    "path": "units/human/peasant/peasant.mdx",
+    "source": "units\\human\\Peasant\\Peasant",
+    "available": true,
+    "scale": 1
+  },
+  "failedAssets": [],
+  "errors": [],
+  "runtimeErrors": []
+}

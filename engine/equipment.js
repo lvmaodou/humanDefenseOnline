@@ -51,7 +51,7 @@ export function installEquipment(V) {
   };
   const startItemBuilding = (unit, item, placement) => {
     const built = V.createUnit(unit.owner, fourCC(placement.buildUnit), placement.x, placement.y, unit.facing);
-    built.constructed = false;built.constructEnd = V.time + placement.duration;built.fromItem = item.raw;
+    V.startConstruction(built, placement.duration);built.fromItem = item.raw;
     unit.pendingItemBuild = null;unit.move = null;
     item.charges--;if (item.charges === 0 && V.data.items[item.raw].perishable) V.removeItem(item);
     V.effect('build', unit, built, { item: built.fromItem, unit: built.raw, duration: placement.duration });
@@ -89,7 +89,7 @@ export function installEquipment(V) {
     if (player.gold < gold || player.lumber < lumber) throw new Error('金币或木材不足');
     if (player.food - unit.food + food > Math.min(Number(V.rules.FoodCeiling) || 65, player.cap)) throw new Error('人口不足');
     player.gold -= gold;player.lumber -= lumber;player.food += food - unit.food;unit.food = food;
-    unit.upgradeTo = id;unit.upgradeEnd = V.time + Math.max(.1, Number(definition.bldtm) || .1);
+    V.startConstruction(unit, definition.bldtm, id);
     V.effect('build', unit, unit, { unit: id });return true;
   };
   V.finishEquipmentUpgrade = unit => {
@@ -98,7 +98,7 @@ export function installEquipment(V) {
     unit.maxMana = unit.stats.maxMana;unit.mana = Math.min(unit.maxMana, Number(definition.mana0) || 0);
     unit.abilities = new Map(String(definition.abilList || '').split(',').filter(id => id && id !== '_').map(id => [fourCC(id), 1]));
     unit.autoCast = new Set(String(definition.auto || '').split(',').filter(id => unit.abilities.has(fourCC(id))).map(fourCC));
-    unit.castCooldown.clear();unit.upgradeTo = null;unit.upgradeEnd = null;unit.cooldown = 0;unit.constructed = true;
+    unit.castCooldown.clear();unit.upgradeTo = null;unit.upgradeEnd = null;unit.upgradeStart = null;unit.cooldown = 0;unit.constructed = true;
     V.fire('EVENT_PLAYER_UNIT_UPGRADE_FINISH', { unit, player: unit.owner });
   };
 
@@ -112,6 +112,7 @@ export function installEquipment(V) {
     const visible = new Set();
     for (const unit of units) unit.equipmentAuras = new Map();
     for (const source of units) for (const id of source.abilities.keys()) {
+      if (!source.constructed || source.upgradeEnd) continue;
       if (!auraIds.has(id)) continue;
       const ability = V.ability(id);if (!auraCodes.has(ability.code)) continue;
       const art = V.data.abilityStrings[ability.alias], key = `${source.hid}:${id}`;

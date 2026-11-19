@@ -54,11 +54,17 @@ export function createUnitModel(unit, definition = {}) {
   makeBar(0x111111,width+.025,.075/style.size,0);
   const health=makeBar(unit.owner>=8?0xdb2929:0x37ba27,width,.04/style.size,.002);
   const mana=makeBar(0x2367e3,width,.015/style.size,.003); mana.position.y=-.03/style.size;
+  if(unit.building){
+    const progressBackground=makeBar(0x111111,width+.025,.055/style.size,.004);progressBackground.position.y=.065/style.size;progressBackground.visible=false;
+    const progress=makeBar(0xe3b650,width,.03/style.size,.005);progress.position.y=.065/style.size;progress.visible=false;
+    root.userData.constructionBar=progress;root.userData.constructionBackground=progressBackground;
+  }
   root.add(bar); root.userData.healthBar=bar; root.userData.health=health; root.userData.mana=mana; root.userData.barWidth=width;
   if(style.sourceModel&&assets?.has(style.sourceModel)&&unit.owner>=4&&!unit.building)root.userData.lodProxy=true;
   if (assets?.has(style.sourceModel)) {
     root.userData.ready=assets.attach(root,style.sourceModel,ownerDefinition(unit,definition)).then(instance=>{
       if(instance&&root.userData.deathCue)instance.cue('death');
+      else instance?.setConstruction(root.userData.construction || null);
       return instance;
     });
   } else if(style.sourceModel) {
@@ -67,7 +73,12 @@ export function createUnitModel(unit, definition = {}) {
     replacement.userData.selection.visible=false; replacement.userData.healthBar.visible=false;
     root.add(replacement); root.userData.fallback=replacement; root.userData.ready=Promise.resolve(null);
   }
+  updateUnitConstruction(root,unit);
   return root;
+}
+export function updateUnitConstruction(root,unit,properties='') {
+  root.userData.construction=unit.construction&&!unit.dead?{...unit.construction,properties,elapsed:0}:null;
+  root.userData.warcraft?.setConstruction(root.userData.construction);
 }
 export function cueUnitAnimation(root,kind,animationNames='') {
   if(kind==='death')root.userData.deathCue=true;
@@ -79,6 +90,8 @@ export function animateUnit(root,dt,time,selected=false,camera=null,frustum=null
   const unit=root.userData.entity, rig=root.userData.rig;
   const animation=root.userData.animationState??={elapsed:0};
   animation.elapsed+=dt;
+  const construction=root.userData.construction;
+  if(construction){construction.elapsed+=dt;root.userData.warcraft?.setConstruction({...construction,progress:Math.min(1,construction.progress+construction.elapsed/construction.duration)});}
   if(!selected&&frustum?.planes.some(plane=>plane.distanceToPoint(root.position)<-12))return !root.userData.released;
   const distanceSq=camera?camera.position.distanceToSquared(root.position):0;
   const pinned=selected||root.userData.forceDetail;
@@ -106,7 +119,12 @@ export function animateUnit(root,dt,time,selected=false,camera=null,frustum=null
   const fraction=Math.max(0,Math.min(1,(unit.hp||0)/Math.max(1,unit.maxHp||1)));
   root.userData.health.scale.x=fraction;root.userData.health.position.x=-root.userData.barWidth*(1-fraction)/2;
   root.userData.mana.scale.x=Math.max(0,Math.min(1,(unit.mana||0)/Math.max(1,unit.maxMana||1)));root.userData.mana.visible=Boolean(unit.maxMana);
-  root.userData.healthBar.visible=!root.userData.deathCue&&(selected||fraction<.995);
+  if(root.userData.constructionBar){
+    const progress=construction?Math.min(1,construction.progress+construction.elapsed/construction.duration):0;
+    root.userData.constructionBar.visible=root.userData.constructionBackground.visible=Boolean(construction)&&!root.userData.deathCue;
+    root.userData.constructionBar.scale.x=progress;root.userData.constructionBar.position.x=-root.userData.barWidth*(1-progress)/2;
+  }
+  root.userData.healthBar.visible=!root.userData.deathCue&&(selected||fraction<.995||Boolean(construction));
   if(camera){root.getWorldQuaternion(inverse).invert();root.userData.healthBar.quaternion.copy(inverse).multiply(camera.quaternion);}
   return !root.userData.released;
 }

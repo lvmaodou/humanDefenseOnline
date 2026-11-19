@@ -220,6 +220,7 @@ test('building direction follows original hunter skills rather than a universal 
   const tower=game.action(0,{type:'build',unit:'h00L',x:hero.x,y:hero.y+384,facing:135});
   assert.equal(tower.facing,270,'client facing cannot rotate every building');
   assert.equal(tower.building,true);
+  game.tick(game.data.units[tower.raw].bldtm+.05);
   tower.data=123;
   const gold=game.players[0].gold;
   assert.equal(game.action(0,{type:'cast',unit:tower.hid,ability:'A096'}),true);

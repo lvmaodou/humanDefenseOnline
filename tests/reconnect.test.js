@@ -156,3 +156,97 @@ test('the browser stores the credential, waits for authentication before sending
     assert.equal(statuses.at(-1), 'failed');assert.equal(readSession(storage), null);assert.equal(connection.stopped, true);
   } finally { connection.stop(); }
 });
+
+test('finished matches reject saved credentials and new joins, then release the room when everyone leaves', async () => {
+  for (const status of ['victory', 'defeat']) {
+    const roomId = status === 'victory' ? 'WINEND' : 'LOSEEND';
+    const host = await client({ name: 'Host', room: roomId }), room = rooms.get(roomId);
+    room.game.status = status;
+    const resume = await client({ room: roomId, resumeToken: host.joined.resumeToken });
+    assert.equal(resume.joined.code, 'GAME_FINISHED');
+    const fresh = await client({ name: 'Guest', room: roomId });assert.equal(fresh.joined.code, 'GAME_FINISHED');
+    host.ws.send(JSON.stringify({ type: 'leave' }));await host.next(message => message.type === 'left');
+    assert.equal(rooms.has(roomId), false);assert.equal(room.timer, null);
+    const restarted = await client({ name: 'Host', room: roomId });
+    assert.equal(restarted.joined.resumed, false);assert.notEqual(rooms.get(roomId).game, room.game);
+    assert.equal(rooms.get(roomId).game.status, 'playing');
+    await Promise.all([host, resume, fresh, restarted].map(member => close(member.ws)));
+  }
+});
+
+test('returning home invalidates only that player and disconnected teammates can still resume', async () => {
+  const host = await client({ name: 'Host', room: 'LEAVE' }), guest = await client({ name: 'Guest', room: 'LEAVE' });
+  const room = rooms.get('LEAVE');room.game.globals.udg_waves = 3;
+  await close(guest.ws);
+  host.ws.send(JSON.stringify({ type: 'leave' }));await host.next(message => message.type === 'left');
+  assert.equal(room.players.size, 1);assert.equal(room.game.players[0].active, false);assert.equal(room.game.players[1].active, true);
+  assert.equal(room.timer, null);
+  const old = await client({ room: room.id, resumeToken: host.joined.resumeToken });assert.equal(old.joined.code, 'SESSION_INVALID');
+  const returned = await client({ room: room.id, resumeToken: guest.joined.resumeToken });
+  assert.equal(returned.joined.slot, 1);assert.equal(rooms.get(room.id), room);
+  await Promise.all([host, old, returned].map(member => close(member.ws)));
+});
+
+test('a delayed close from a finished room cannot delete a new match using the same code', () => {
+  const sessions = new RoomSessions({ createGame: () => ({ status: 'playing', players: [{}, {}, {}, {}], globals: {}, start() {}, message() {}, tick() {} }), broadcast() {} });
+  const socket = () => ({ readyState: 1, close() { this.readyState = 3; } });
+  try {
+    const oldSocket = socket(), old = sessions.join(oldSocket, { room: 'AGAIN', name: 'Old' });
+    old.room.game.status = 'defeat';oldSocket.readyState = 3;
+    const current = sessions.join(socket(), { room: 'AGAIN', name: 'New' });
+    assert.notEqual(current.room, old.room);
+    sessions.detach(old.room, old.player, oldSocket);
+    assert.equal(sessions.rooms.get('AGAIN'), current.room);
+  } finally { sessions.dispose(); }
+});
+
+test('match results clear persisted resume credentials, and leaving cancels retries and ignores late messages', () => {
+  const values = new Map(), storage = { getItem: key => values.get(key), setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };
+  const sockets = [], statuses = [], messages = [];
+  class Socket {
+    constructor() { this.readyState = 1;this.sent = [];sockets.push(this); }
+    send(raw) { this.sent.push(JSON.parse(raw)); }
+    close() { this.readyState = 3; }
+    receive(message) { this.onmessage({ data: JSON.stringify(message) }); }
+  }
+  const connection = new BattleConnection({ url, storage, WebSocketClass: Socket, onStatus: value => statuses.push(value), onMessage: value => messages.push(value) });
+  try {
+    for (const status of ['victory', 'defeat']) {
+      connection.start({ name: 'Host', room: 'END' });const socket = sockets.at(-1);socket.onopen();
+      socket.receive({ type: 'joined', name: 'Host', room: 'END', resumeToken: 'a'.repeat(64) });assert.ok(readSession(storage));
+      socket.receive({ type: 'state', state: { status } });assert.equal(readSession(storage), null);
+      const count = sockets.length;socket.onclose({ code: 1006 });connection.retry();
+      assert.equal(sockets.length, count);assert.equal(statuses.at(-1), 'finished');
+    }
+    connection.start({ name: 'Host', room: 'END' });const socket = sockets.at(-1);socket.onopen();
+    socket.receive({ type: 'joined', name: 'Host', room: 'END', resumeToken: 'b'.repeat(64) });
+    connection.leave();assert.equal(socket.sent.at(-1).type, 'leave');assert.equal(connection.session, null);assert.equal(readSession(storage), null);
+    const count = messages.length;socket.receive({ type: 'state', state: { status: 'playing' } });assert.equal(messages.length, count);
+    connection.retry();assert.equal(connection.stopped, true);assert.equal(statuses.at(-1), 'idle');
+    connection.start({ name: 'Host', room: 'END', resumeToken: 'c'.repeat(64) });const stale = sockets.at(-1);stale.onopen();
+    stale.receive({ type: 'error', code: 'GAME_FINISHED', message: 'Finished' });
+    assert.equal(connection.session, null);assert.equal(readSession(storage), null);assert.equal(statuses.at(-1), 'failed');
+  } finally { connection.stop(); }
+});
+
+test('an old result or exit in another page cannot erase the new match resume credential', () => {
+  const values = new Map(), storage = { getItem: key => values.get(key), setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };
+  class Socket {
+    constructor() { this.readyState = 1; }
+    send() {}
+    close() { this.readyState = 3; }
+    receive(message) { this.onmessage({ data: JSON.stringify(message) }); }
+  }
+  const make = () => new BattleConnection({ url, storage, WebSocketClass: Socket, onStatus() {}, onMessage() {} });
+  const old = make(), current = make();
+  try {
+    old.start({ name: 'Old', room: 'OLD' });const oldSocket = old.socket;oldSocket.onopen();
+    oldSocket.receive({ type: 'joined', room: 'OLD', resumeToken: 'a'.repeat(64) });
+    current.start({ name: 'Current', room: 'NEW' });current.socket.onopen();
+    current.socket.receive({ type: 'joined', room: 'NEW', resumeToken: 'b'.repeat(64) });
+    oldSocket.receive({ type: 'state', state: { status: 'defeat' } });
+    assert.equal(readSession(storage).room, 'NEW');
+    old.leave();assert.equal(readSession(storage).resumeToken, 'b'.repeat(64));
+    current.leave();assert.equal(readSession(storage), null);
+  } finally { old.stop();current.stop(); }
+});

@@ -48,7 +48,7 @@ try {
       return Math.hypot(...view.focus.map((n, i) => n - view.target[i])) < .002 && Math.hypot(...view.position.map((n, i) => n - view.target[i] - offset[i] * view.zoom)) < .002;
     }, cameraOffset());
     const game = rooms.get(roomId).game, worker = [...game.units.values()].find(u => u.owner.id === 0 && u.raw === 'h002');
-    const thirdSite = { x: worker.x, y: worker.y + 512 };
+    const thirdSite = { x: worker.x, y: worker.y + 576 };
     game.tasks = [];game.timers = [];
     const tap = async locator => touch ? locator.tap() : locator.click();
     const ground = async (x, y) => { const p = await project(page, x, y);if (touch) await page.touchscreen.tap(p.x, p.y);else await page.mouse.click(p.x, p.y); };

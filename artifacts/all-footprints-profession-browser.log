@@ -1,0 +1,8 @@
+Human Defense 3.0.0 listening on http://localhost:0
+YM: 40 models, upgrade and learned command verified
+LR: 40 models, upgrade and learned command verified
+DZ: 40 models, upgrade and learned command verified
+SS: 40 models, upgrade and learned command verified
+YX: 40 models, upgrade and learned command verified
+MJS: 40 models, upgrade and learned command verified
+{"professions":[{"profession":"野蛮人","buildingModels":40,"upgrade":"h027","learnedAbility":"A04B"},{"profession":"猎人","buildingModels":40,"upgrade":"h012","learnedAbility":"A04A"},{"profession":"盗贼","buildingModels":40,"upgrade":"h04C","learnedAbility":"A08Q"},{"profession":"术士","buildingModels":40,"upgrade":"h033","learnedAbility":"A062"},{"profession":"游侠","buildingModels":40,"upgrade":"h042","learnedAbility":"A07D"},{"profession":"魔剑士","buildingModels":40,"upgrade":"h076","learnedAbility":"A0EE"}],"errors":[],"failedAssets":[]}

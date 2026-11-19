@@ -47,7 +47,7 @@ try {
   const tick = game.tick.bind(game);game.tick = () => {};
   const sites = [];
   for (let dy = 256; dy <= 640; dy += 128) for (let dx = -256; dx <= 256; dx += 128) {
-    const placement = checkBuildPlacement(game.terrain, [...game.units.values()], worker.x + dx, worker.y + dy);
+    const placement = checkBuildPlacement(game.terrain, [...game.units.values()], worker.x + dx, worker.y + dy, { type: 'h007' });
     if (placement.valid && sites.every(site => Math.hypot(site.x - placement.x, site.y - placement.y) >= 256)) sites.push(placement);
   }
   assert.ok(sites.length >= 2);
@@ -57,7 +57,7 @@ try {
   assert.equal(game.action(0, { type: 'item', unit: worker.hid, item: item.hid, x: site.x, y: site.y }), true);
   const tower = [...game.units.values()].find(unit => unit.raw === 'h007' && unit.owner.id === 0);
   tick(2.5);
-  await page.waitForFunction(id => window.reviewState?.units.find(unit => unit.id === id)?.construction?.progress === .5, tower.hid);
+  await page.waitForFunction(id => Math.abs((window.reviewState?.units.find(unit => unit.id === id)?.construction?.progress ?? -1) - .5) < 1e-8, tower.hid);
   report.build = await visual(tower.hid);report.ordinary = await visual(ordinary.hid);
   assert.match(report.build.animation.name, /^Birth$/i);assert.ok(Math.abs(report.build.animation.frame - 30000) < 2500);
   assert.match(report.ordinary.animation.name, /^Stand/);
@@ -68,7 +68,7 @@ try {
 
   await page.reload();await page.waitForFunction(() => window.reviewJoined?.resumed && window.reviewState?.units.some(unit => unit.type === 'h007'));
   report.reconnected = await visual(tower.hid);
-  assert.equal(report.reconnected.construction.progress, .5);assert.match(report.reconnected.animation.name, /^Birth$/i);
+  assert.ok(Math.abs(report.reconnected.construction.progress - .5) < 1e-8);assert.match(report.reconnected.animation.name, /^Birth$/i);
   assert.ok(Math.abs(report.reconnected.animation.frame - 30000) < 2500);
 
   tick(2.6);assert.equal(game.action(0, { type: 'upgrade', unit: tower.hid, to: 'h052' }), true);tick(4);

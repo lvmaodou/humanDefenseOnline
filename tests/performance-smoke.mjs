@@ -17,13 +17,16 @@ async function frameMetrics(page) {
     const average = deltas.reduce((sum, value) => sum + value, 0) / Math.max(1, deltas.length);
     const recentStates = window.__stateTimes.filter(time => performance.now() - time < 1100);
     const visual = window.__originalVisualDebug();
+    const enemies = new Set(window.reviewState.units.filter(unit => unit.owner >= 8).map(unit => unit.id));
+    const visibleEnemies = visual.units.filter(unit => enemies.has(unit.id) && unit.visible && unit.drawCount > 0);
     return {
       fps: Math.round(1000 / average),
       p95FrameMs: Math.round(deltas[Math.floor(deltas.length * .95)] || 0),
       statePacketsPerSecond: recentStates.length,
       stateBytes: window.__stateBytes,
-      lod: visual.modelLod,
-      batchedUnits: window.__lowDetailInstanceCount(),
+      unitRendering: visual.unitRendering,
+      visibleEnemyModels: visibleEnemies.length,
+      placeholderModels: visibleEnemies.filter(unit => unit.model !== 'original-mdx').length,
       renderedCalls: visual.renderer.calls,
       loadedModels: visual.assets.loadedModels
     };
@@ -85,6 +88,11 @@ try {
   }
 
   await page.waitForFunction(() => window.reviewState?.units.filter(unit => unit.owner === 8).length >= 500);
+  await page.waitForFunction(() => window.__originalVisualDebug().unitRendering.native >= 500);
+  await page.waitForTimeout(2500);
+  // Measure steady rendering after native instances have initialized, instead
+  // of mixing initial loading pauses into a short frame-rate sample.
+  await page.evaluate(() => { window.__frameTimes = [];window.__stateTimes = []; });
   await page.waitForTimeout(2500);
   const fullSnapshot = game.snapshot();
   const compactSnapshot = compactNetworkState(structuredClone(fullSnapshot));
@@ -94,8 +102,9 @@ try {
   console.log(JSON.stringify({ units: game.units.size, baseline, rawBytes, compactBytes, ...report }));
   assert.ok(report.statePacketsPerSecond >= 6, 'live simulation updates keep reaching the browser');
   assert.ok(compactBytes < rawBytes, 'enemy snapshot compaction reduces wire data');
-  assert.ok(report.lod.simplified > 0, 'visible distant enemy units use the lightweight model');
-  assert.ok(report.batchedUnits > 0, 'visible lightweight units are submitted in a shared draw batch');
+  assert.ok(report.unitRendering.throttled > 0, 'distant models keep their shapes while animation updates are throttled');
+  assert.ok(report.visibleEnemyModels > 0, 'visible enemies render their original models');
+  assert.equal(report.placeholderModels, 0, 'visible enemies never switch to geometric placeholders');
   assert.equal(errors.length, 0, errors.join('\n'));
 } finally {
   await browser.close();

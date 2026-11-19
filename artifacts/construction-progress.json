@@ -1,5 +1,8 @@
 {
   "build": {
+    "visible": true,
+    "drawCount": 2,
+    "distance": 13.540435087876894,
     "id": 435,
     "construction": {
       "kind": "build",
@@ -9,8 +12,8 @@
     },
     "animation": {
       "name": "Birth",
-      "frame": 30596.39489831118,
-      "progress": 0.509939999961853
+      "frame": 30565.194910377635,
+      "progress": 0.509420000076294
     },
     "type": "h007",
     "model": "original-mdx",
@@ -20,6 +23,9 @@
     "scale": 1
   },
   "ordinary": {
+    "visible": true,
+    "drawCount": 4,
+    "distance": 13.70793585773266,
     "id": 431,
     "construction": {
       "kind": "build",
@@ -29,8 +35,8 @@
     },
     "animation": {
       "name": "Stand",
-      "frame": 238.29999923706055,
-      "progress": 0.25712999992370605
+      "frame": 227.5,
+      "progress": 0.25605
     },
     "type": "h03J",
     "model": "original-mdx",
@@ -40,6 +46,9 @@
     "scale": 0.8
   },
   "reconnected": {
+    "visible": true,
+    "drawCount": 2,
+    "distance": 12.90246176101238,
     "id": 435,
     "construction": {
       "kind": "build",
@@ -49,8 +58,8 @@
     },
     "animation": {
       "name": "Birth",
-      "frame": 30220.794970066454,
-      "progress": 0.5036800001144409
+      "frame": 30386.394933311185,
+      "progress": 0.5064399999618531
     },
     "type": "h007",
     "model": "original-mdx",
@@ -60,17 +69,20 @@
     "scale": 1
   },
   "upgrade": {
+    "visible": true,
+    "drawCount": 6,
+    "distance": 12.901958513433518,
     "id": 435,
     "construction": {
       "kind": "upgrade",
-      "duration": 9.999999999999998,
+      "duration": 10.000000000000002,
       "remaining": 6,
-      "progress": 0.3999999999999999
+      "progress": 0.40000000000000013
     },
     "animation": {
       "name": "Birth Upgrade First Second third",
-      "frame": 107514.19596865558,
-      "progress": 0.4030199999809264
+      "frame": 107529.79596834442,
+      "progress": 0.4032800000190736
     },
     "type": "h007",
     "model": "original-mdx",
@@ -80,10 +92,13 @@
     "scale": 1
   },
   "finished": {
+    "visible": true,
+    "drawCount": 2,
+    "distance": 12.901233782362958,
     "id": 435,
     "animation": {
       "name": "Stand Upgrade First Ready Attack",
-      "frame": 146683.79999923706
+      "frame": 146700.5
     },
     "type": "h052",
     "model": "original-mdx",
@@ -93,10 +108,13 @@
     "scale": 1
   },
   "worker": {
+    "visible": true,
+    "drawCount": 25,
+    "distance": 12.890889762760786,
     "id": 429,
     "animation": {
       "name": "Stand",
-      "frame": 655.3999996185303
+      "frame": 672.3999996185303
     },
     "type": "h003",
     "model": "original-mdx",

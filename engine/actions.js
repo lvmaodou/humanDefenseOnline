@@ -1,12 +1,13 @@
 import {fourCC,rawId} from './runtime.js';
 import {checkBuildPlacement} from '../public/placement.js';
+import {abilityControls} from './ability-data.js';
 
 export function installActions(V,terrain){
   V.canBuild=(slot,id,x,y)=>{
     const p=V.players[slot],d=V.data.units[id];if(!p?.active||!d?.isbldg||V.status!=='playing')throw new Error('当前无法建造');
     const builder=[...V.units.values()].find(u=>u.owner===p&&!u.removed&&!u.death&&String(V.data.units[u.raw]?.Builds||'').split(',').includes(id));
     if(!builder)throw new Error('该职业不能建造此单位');
-    const placement=checkBuildPlacement(terrain,[...V.units.values()],x,y);
+    const placement=checkBuildPlacement(terrain,[...V.units.values()],x,y,{type:id});
     if(!placement.valid)throw new Error(placement.reason);
     x=placement.x;y=placement.y;
     const owned=[...V.units.values()].filter(u=>u.owner===p&&u.constructed&&!u.removed);
@@ -31,12 +32,13 @@ export function installActions(V,terrain){
     }
     const unit=V.units.get(m.unit),p=V.players[slot];if(!unit||unit.owner!==p)throw new Error('只能操作自己的单位');
     if(unit.removed||unit.death)throw new Error('该单位当前无法操作');
+    if([...unit.abilities.keys()].some(id=>V.ability(id).code==='Aloc'))throw new Error('该单位无法直接操作');
     if((!unit.constructed||unit.upgradeEnd)&&['cast','autocast','target'].includes(m.type))throw new Error(unit.upgradeEnd?'建筑升级中，完工后可操作':'建筑建造中，完工后可操作');
-    if(m.type==='upgrade')return V.upgradeEquipment(unit,m.to);
-    if(m.type==='autocast'){const id=fourCC(m.ability);if(!unit.abilities.has(id)||!String(V.data.units[unit.raw]?.auto||'_').split(',').includes(rawId(id)))throw new Error('该单位没有这个自动施法技能');if(m.enabled)unit.autoCast.add(id);else unit.autoCast.delete(id);return true;}
+    if(m.type==='upgrade')return V.upgradeBuilding(unit,m.to);
+    if(m.type==='autocast'){const id=fourCC(m.ability);if(!unit.abilities.has(id)||!abilityControls(V.data,unit.raw,rawId(id)).autocastSupported)throw new Error('该单位没有这个自动施法技能');if(m.enabled)unit.autoCast.add(id);else unit.autoCast.delete(id);return true;}
     if(m.type==='move'){if(unit.building)throw new Error('建筑不能移动');if(!V.canMove(unit))throw new Error('该单位不能移动');if(!Number.isFinite(m.x)||!Number.isFinite(m.y))return false;unit.pendingItemBuild=null;unit.manualTarget=null;unit.target=null;unit.manualTargetApproachAt=0;return V.setMove(unit,{x:Math.max(-7800,Math.min(7800,m.x)),y:Math.max(-7800,Math.min(7800,m.y))},851986);}
-    if(m.type==='cast'){const id=fourCC(m.ability);if(!unit.abilities.has(id))throw new Error('单位没有该技能');const target=V.units.get(m.target),point=Number.isFinite(m.x)&&Number.isFinite(m.y)?{x:m.x,y:m.y}:null;return V.cast(unit,id,target,point);}
-    if(m.type==='target'){if(m.target===null){unit.manualTarget=null;unit.target=null;unit.manualTargetApproachAt=0;return true;}const target=V.units.get(m.target);if(target&&target.owner.team!==p.team){unit.manualTarget=target;unit.target=target;unit.move=null;unit.manualTargetApproachAt=0;}return true;}
+    if(m.type==='cast'){const id=fourCC(m.ability);if(!unit.abilities.has(id))throw new Error('单位没有该技能');if(m.ability!=='A01H'&&!abilityControls(V.data,unit.raw,rawId(id)).castable)throw new Error('被动技能无需手动施放');const target=V.units.get(m.target),point=Number.isFinite(m.x)&&Number.isFinite(m.y)?{x:m.x,y:m.y}:null;return V.cast(unit,id,target,point);}
+    if(m.type==='target'){if(m.target===null){V.interruptChannel(unit);unit.manualTarget=null;unit.target=null;unit.manualTargetApproachAt=0;return true;}const target=V.units.get(m.target);if(target&&target.owner.team!==p.team){V.interruptChannel(unit);unit.manualTarget=target;unit.target=target;unit.move=null;unit.manualTargetApproachAt=0;}return true;}
     if(m.type==='pickup')return V.pickup(unit,V.items.get(m.item));
     if(m.type==='buy')return V.buy(slot,unit,V.data.items[m.item]);
     if(m.type==='drop'){const item=V.items.get(m.item);if(item?.carrier!==unit||item.removed)throw new Error('该装备不在物品栏中');return V.dropItem(unit,item);}

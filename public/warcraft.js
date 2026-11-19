@@ -20,15 +20,26 @@ export function uploadModelTexture(modelRenderer, gl, path, image) {
     unpack.forEach((parameter, index) => gl.pixelStorei(parameter, previous[index]));
   }
 }
+const animationTags = value => String(value || '').toLowerCase().replaceAll(',', ' ').split(/\s+/).filter(Boolean);
+const animationVariants = new Set(['upgrade','first','second','third','fourth','fifth','alternate','alternateex','swim']);
 export function selectSequence(sequences, requested, properties = '') {
-  const tags = `${requested} ${properties}`.toLowerCase().replaceAll(',', ' ').split(/\s+/).filter(Boolean);
-  const scored = sequences.map((sequence, index) => {
-    const words = sequence.Name.toLowerCase().split(/\s+/);
-    return { index, score: tags.reduce((score, tag, i) => score + (words.includes(tag) ? i === 0 ? 100 : 10 : i === 0 ? -100 : -2), 0) - (sequence.Rarity || 0) / 100 };
-  });
-  const best = scored.sort((a, b) => b.score - a.score)[0];
-  if (best?.score >= 0) return best.index;
-  return sequences.findIndex(sequence => /^stand(?:\s|$)/i.test(sequence.Name));
+  const [action = 'stand', ...modifiers] = animationTags(requested), persistent = animationTags(properties);
+  const tags = new Set([...modifiers, ...persistent]);
+  const choose = name => {
+    let best = -1, bestScore = -Infinity;
+    for (const [index, sequence] of sequences.entries()) {
+      const words = animationTags(sequence.Name);if (!words.includes(name)) continue;
+      // A shared MDX can contain several mutually exclusive building forms.
+      // Prefer the authored form, including when a missing action uses Stand.
+      let score = -(Number(sequence.Rarity) || 0) / 100;
+      for (const tag of tags) score += words.includes(tag) ? 10 : -2;
+      for (const word of words) if (animationVariants.has(word) && !tags.has(word)) score -= 20;
+      if (score > bestScore) { bestScore = score;best = index; }
+    }
+    return best;
+  };
+  const selected = choose(action);
+  return selected >= 0 ? selected : choose('stand');
 }
 
 // MDX owns its native skinning, animated layers, particles and ribbons. The
@@ -83,7 +94,7 @@ const modelView = new THREE.Matrix4(), lightPosition = new THREE.Vector3();
 const cueAliases = { cast: 'spell', build: 'birth', hit: null, damage: null, projectile: 'attack' };
 export class WarcraftInstance {
   constructor(library, resource, definition) {
-    this.library = library; this.resource = resource; this.definition = definition; this.pending = 0; this.action = 'stand'; this.hold = 0; this.dead = false;
+    this.library = library; this.resource = resource; this.definition = definition; this.pending = 0; this.action = 'stand'; this.hold = 0; this.dead = false;this.poseDirty = true;
     this.renderer = new ModelRenderer(resource.model);
     // Geometry, programs and immutable textures are shared between instances.
     // Animation state and emitter buffers remain private to each instance.
@@ -105,19 +116,31 @@ export class WarcraftInstance {
   }
   play(action, properties = '', restart = false) {
     const index = selectSequence(this.resource.model.Sequences, action, properties);
-    if (index >= 0 && (restart || this.renderer.getSequence() !== index)) this.renderer.setSequence(index);
+    if (index >= 0 && (restart || this.renderer.getSequence() !== index)) { this.renderer.setSequence(index);this.poseDirty = true; }
     this.action = action;
     return index >= 0 ? this.resource.model.Sequences[index] : null;
   }
   cue(kind, animationNames = '') {
     const action = kind in cueAliases ? cueAliases[kind] : kind;
     if (!action || this.dead) return;
+    if(this.channel&&action!=='spell'&&action!=='death')return;
     if (this.construction && action !== 'death') return;
     if (action === 'death') this.dead = true;
-    const requested = animationNames ? animationNames.replaceAll(',', ' ').split(/\s+/)[0] : action;
-    const properties = animationNames || this.definition.Animprops || '';
+    const requested = animationTags(animationNames)[0] || action;
+    const properties = `${this.definition.Animprops || ''} ${animationNames}`;
+    const selected = selectSequence(this.resource.model.Sequences, requested, properties);
+    // A passive/automatic spell can have no model animation. Leave the
+    // current attack running instead of restarting Stand on every spell cue.
+    if (action !== 'death' && (selected < 0 || !animationTags(this.resource.model.Sequences[selected].Name).includes(requested))) return;
     const sequence = this.play(requested, properties, true);
     this.hold = sequence ? (sequence.Interval[1] - sequence.Interval[0]) / 1000 : .4;
+  }
+  setChannel(state) {
+    if(this.dead||this.construction)state=null;
+    if((this.channel?.ability||null)===(state?.ability||null))return;
+    const previous=this.channel;this.channel=state;
+    if(state){this.cue('spell',state.animationNames||'spell,channel');this.channelSequence=this.renderer.getSequence();}
+    else if(previous&&this.renderer.getSequence()===this.channelSequence){this.hold=0;this.play('stand',this.definition.Animprops||'');}
   }
   setConstruction(phase) {
     if (this.dead) return;
@@ -133,7 +156,7 @@ export class WarcraftInstance {
       const selected = selectSequence(candidates, 'birth', phase.properties || '');
       this.constructionSequence = selected >= 0 ? candidates[selected].index : -1;
       this.pending = 0;this.hold = 0;
-      if (this.constructionSequence >= 0) { this.renderer.setSequence(this.constructionSequence);this.action = 'birth'; }
+      if (this.constructionSequence >= 0) { this.renderer.setSequence(this.constructionSequence);this.action = 'birth';this.poseDirty = true; }
       else this.play('stand', this.definition.Animprops || '', true);
     }
     this.construction = phase;
@@ -145,8 +168,10 @@ export class WarcraftInstance {
       return;
     }
     if (!this.dead) {
-      this.hold = Math.max(0, this.hold - dt);
-      if (this.hold <= 0) this.play(movement > .01 ? 'walk' : 'stand', this.definition.Animprops || '');
+      if(!this.channel){
+        this.hold = Math.max(0, this.hold - dt);
+        if (this.hold <= 0) this.play(movement > .01 ? 'walk' : 'stand', this.definition.Animprops || '');
+      }
     }
     const sequence = this.resource.model.Sequences[this.renderer.getSequence()];
     let speed = 1;
@@ -172,11 +197,16 @@ export class WarcraftInstance {
       // download. Keep emitter updates running at the same animation speed.
       const start = sequence.Interval[0], span = Math.max(0, sequence.Interval[1] - start - .01);
       const frame = start + span * Math.max(0, Math.min(1, this.construction.progress));
-      delta = Math.min(this.pending, frame - start);this.renderer.setFrame(frame - delta);
+      delta = Math.min(this.pending, frame - start);
+      if (Math.abs(frame - this.renderer.getFrame()) > .001) this.poseDirty = true;
+      this.renderer.setFrame(frame - delta);
     } else delta = sequence?.NonLooping ? Math.min(this.pending, Math.max(0, sequence.Interval[1] - this.renderer.getFrame() - .01)) : this.pending;
-    this.renderer.update(Math.max(0, delta)); this.pending = 0;
+    // A distant unit still draws its full model every frame. Reuse its last
+    // pose between animation updates instead of recomputing every bone at dt=0.
+    if (this.poseDirty || delta > .001) { this.renderer.update(Math.max(0, delta));this.poseDirty = false; }
+    this.pending = 0;
     this.renderer.render(modelView.elements, camera.projectionMatrix.elements, {});
-    this.library.stats.rendered++; renderer.resetState();
+    this.library.stats.rendered++;this.drawCount=(this.drawCount||0)+1;renderer.resetState();
   }
   attachment(name, out = new THREE.Vector3()) {
     const key = String(name || 'origin').toLowerCase().replace(/\s+/g, '');

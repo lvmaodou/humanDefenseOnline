@@ -287,7 +287,8 @@ test('grass footprints can sit flush with rendered cliffs while crossing footpri
   const gold=game.players[0].gold,building=game.build(0,'h00L',4096,-6400);
   assert.equal(building.x,4096);assert.equal(building.y,-6400);
   assert.equal(game.players[0].gold,gold-data.units.h00L.goldcost);
-  assert.ok(game.canBuild(0,'h00L',4096,-6272),'edge-aligned buildings may touch without overlapping');
+  assert.throws(()=>game.canBuild(0,'h00L',4096,-6272),/重叠/,'a hunter must reserve its larger promoted form instead of assuming a 128 square');
+  assert.ok(game.canBuild(0,'h00L',4096,-6208),'edge-aligned buildings retain a valid site beyond the actual reserved base');
   assert.throws(()=>game.canBuild(0,'h00L',4096,-6336),/重叠/);
   const explicit={...terrain,pathing:{...terrain.pathing,flags:[...terrain.pathing.flags]}};
   const column=(4096-48-terrain.offset[0])/32,row=(-6400-48-terrain.offset[1])/32;
@@ -299,7 +300,7 @@ test('grass footprints can sit flush with rendered cliffs while crossing footpri
   assert.equal(checkBuildPlacement(terrain,[],3968,-6400).valid,false,'ravine roads remain unbuildable');
 });
 
-test('original weapon rows drive attacks on both teams with integer damage rolls',()=>{
+test('enabled defender weapons use integer rolls and source waves retain disabled weapons',()=>{
   const game=makeGame();
   const defender=game.createUnit(game.players[0],game.fourCC('hfoo'),0,0);
   const creep=game.createUnit(game.players[8],game.fourCC('nanc'),30,0);
@@ -313,9 +314,9 @@ test('original weapon rows drive attacks on both teams with integer damage rolls
   const regeneration=(Number(data.units.nanc.regenHP)||0)*.05;
   game.tick(.05);
   assert.ok(Math.abs((creepHp-creep.hp)-(expectedDamage-regeneration))<1e-9);
-  assert.ok(defender.hp<defenderHp);
+  assert.equal(defender.hp,defenderHp,'the source wave has weapsOn=0');
   assert.ok(defender.cooldown>0);
-  assert.ok(creep.cooldown>0);
+  assert.equal(creep.cooldown,0);
 });
 
 test('weapon damage applies the current runtime attack-type versus armor-type multiplier',()=>{
@@ -330,7 +331,7 @@ test('weapon damage applies the current runtime attack-type versus armor-type mu
   const normal=game.createUnit(game.players[8],game.fourCC('nanc'),100,100);
   const beforeSpell=normal.hp,spellArmor=Number(data.units.nanc.def)||0;
   game.damage(attacker,normal,100,true,'DAMAGE_TYPE_MAGIC','spells');
-  const expectedSpell=100*.75*(spellArmor>=0?1/(1+.06*spellArmor):2-Math.pow(.94,-spellArmor));
+  const expectedSpell=100*.75;
   assert.ok(Math.abs((beforeSpell-normal.hp)-expectedSpell)<1e-9);
 });
 
@@ -341,7 +342,7 @@ test('map speed cap and researched upgrade levels affect live unit stats',()=>{
   assert.equal(game.moveSpeed(builder),522);
   assert.ok(Math.abs(builder.x-26.1)<1e-9);
 
-  const ranger=game.createUnit(game.players[0],game.fourCC('h018'),2000,0);
+  const ranger=game.createUnit(game.players[0],game.fourCC('h03J'),2000,0);
   const baseRange=ranger.stats.attackRange;
   game.natives.SetPlayerTechResearched(game.players[0],game.fourCC('R005'),1);
   assert.equal(ranger.stats.attackRange,baseRange+100);
@@ -425,11 +426,12 @@ test('missile bounce and concentric splash use the original weapon fields',()=>{
   assert.ok(Math.abs(losses[2]/losses[0]-.5)<1e-9);
   assert.ok(Math.abs(losses[3]/losses[0]-.25)<1e-9);
 
-  const bounceGame=makeGame([]),bouncer=bounceGame.createUnit(bounceGame.players[0],bounceGame.fourCC('h01B'),0,0),first=bounceGame.createUnit(bounceGame.players[8],bounceGame.fourCC('hfoo'),100,0),second=bounceGame.createUnit(bounceGame.players[8],bounceGame.fourCC('hfoo'),200,0);
+  const bounceGame=makeGame([]),bouncer=bounceGame.createUnit(bounceGame.players[0],bounceGame.fourCC('h05P'),0,0),first=bounceGame.createUnit(bounceGame.players[8],bounceGame.fourCC('hfoo'),100,0),second=bounceGame.createUnit(bounceGame.players[8],bounceGame.fourCC('hfoo'),200,0);
   first.hp=first.maxHp=second.hp=second.maxHp=1e9;bouncer.target=first;bounceGame.time=.05;bounceGame.updateCombat(.05);bounceGame.time=.25;bounceGame.updateCombat(0);
+  assert.equal(second.hp,1e9,'the bounce must travel from the first target');bounceGame.time=.5;bounceGame.updateCombat(0);
   const firstLoss=1e9-first.hp,secondLoss=1e9-second.hp;
   assert.ok(firstLoss>0&&secondLoss>0);
-  assert.ok(Math.abs(secondLoss/firstLoss-.7)<1e-9);
+  assert.ok(Math.abs(secondLoss/firstLoss-(1-data.units.h05P.damageLoss1))<1e-9);
 });
 
 test('mline weapons damage targets along their fixed projectile path',()=>{
@@ -470,7 +472,7 @@ test('all six profession attacks run their passive and map-trigger effects',()=>
   assert.ok(fixtures.find(f=>f.name==='barbarian').target.buffs.some(buff=>buff.kind==='stun'));
   assert.ok(fixtures.find(f=>f.name==='hunter').secondary.hp<1e9);
   assert.equal(fixtures.find(f=>f.name==='rogue').goldGain,2);
-  assert.ok(fixtures.find(f=>f.name==='mage').buffs.some(buff=>buff.kind==='slow'));
+  assert.ok(fixtures.find(f=>f.name==='mage').buffs.some(buff=>buff.kind==='stun'));
   assert.ok(fixtures.find(f=>f.name==='ranger').secondary.hp<1e9);
   assert.ok(fixtures.find(f=>f.name==='swordsman').secondary.hp<1e9);
   assert.equal(game.errors.length,0);
@@ -504,15 +506,15 @@ test('advanced profession passives use source damage, duration, and summon field
   const pulverizer=pulverizeGame.createUnit(pulverizeGame.players[0],pulverizeGame.fourCC('h01O'),0,0),primary=pulverizeGame.createUnit(pulverizeGame.players[8],pulverizeGame.fourCC('hfoo'),200,0),inner=pulverizeGame.createUnit(pulverizeGame.players[8],pulverizeGame.fourCC('hfoo'),800,0),outer=pulverizeGame.createUnit(pulverizeGame.players[8],pulverizeGame.fourCC('hfoo'),1000,0),outside=pulverizeGame.createUnit(pulverizeGame.players[8],pulverizeGame.fourCC('hfoo'),1150,0);
   for(const unit of [primary,inner,outer,outside])unit.hp=unit.maxHp=1e9;
   landAttack(pulverizeGame,pulverizer,primary);
-  assert.equal(1e9-inner.hp,500);
-  assert.equal(1e9-outer.hp,250);
+  assert.equal(1e9-inner.hp,500*pulverizeGame.attackVsArmor.spells[data.units.hfoo.defType]);
+  assert.equal(1e9-outer.hp,250*pulverizeGame.attackVsArmor.spells[data.units.hfoo.defType]);
   assert.equal(outside.hp,1e9);
 
   const poisonGame=makeGame([]),poisoner=poisonGame.createUnit(poisonGame.players[0],poisonGame.fourCC('h03Q'),0,0),poisonTarget=poisonGame.createUnit(poisonGame.players[8],poisonGame.fourCC('hfoo'),200,0),cloudVictim=poisonGame.createUnit(poisonGame.players[8],poisonGame.fourCC('hfoo'),450,0);
   for(const unit of [poisonTarget,cloudVictim])unit.hp=unit.maxHp=1e9;
   landAttack(poisonGame,poisoner,poisonTarget);
   const poisonBefore=cloudVictim.hp;
-  poisonGame.time=5.5;poisonGame.updateCombat(.5);
+  poisonGame.time=6;poisonGame.updateCombat(1);
   assert.ok(poisonBefore-cloudVictim.hp>0&&poisonBefore-cloudVictim.hp<=300);
   assert.ok(poisonGame.effects.some(effect=>effect.kind==='area'&&effect.code==='Aapl'));
 
@@ -561,8 +563,8 @@ test('map-defined autocast defaults are visible and disable their automatic comb
 
   const poison=game.createUnit(game.players[0],game.fourCC('h03Q'),1000,0),poisonTarget=game.createUnit(game.players[8],game.fourCC('hfoo'),1200,0);
   poisonTarget.hp=poisonTarget.maxHp=1e9;poison.target=poisonTarget;poison.cooldown=0;
-  assert.equal(poison.autoCast.has(game.fourCC('A06K')),true);
-  assert.equal(game.action(0,{type:'autocast',unit:poison.hid,ability:'A06K',enabled:false}),true);
+  assert.equal(game.snapshot().units.find(unit=>unit.id===poison.hid).abilities.find(ability=>ability.id==='A06K').autocastSupported,false);
+  assert.throws(()=>game.action(0,{type:'autocast',unit:poison.hid,ability:'A06K',enabled:false}),/自动施法/);
   game.time=.1;game.updateCombat(.05);
   assert.equal((game.zones||[]).some(zone=>zone.source===poison&&zone.kind==='Aapl'),false);
   assert.throws(()=>game.action(0,{type:'autocast',unit:poison.hid,ability:'A04E',enabled:false}),/自动施法/);
@@ -632,7 +634,7 @@ test('usable and passive inventory items apply their original ability effects',(
   assert.deepEqual(hero.itemStats.attributes,{strength:5,agility:5,intelligence:5});
   assert.equal(hero.itemStats.lifeSteal,.5);
   assert.equal(hero.itemStats.fireDamage,5);
-  assert.equal(hero.itemStats.damage,10);
+  assert.equal(hero.itemStats.damage,15);
   assert.equal(hero.itemStats.poisonDamage,9);
   assert.equal(hero.itemStats.airAttack,true);
   const target=game.createUnit(game.players[8],game.fourCC('hfoo'),4050,50),nearby=game.createUnit(game.players[8],game.fourCC('hfoo'),4080,65);

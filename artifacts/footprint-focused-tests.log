@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: all 240 profession forms have reproducible footprints from their original pathing and standing MDX bases
+ok 1 - all 240 profession forms have reproducible footprints from their original pathing and standing MDX bases
+  ---
+  duration_ms: 271.6315
+  type: 'test'
+  ...
+# Subtest: actual base rotation and original model scale are applied without using the selection-circle scale
+ok 2 - actual base rotation and original model scale are applied without using the selection-circle scale
+  ---
+  duration_ms: 1.0455
+  type: 'test'
+  ...
+# Subtest: construction reserves larger future bases, including all three magic swordsman set upgrades
+ok 3 - construction reserves larger future bases, including all three magic swordsman set upgrades
+  ---
+  duration_ms: 0.9492
+  type: 'test'
+  ...
+# Subtest: each cliff direction rejects a real base overhang while retaining flush placement for smaller buildings
+ok 4 - each cliff direction rejects a real base overhang while retaining flush placement for smaller buildings
+  ---
+  duration_ms: 9.4399
+  type: 'test'
+  ...
+# Subtest: a tiny overhang at a diagonal cliff is detected between path-grid sample points
+ok 5 - a tiny overhang at a diagonal cliff is detected between path-grid sample points
+  ---
+  duration_ms: 2.1807
+  type: 'test'
+  ...
+# Subtest: neighbour collisions use both real footprints and allow touching small footprints
+ok 6 - neighbour collisions use both real footprints and allow touching small footprints
+  ---
+  duration_ms: 5.9619
+  type: 'test'
+  ...
+# Subtest: the enlarged base is checked against map boundaries, decorations and every touched no-build cell
+ok 7 - the enlarged base is checked against map boundaries, decorations and every touched no-build cell
+  ---
+  duration_ms: 2.8194
+  type: 'test'
+  ...
+# Subtest: item construction uses the same footprint and facing as the preview and preserves equipment on invalid sites
+ok 8 - item construction uses the same footprint and facing as the preview and preserves equipment on invalid sites
+  ---
+  duration_ms: 73.6019
+  type: 'test'
+  ...
+# Subtest: legacy tower upgrades reject unsupported or overlapping larger bases before charging resources
+ok 9 - legacy tower upgrades reject unsupported or overlapping larger bases before charging resources
+  ---
+  duration_ms: 21.1822
+  type: 'test'
+  ...
+# Subtest: upgrading existing off-grid buildings validates their actual position without silently snapping
+ok 10 - upgrading existing off-grid buildings validates their actual position without silently snapping
+  ---
+  duration_ms: 16.5509
+  type: 'test'
+  ...
+# Subtest: all 66 profession buildings use their source duration, stay inactive until completion and finish exactly once
+ok 11 - all 66 profession buildings use their source duration, stay inactive until completion and finish exactly once
+  ---
+  duration_ms: 844.6697
+  type: 'test'
+  ...
+# Subtest: all 18 item towers use the five-second ability duration and ten-second set upgrade, including reconnect snapshots
+ok 12 - all 18 item towers use the five-second ability duration and ten-second set upgrade, including reconnect snapshots
+  ---
+  duration_ms: 134.7872
+  type: 'test'
+  ...
+# Subtest: construction suppresses attacks and aura sources; completion enables combat
+ok 13 - construction suppresses attacks and aura sources; completion enables combat
+  ---
+  duration_ms: 9.401
+  type: 'test'
+  ...
+# Subtest: teammates transfer gold and lumber atomically and invalid or excessive gifts change neither balance
+ok 14 - teammates transfer gold and lumber atomically and invalid or excessive gifts change neither balance
+  ---
+  duration_ms: 58.1365
+  type: 'test'
+  ...
+# Subtest: a farmer can pick up, drop and hand equipment to a teammate without duplicating or losing charges
+ok 15 - a farmer can pick up, drop and hand equipment to a teammate without duplicating or losing charges
+  ---
+  duration_ms: 31.3041
+  type: 'test'
+  ...
+# Subtest: all six professions build three permanent item towers, upgrade them and trigger the original set ability and links
+ok 16 - all six professions build three permanent item towers, upgrade them and trigger the original set ability and links
+  ---
+  duration_ms: 201.0363
+  type: 'test'
+  ...
+# Subtest: pickup capacity comes from the original inventory ability and buildings without inventory cannot take drops
+ok 17 - pickup capacity comes from the original inventory ability and buildings without inventory cannot take drops
+  ---
+  duration_ms: 13.2703
+  type: 'test'
+  ...
+# Subtest: set construction rejects blocked terrain without consuming equipment and approaches distant valid locations
+ok 18 - set construction rejects blocked terrain without consuming equipment and approaches distant valid locations
+  ---
+  duration_ms: 28.7419
+  type: 'test'
+  ...
+# Subtest: set activation retains the original profession and pairwise distance limits and crazy mode exceptions
+ok 19 - set activation retains the original profession and pairwise distance limits and crazy mode exceptions
+  ---
+  duration_ms: 58.704
+  type: 'test'
+  ...
+# Subtest: profession set auras affect armor, attack speed, mana recovery and enemy movement without stacking three copies
+ok 20 - profession set auras affect armor, attack speed, mana recovery and enemy movement without stacking three copies
+  ---
+  duration_ms: 67.8608
+  type: 'test'
+  ...
+# Subtest: the completed barbarian set applies its source bash damage and permanent leg-breaking stun
+ok 21 - the completed barbarian set applies its source bash damage and permanent leg-breaking stun
+  ---
+  duration_ms: 13.7404
+  type: 'test'
+  ...
+# Subtest: the completed rogue set increases source theft rewards by 50 percent
+ok 22 - the completed rogue set increases source theft rewards by 50 percent
+  ---
+  duration_ms: 15.5708
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1255.4208

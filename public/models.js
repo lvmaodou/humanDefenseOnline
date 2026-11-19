@@ -26,9 +26,6 @@ export function describeModel(definition = {}, id = '') {
   };
 }
 const ownerDefinition = (unit, definition) => ({ ...definition, ownerColor: unit.ownerColor ?? unit.owner ?? 0 });
-const lowDetailGeometry=new THREE.CylinderGeometry(.16,.23,.82,6);
-const lowDetailMaterial=new THREE.MeshLambertMaterial({color:0xffffff});
-export function lowDetailResources(){return{geometry:lowDetailGeometry,material:lowDetailMaterial};}
 export function createUnitModel(unit, definition = {}) {
   const style = describeModel(definition, unit.type), root = new THREE.Group();
   root.name = `unit:${unit.type}`; root.scale.setScalar(style.size);
@@ -60,11 +57,10 @@ export function createUnitModel(unit, definition = {}) {
     root.userData.constructionBar=progress;root.userData.constructionBackground=progressBackground;
   }
   root.add(bar); root.userData.healthBar=bar; root.userData.health=health; root.userData.mana=mana; root.userData.barWidth=width;
-  if(style.sourceModel&&assets?.has(style.sourceModel)&&unit.owner>=4&&!unit.building)root.userData.lodProxy=true;
   if (assets?.has(style.sourceModel)) {
     root.userData.ready=assets.attach(root,style.sourceModel,ownerDefinition(unit,definition)).then(instance=>{
       if(instance&&root.userData.deathCue)instance.cue('death');
-      else instance?.setConstruction(root.userData.construction || null);
+      else {instance?.setConstruction(root.userData.construction || null);instance?.setChannel?.(root.userData.entity.channel||null);}
       return instance;
     });
   } else if(style.sourceModel) {
@@ -79,6 +75,7 @@ export function createUnitModel(unit, definition = {}) {
 export function updateUnitConstruction(root,unit,properties='') {
   root.userData.construction=unit.construction&&!unit.dead?{...unit.construction,properties,elapsed:0}:null;
   root.userData.warcraft?.setConstruction(root.userData.construction);
+  root.userData.warcraft?.setChannel?.(unit.channel||null);
 }
 export function cueUnitAnimation(root,kind,animationNames='') {
   if(kind==='death')root.userData.deathCue=true;
@@ -92,24 +89,14 @@ export function animateUnit(root,dt,time,selected=false,camera=null,frustum=null
   animation.elapsed+=dt;
   const construction=root.userData.construction;
   if(construction){construction.elapsed+=dt;root.userData.warcraft?.setConstruction({...construction,progress:Math.min(1,construction.progress+construction.elapsed/construction.duration)});}
-  if(!selected&&frustum?.planes.some(plane=>plane.distanceToPoint(root.position)<-12))return !root.userData.released;
+  animation.culled=Boolean(!selected&&frustum?.planes.some(plane=>plane.distanceToPoint(root.position)<-12));
+  if(animation.culled)return !root.userData.released;
   const distanceSq=camera?camera.position.distanceToSquared(root.position):0;
   const pinned=selected||root.userData.forceDetail;
-  if(root.userData.lodProxy){
-    // Keep the authored Warcraft model visible throughout the play area.  The
-    // shared cylinder is only a far distance fallback for units outside the
-    // focus of the battle; using it at 12-16 world units made ordinary
-    // monsters look like red pillars as soon as they entered the camera.
-    const simplified=root.userData.lowDetail?distanceSq>30*30:distanceSq>40*40;
-    root.userData.lowDetail=Boolean(!pinned&&!unit.dead&&simplified);
-    if(root.userData.warcraft)root.userData.warcraft.coordinate.visible=!root.userData.lowDetail;
-    if(root.userData.fallback)root.userData.fallback.visible=!root.userData.lowDetail;
-  }
-  if(root.userData.lowDetail){
-    root.userData.selection.visible=false;root.userData.healthBar.visible=false;
-    return true;
-  }
+  // Keep the authored model at every zoom. Distance only changes how often
+  // its animation pose is evaluated; it must not change the unit's shape.
   const interval=pinned||distanceSq<28*28?0:distanceSq<64*64?.05:.1;
+  animation.interval=interval;
   if(interval===0||animation.elapsed>=interval){
     const elapsed=animation.elapsed;animation.elapsed=0;
     root.userData.warcraft?.advance(elapsed,rig.move||0);

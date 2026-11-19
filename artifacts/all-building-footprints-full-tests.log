@@ -1,0 +1,1049 @@
+TAP version 13
+# Subtest: ranger set structures use the source model scale, separately from selection scale
+ok 1 - ranger set structures use the source model scale, separately from selection scale
+  ---
+  duration_ms: 21.9211
+  type: 'test'
+  ...
+# Subtest: missing tower actions fall back to Stand of the same upgraded form
+ok 2 - missing tower actions fall back to Stand of the same upgraded form
+  ---
+  duration_ms: 1.7418
+  type: 'test'
+  ...
+# Subtest: ice and fire arrow animation names preserve the original upgraded tower geosets
+ok 3 - ice and fire arrow animation names preserve the original upgraded tower geosets
+  ---
+  duration_ms: 14.2573
+  type: 'test'
+  ...
+# Subtest: unsupported passive spell cues neither replace nor rewind an ongoing tower attack
+ok 4 - unsupported passive spell cues neither replace nor rewind an ongoing tower attack
+  ---
+  duration_ms: 3.7612
+  type: 'test'
+  ...
+# Subtest: shared tower instances keep independent construction, guard and arcane forms through attack and spell cues
+ok 5 - shared tower instances keep independent construction, guard and arcane forms through attack and spell cues
+  ---
+  duration_ms: 11.1052
+  type: 'test'
+  ...
+# Subtest: sequence variants avoid unrelated upgraded, swimming and alternate forms when the requested action is unavailable
+ok 6 - sequence variants avoid unrelated upgraded, swimming and alternate forms when the requested action is unavailable
+  ---
+  duration_ms: 0.5046
+  type: 'test'
+  ...
+# Subtest: all 240 profession forms have reproducible footprints from their original pathing and standing MDX bases
+ok 7 - all 240 profession forms have reproducible footprints from their original pathing and standing MDX bases
+  ---
+  duration_ms: 9298.4301
+  type: 'test'
+  ...
+# Subtest: actual base rotation and original model scale are applied without using the selection-circle scale
+ok 8 - actual base rotation and original model scale are applied without using the selection-circle scale
+  ---
+  duration_ms: 0.7339
+  type: 'test'
+  ...
+# Subtest: construction reserves larger future bases, including all three magic swordsman set upgrades
+ok 9 - construction reserves larger future bases, including all three magic swordsman set upgrades
+  ---
+  duration_ms: 0.5556
+  type: 'test'
+  ...
+# Subtest: each cliff direction rejects a real base overhang while retaining flush placement for smaller buildings
+ok 10 - each cliff direction rejects a real base overhang while retaining flush placement for smaller buildings
+  ---
+  duration_ms: 5.4463
+  type: 'test'
+  ...
+# Subtest: a tiny overhang at a diagonal cliff is detected between path-grid sample points
+ok 11 - a tiny overhang at a diagonal cliff is detected between path-grid sample points
+  ---
+  duration_ms: 1.9011
+  type: 'test'
+  ...
+# Subtest: neighbour collisions use both real footprints and allow touching small footprints
+ok 12 - neighbour collisions use both real footprints and allow touching small footprints
+  ---
+  duration_ms: 2.6419
+  type: 'test'
+  ...
+# Subtest: the enlarged base is checked against map boundaries, decorations and every touched no-build cell
+ok 13 - the enlarged base is checked against map boundaries, decorations and every touched no-build cell
+  ---
+  duration_ms: 4.0824
+  type: 'test'
+  ...
+# Subtest: item construction uses the same footprint and facing as the preview and preserves equipment on invalid sites
+ok 14 - item construction uses the same footprint and facing as the preview and preserves equipment on invalid sites
+  ---
+  duration_ms: 58.2918
+  type: 'test'
+  ...
+# Subtest: legacy tower upgrades reject unsupported or overlapping larger bases before charging resources
+ok 15 - legacy tower upgrades reject unsupported or overlapping larger bases before charging resources
+  ---
+  duration_ms: 18.3263
+  type: 'test'
+  ...
+# Subtest: upgrading existing off-grid buildings validates their actual position without silently snapping
+ok 16 - upgrading existing off-grid buildings validates their actual position without silently snapping
+  ---
+  duration_ms: 17.2252
+  type: 'test'
+  ...
+# Subtest: all twelve original pathing masks retain their actual TGA dimensions and pinned contents
+ok 17 - all twelve original pathing masks retain their actual TGA dimensions and pinned contents
+  ---
+  duration_ms: 10.7602
+  type: 'test'
+  ...
+# Subtest: large unit-model buildings and higher-than-zero front paws contribute real supporting ground
+ok 18 - large unit-model buildings and higher-than-zero front paws contribute real supporting ground
+  ---
+  duration_ms: 0.3257
+  type: 'test'
+  ...
+# Subtest: every profession promotion and paid upgrade fits the footprint reserved by its previous form
+ok 19 - every profession promotion and paid upgrade fits the footprint reserved by its previous form
+  ---
+  duration_ms: 31.6475
+  type: 'test'
+  ...
+# Subtest: later pathing masks are reserved even when neither model has a solid base
+ok 20 - later pathing masks are reserved even when neither model has a solid base
+  ---
+  duration_ms: 0.3993
+  type: 'test'
+  ...
+# Subtest: ordinary construction rejects oversized creature bases before charging and keeps valid sites available
+ok 21 - ordinary construction rejects oversized creature bases before charging and keeps valid sites available
+  ---
+  duration_ms: 17.6425
+  type: 'test'
+  ...
+# Subtest: special masks and unit-model bases are selectable at their outer occupied ground without stealing free neighbours
+ok 22 - special masks and unit-model bases are selectable at their outer occupied ground without stealing free neighbours
+  ---
+  duration_ms: 0.8364
+  type: 'test'
+  ...
+# Subtest: all 314 building profiles reject exactly the unsupported cliff sides and allow supported placement inland
+ok 23 - all 314 building profiles reject exactly the unsupported cliff sides and allow supported placement inland
+  ---
+  duration_ms: 669.5169
+  type: 'test'
+  ...
+# Subtest: all six profession menus start with an affordable original base tower
+ok 24 - all six profession menus start with an affordable original base tower
+  ---
+  duration_ms: 1.9015
+  type: 'test'
+  ...
+# Subtest: building choices explain missing prerequisites and only accept completed living owned towers
+ok 25 - building choices explain missing prerequisites and only accept completed living owned towers
+  ---
+  duration_ms: 0.4221
+  type: 'test'
+  ...
+# Subtest: building choices report gold, lumber, population and ended battles before placement
+ok 26 - building choices report gold, lumber, population and ended battles before placement
+  ---
+  duration_ms: 0.3428
+  type: 'test'
+  ...
+# Subtest: native Birth follows construction progress instead of its authored sixty-second duration
+ok 27 - native Birth follows construction progress instead of its authored sixty-second duration
+  ---
+  duration_ms: 13.4788
+  type: 'test'
+  ...
+# Subtest: an upgrade chooses Birth Upgrade and models without Birth keep their own Stand animation
+ok 28 - an upgrade chooses Birth Upgrade and models without Birth keep their own Stand animation
+  ---
+  duration_ms: 1.6839
+  type: 'test'
+  ...
+# Subtest: a late model load uses the latest construction snapshot and completion clears the progress bar
+ok 29 - a late model load uses the latest construction snapshot and completion clears the progress bar
+  ---
+  duration_ms: 10.8503
+  type: 'test'
+  ...
+# Subtest: all 66 profession buildings use their source duration, stay inactive until completion and finish exactly once
+ok 30 - all 66 profession buildings use their source duration, stay inactive until completion and finish exactly once
+  ---
+  duration_ms: 2815.1669
+  type: 'test'
+  ...
+# Subtest: all 18 item towers use the five-second ability duration and ten-second set upgrade, including reconnect snapshots
+ok 31 - all 18 item towers use the five-second ability duration and ten-second set upgrade, including reconnect snapshots
+  ---
+  duration_ms: 541.8322
+  type: 'test'
+  ...
+# Subtest: construction suppresses attacks and aura sources; completion enables combat
+ok 32 - construction suppresses attacks and aura sources; completion enables combat
+  ---
+  duration_ms: 29.7701
+  type: 'test'
+  ...
+# Subtest: source effects destroyed in the same tick still animate once at the correct terrain position
+ok 33 - source effects destroyed in the same tick still animate once at the correct terrain position
+  ---
+  duration_ms: 5.9446
+  type: 'test'
+  ...
+# Subtest: native spell missiles use the source model, line length, animation and corrected server coordinates
+ok 34 - native spell missiles use the source model, line length, animation and corrected server coordinates
+  ---
+  duration_ms: 3.3356
+  type: 'test'
+  ...
+# Subtest: attached effects resolve prefixed unit IDs and observe destruction in later snapshots
+ok 35 - attached effects resolve prefixed unit IDs and observe destruction in later snapshots
+  ---
+  duration_ms: 1.5951
+  type: 'test'
+  ...
+# Subtest: disposing an effect before asynchronous model loading completes releases the late instance
+ok 36 - disposing an effect before asynchronous model loading completes releases the late instance
+  ---
+  duration_ms: 1.1442
+  type: 'test'
+  ...
+# Subtest: fallback spell positions use the same north/south transform and elevation as units
+ok 37 - fallback spell positions use the same north/south transform and elevation as units
+  ---
+  duration_ms: 13.8583
+  type: 'test'
+  ...
+# Subtest: an oversized building model cannot select the neighbouring ground square
+ok 38 - an oversized building model cannot select the neighbouring ground square
+  ---
+  duration_ms: 3.7828
+  type: 'test'
+  ...
+# Subtest: original set lightning links animate persistently until the source destroys them
+ok 39 - original set lightning links animate persistently until the source destroys them
+  ---
+  duration_ms: 37.7305
+  type: 'test'
+  ...
+# Subtest: all map-referenced items share the available source chest; the stock tome is outside the map drop pool
+ok 40 - all map-referenced items share the available source chest; the stock tome is outside the map drop pool
+  ---
+  duration_ms: 15.4414
+  type: 'test'
+  ...
+# Subtest: source drops have a raycastable model volume, animate and release their native and picking resources once
+ok 41 - source drops have a raycastable model volume, animate and release their native and picking resources once
+  ---
+  duration_ms: 16.3604
+  type: 'test'
+  ...
+# Subtest: picking up a drop while its MDX is loading cannot leave a late native instance in the scene
+ok 42 - picking up a drop while its MDX is loading cannot leave a late native instance in the scene
+  ---
+  duration_ms: 2.6099
+  type: 'test'
+  ...
+# Subtest: original item purchases require real shop stock and the map only supplies its scripted items
+ok 43 - original item purchases require real shop stock and the map only supplies its scripted items
+  ---
+  duration_ms: 198.4321
+  type: 'test'
+  ...
+# Subtest: generated reference pack retains imported source tables, map identity, and custom gameplay constants
+ok 44 - generated reference pack retains imported source tables, map identity, and custom gameplay constants
+  ---
+  duration_ms: 35.555
+  type: 'test'
+  ...
+# Subtest: version 3.0 source content retains original classes, enemies, and late-game waves
+ok 45 - version 3.0 source content retains original classes, enemies, and late-game waves
+  ---
+  duration_ms: 0.7093
+  type: 'test'
+  ...
+# Subtest: converted original startup presents original mode, difficulty, and class choices
+ok 46 - converted original startup presents original mode, difficulty, and class choices
+  ---
+  duration_ms: 124.7497
+  type: 'test'
+  ...
+# Subtest: converted periodic spawn script reaches the first original wave without script errors
+ok 47 - converted periodic spawn script reaches the first original wave without script errors
+  ---
+  duration_ms: 576.9271
+  type: 'test'
+  ...
+# Subtest: original periodic wave triggers reach wave 56 without script errors
+ok 48 - original periodic wave triggers reach wave 56 without script errors
+  ---
+  duration_ms: 6462.2266
+  type: 'test'
+  ...
+# Subtest: ground items use the source map pickup range
+ok 49 - ground items use the source map pickup range
+  ---
+  duration_ms: 24.4443
+  type: 'test'
+  ...
+# Subtest: story passive items follow smart pickup orders and cannot be consumed as active items
+ok 50 - story passive items follow smart pickup orders and cannot be consumed as active items
+  ---
+  duration_ms: 10.6358
+  type: 'test'
+  ...
+# Subtest: real wave deaths follow the original drop rolls, cutoff and all eighteen item choices
+ok 51 - real wave deaths follow the original drop rolls, cutoff and all eighteen item choices
+  ---
+  duration_ms: 31.1519
+  type: 'test'
+  ...
+# Subtest: the original neutral Jaina table makes eight independent half-chance drops only once
+ok 52 - the original neutral Jaina table makes eight independent half-chance drops only once
+  ---
+  duration_ms: 25.052
+  type: 'test'
+  ...
+# Subtest: rogue map triggers toggle the gold drain and blink moves to the chosen point
+ok 53 - rogue map triggers toggle the gold drain and blink moves to the chosen point
+  ---
+  duration_ms: 32.2131
+  type: 'test'
+  ...
+# Subtest: building direction follows original hunter skills rather than a universal turn action
+ok 54 - building direction follows original hunter skills rather than a universal turn action
+  ---
+  duration_ms: 33.457
+  type: 'test'
+  ...
+# Subtest: source pathing and 4x4 tower footprints apply without a player-start radius rule
+ok 55 - source pathing and 4x4 tower footprints apply without a player-start radius rule
+  ---
+  duration_ms: 25.0635
+  type: 'test'
+  ...
+# Subtest: native WPM buildability and original tree footprints prevent construction on roads and decorations
+ok 56 - native WPM buildability and original tree footprints prevent construction on roads and decorations
+  ---
+  duration_ms: 6.5085
+  type: 'test'
+  ...
+# Subtest: grass footprints can sit flush with rendered cliffs while crossing footprints and explicit no-build cells stay blocked
+ok 57 - grass footprints can sit flush with rendered cliffs while crossing footprints and explicit no-build cells stay blocked
+  ---
+  duration_ms: 15.7053
+  type: 'test'
+  ...
+# Subtest: enabled defender weapons use integer rolls and source waves retain disabled weapons
+ok 58 - enabled defender weapons use integer rolls and source waves retain disabled weapons
+  ---
+  duration_ms: 7.0882
+  type: 'test'
+  ...
+# Subtest: weapon damage applies the current runtime attack-type versus armor-type multiplier
+ok 59 - weapon damage applies the current runtime attack-type versus armor-type multiplier
+  ---
+  duration_ms: 11.1297
+  type: 'test'
+  ...
+# Subtest: map speed cap and researched upgrade levels affect live unit stats
+ok 60 - map speed cap and researched upgrade levels affect live unit stats
+  ---
+  duration_ms: 2.1253
+  type: 'test'
+  ...
+# Subtest: path grid routes around blocked cells and clamps blocked destinations to walkable ground
+ok 61 - path grid routes around blocked cells and clamps blocked destinations to walkable ground
+  ---
+  duration_ms: 5.9065
+  type: 'test'
+  ...
+# Subtest: source WPM pathing routes within a lane and rejects unreachable map regions
+ok 62 - source WPM pathing routes within a lane and rejects unreachable map regions
+  ---
+  duration_ms: 30.9853
+  type: 'test'
+  ...
+# Subtest: missile attacks resolve damage only when their original projectile flight completes
+ok 63 - missile attacks resolve damage only when their original projectile flight completes
+  ---
+  duration_ms: 8.009
+  type: 'test'
+  ...
+# Subtest: homing missiles recalculate travel time and target coordinates after movement
+ok 64 - homing missiles recalculate travel time and target coordinates after movement
+  ---
+  duration_ms: 8.7961
+  type: 'test'
+  ...
+# Subtest: missile bounce and concentric splash use the original weapon fields
+ok 65 - missile bounce and concentric splash use the original weapon fields
+  ---
+  duration_ms: 14.863
+  type: 'test'
+  ...
+# Subtest: mline weapons damage targets along their fixed projectile path
+ok 66 - mline weapons damage targets along their fixed projectile path
+  ---
+  duration_ms: 5.8063
+  type: 'test'
+  ...
+# Subtest: all six profession attacks run their passive and map-trigger effects
+ok 67 - all six profession attacks run their passive and map-trigger effects
+  ---
+  duration_ms: 31.108
+  type: 'test'
+  ...
+# Subtest: every tower tier in all six professions completes an attack without runtime errors
+ok 68 - every tower tier in all six professions completes an attack without runtime errors
+  ---
+  duration_ms: 218.8934
+  type: 'test'
+  ...
+# Subtest: advanced profession passives use source damage, duration, and summon fields
+ok 69 - advanced profession passives use source damage, duration, and summon fields
+  ---
+  duration_ms: 23.5258
+  type: 'test'
+  ...
+# Subtest: custom Afae profession casts run JASS effects without mana or generic slow
+ok 70 - custom Afae profession casts run JASS effects without mana or generic slow
+  ---
+  duration_ms: 15.9784
+  type: 'test'
+  ...
+# Subtest: map-defined autocast defaults are visible and disable their automatic combat effects
+ok 71 - map-defined autocast defaults are visible and disable their automatic combat effects
+  ---
+  duration_ms: 17.9293
+  type: 'test'
+  ...
+# Subtest: target actions support clearing a manually assigned enemy
+ok 72 - target actions support clearing a manually assigned enemy
+  ---
+  duration_ms: 5.5855
+  type: 'test'
+  ...
+# Subtest: the original sell ability refunds unit life and removes the sold tower
+ok 73 - the original sell ability refunds unit life and removes the sold tower
+  ---
+  duration_ms: 10.2116
+  type: 'test'
+  ...
+# Subtest: usable and passive inventory items apply their original ability effects
+ok 74 - usable and passive inventory items apply their original ability effects
+  ---
+  duration_ms: 7.4215
+  type: 'test'
+  ...
+# Subtest: targeted items, temporary buffs, resurrection and start-location travel follow source data
+ok 75 - targeted items, temporary buffs, resurrection and start-location travel follow source data
+  ---
+  duration_ms: 8.2304
+  type: 'test'
+  ...
+# Subtest: remaining active items apply level, blight, summon, and lightning-orb behavior
+ok 76 - remaining active items apply level, blight, summon, and lightning-orb behavior
+  ---
+  duration_ms: 7.2293
+  type: 'test'
+  ...
+# Subtest: overlapping original wave spawns can separate and advance without any control buffs
+ok 77 - overlapping original wave spawns can separate and advance without any control buffs
+  ---
+  duration_ms: 174.6392
+  type: 'test'
+  ...
+# Subtest: a temporary crowd keeps its move order and does not repeatedly search the unchanged terrain
+ok 78 - a temporary crowd keeps its move order and does not repeatedly search the unchanged terrain
+  ---
+  duration_ms: 103.7448
+  type: 'test'
+  ...
+# Subtest: entering a region at the final waypoint preserves the next route order issued by the map trigger
+ok 79 - entering a region at the final waypoint preserves the next route order issued by the map trigger
+  ---
+  duration_ms: 9.3363
+  type: 'test'
+  ...
+# Subtest: a terrain path waits for temporary blockers instead of rerunning the same A star path every half second
+ok 80 - a terrain path waits for temporary blockers instead of rerunning the same A star path every half second
+  ---
+  duration_ms: 17.6517
+  type: 'test'
+  ...
+# Subtest: slow and root snapshots report real movement while a nearby swordsman tower keeps attacking
+ok 81 - slow and root snapshots report real movement while a nearby swordsman tower keeps attacking
+  ---
+  duration_ms: 20.72
+  type: 'test'
+  ...
+# Subtest: network snapshots keep player controls while trimming unused neutral unit details
+ok 82 - network snapshots keep player controls while trimming unused neutral unit details
+  ---
+  duration_ms: 4.4078
+  type: 'test'
+  ...
+# Subtest: room simulation stays at 20 Hz while state broadcasts run at 10 Hz
+ok 83 - room simulation stays at 20 Hz while state broadcasts run at 10 Hz
+  ---
+  duration_ms: 2.3319
+  type: 'test'
+  ...
+# Subtest: all original dummy-caster order IDs resolve to their actual native spell family
+ok 84 - all original dummy-caster order IDs resolve to their actual native spell family
+  ---
+  duration_ms: 131.7035
+  type: 'test'
+  ...
+# Subtest: hunter starfall actually damages nearby enemies through the original dummy order
+ok 85 - hunter starfall actually damages nearby enemies through the original dummy order
+  ---
+  duration_ms: 23.598
+  type: 'test'
+  ...
+# Subtest: forked lightning is a single hit on the source number of targets and does not stun
+ok 86 - forked lightning is a single hit on the source number of targets and does not stun
+  ---
+  duration_ms: 26.2579
+  type: 'test'
+  ...
+# Subtest: warlock automatic casts require and consume the original mana cost
+ok 87 - warlock automatic casts require and consume the original mana cost
+  ---
+  duration_ms: 107.5386
+  type: 'test'
+  ...
+# Subtest: ranger barrage launches original missiles at ground and air secondary targets
+ok 88 - ranger barrage launches original missiles at ground and air secondary targets
+  ---
+  duration_ms: 33.8048
+  type: 'test'
+  ...
+# Subtest: high-tier barrage keeps the source target count without an eight-target cap
+ok 89 - high-tier barrage keeps the source target count without an eight-target cap
+  ---
+  duration_ms: 7.4118
+  type: 'test'
+  ...
+# Subtest: black arrow suppresses barrage and a marked enemy raises a skeleton when an ally kills it
+ok 90 - black arrow suppresses barrage and a marked enemy raises a skeleton when an ally kills it
+  ---
+  duration_ms: 9.7976
+  type: 'test'
+  ...
+# Subtest: impale uses wave distance, travel time, damage and hero stun from separate source fields
+ok 91 - impale uses wave distance, travel time, damage and hero stun from separate source fields
+  ---
+  duration_ms: 6.7866
+  type: 'test'
+  ...
+# Subtest: frost nova slows, ensnare roots and shackles disable attacks using hero duration
+ok 92 - frost nova slows, ensnare roots and shackles disable attacks using hero duration
+  ---
+  duration_ms: 7.4755
+  type: 'test'
+  ...
+# Subtest: shadow strike initial and periodic damage survive the short-lived dummy caster
+ok 93 - shadow strike initial and periodic damage survive the short-lived dummy caster
+  ---
+  duration_ms: 6.8439
+  type: 'test'
+  ...
+# Subtest: pocket factories produce militia every four seconds with independent ten-second lives
+ok 94 - pocket factories produce militia every four seconds with independent ten-second lives
+  ---
+  duration_ms: 59.3537
+  type: 'test'
+  ...
+# Subtest: doom persists until death, silences its target and creates the specified warrior
+ok 95 - doom persists until death, silences its target and creates the specified warrior
+  ---
+  duration_ms: 19.2025
+  type: 'test'
+  ...
+# Subtest: infernals retain their source lifetime, permanent immolation and magic immunity
+ok 96 - infernals retain their source lifetime, permanent immolation and magic immunity
+  ---
+  duration_ms: 72.7827
+  type: 'test'
+  ...
+# Subtest: locust swarm releases real source units and removes them when the spell ends
+ok 97 - locust swarm releases real source units and removes them when the spell ends
+  ---
+  duration_ms: 176.3624
+  type: 'test'
+  ...
+# Subtest: frost attack refreshes its native slow instead of stacking it once per arrow
+ok 98 - frost attack refreshes its native slow instead of stacking it once per arrow
+  ---
+  duration_ms: 7.9694
+  type: 'test'
+  ...
+# Subtest: roar defense is armor rather than attack speed and repeated casts refresh one buff
+ok 99 - roar defense is armor rather than attack speed and repeated casts refresh one buff
+  ---
+  duration_ms: 16.7648
+  type: 'test'
+  ...
+# Subtest: range and difficulty technologies affect only the unit types listed by the map
+ok 100 - range and difficulty technologies affect only the unit types listed by the map
+  ---
+  duration_ms: 7.5376
+  type: 'test'
+  ...
+# Subtest: all 56 source waves have their disabled weapons respected near vulnerable summons
+ok 101 - all 56 source waves have their disabled weapons respected near vulnerable summons
+  ---
+  duration_ms: 7.1099
+  type: 'test'
+  ...
+# Subtest: script attack classes, physical armor and weapon bonuses are independent
+ok 102 - script attack classes, physical armor and weapon bonuses are independent
+  ---
+  duration_ms: 6.982
+  type: 'test'
+  ...
+# Subtest: manual commands distinguish native passives, real autocasts and point versus unit targets
+ok 103 - manual commands distinguish native passives, real autocasts and point versus unit targets
+  ---
+  duration_ms: 9.4217
+  type: 'test'
+  ...
+# Subtest: all six professions include every merit tier, manual upgrade and set building with available native models
+ok 104 - all six professions include every merit tier, manual upgrade and set building with available native models
+  ---
+  duration_ms: 350.9326
+  type: 'test'
+  ...
+# Subtest: all 54 native building upgrade edges enforce prerequisites, costs and construction time
+ok 105 - all 54 native building upgrade edges enforce prerequisites, costs and construction time
+  ---
+  duration_ms: 935.3639
+  type: 'test'
+  ...
+# Subtest: source merit promotion and learned abilities execute for all six professions
+ok 106 - source merit promotion and learned abilities execute for all six professions
+  ---
+  duration_ms: 198.3303
+  type: 'test'
+  ...
+# Subtest: set frost and fire arrows honor autocast, native bonuses and frost duration
+ok 107 - set frost and fire arrows honor autocast, native bonuses and frost duration
+  ---
+  duration_ms: 55.6315
+  type: 'test'
+  ...
+# Subtest: set poison and directly attached equipment abilities contribute their source properties
+ok 108 - set poison and directly attached equipment abilities contribute their source properties
+  ---
+  duration_ms: 7.4872
+  type: 'test'
+  ...
+# Subtest: learned marksman and percentage armor auras follow native target masks
+ok 109 - learned marksman and percentage armor auras follow native target masks
+  ---
+  duration_ms: 5.5041
+  type: 'test'
+  ...
+# Subtest: sacrifice war stomp deals native global damage and stun before the scripted death
+ok 110 - sacrifice war stomp deals native global damage and stun before the scripted death
+  ---
+  duration_ms: 126.7726
+  type: 'test'
+  ...
+# Subtest: native buff effects refresh once and are destroyed on expiry or unit removal
+ok 111 - native buff effects refresh once and are destroyed on expiry or unit removal
+  ---
+  duration_ms: 7.8101
+  type: 'test'
+  ...
+# Subtest: learned friendly spells expose autocast and heal mana without selecting an enemy
+ok 112 - learned friendly spells expose autocast and heal mana without selecting an enemy
+  ---
+  duration_ms: 23.3298
+  type: 'test'
+  ...
+# Subtest: hunter set bounce research adds three targets and each bounce travels before dealing damage
+ok 113 - hunter set bounce research adds three targets and each bounce travels before dealing damage
+  ---
+  duration_ms: 11.1165
+  type: 'test'
+  ...
+# Subtest: locust assignment respects the per-target limit and only heals after returning to its caster
+ok 114 - locust assignment respects the per-target limit and only heals after returning to its caster
+  ---
+  duration_ms: 58.1638
+  type: 'test'
+  ...
+# Subtest: stampede beasts travel, collide and use the source explosion radius
+ok 115 - stampede beasts travel, collide and use the source explosion radius
+  ---
+  duration_ms: 8.979
+  type: 'test'
+  ...
+# Subtest: summoned factories accept a rally point and send their children to it
+ok 116 - summoned factories accept a rally point and send their children to it
+  ---
+  duration_ms: 9.0289
+  type: 'test'
+  ...
+# Subtest: an explicit move command suppresses attacks until the summon reaches its destination
+ok 117 - an explicit move command suppresses attacks until the summon reaches its destination
+  ---
+  duration_ms: 10.4459
+  type: 'test'
+  ...
+# Subtest: the original warlock summon spell credits its building and counts gold and player kills once
+ok 118 - the original warlock summon spell credits its building and counts gold and player kills once
+  ---
+  duration_ms: 311.7053
+  type: 'test'
+  ...
+# Subtest: summons retain their specific building through multiple merit promotions
+ok 119 - summons retain their specific building through multiple merit promotions
+  ---
+  duration_ms: 130.1645
+  type: 'test'
+  ...
+# Subtest: native summons and summons created by another summon return merit to their root building
+ok 120 - native summons and summons created by another summon return merit to their root building
+  ---
+  duration_ms: 591.0385
+  type: 'test'
+  ...
+# Subtest: original JASS helper units carry their caster ownership through a delayed trigger
+ok 121 - original JASS helper units carry their caster ownership through a delayed trigger
+  ---
+  duration_ms: 130.6949
+  type: 'test'
+  ...
+# Subtest: dead, sold, transferred, unrelated and hostile sources cannot give a nearby building merit
+ok 122 - dead, sold, transferred, unrelated and hostile sources cannot give a nearby building merit
+  ---
+  duration_ms: 209.0465
+  type: 'test'
+  ...
+# Subtest: building upgrades preserve pending summon merit and each kill keeps its original wave value
+ok 123 - building upgrades preserve pending summon merit and each kill keeps its original wave value
+  ---
+  duration_ms: 82.6451
+  type: 'test'
+  ...
+# Subtest: construction queues merit and flushes it when the building completes
+ok 124 - construction queues merit and flushes it when the building completes
+  ---
+  duration_ms: 100.8921
+  type: 'test'
+  ...
+# Subtest: visible merit thresholds agree with actual original promotions across all six professions
+ok 125 - visible merit thresholds agree with actual original promotions across all six professions
+  ---
+  duration_ms: 548.5505
+  type: 'test'
+  ...
+# Subtest: set-building progress advances through both original skill milestones
+ok 126 - set-building progress advances through both original skill milestones
+  ---
+  duration_ms: 59.1383
+  type: 'test'
+  ...
+# Subtest: learned skills, paid upgrades, training and attack-triggered growth display their own requirements
+ok 127 - learned skills, paid upgrades, training and attack-triggered growth display their own requirements
+  ---
+  duration_ms: 65.459
+  type: 'test'
+  ...
+# Subtest: fast mode advertises the next single-kill promotion and does not use normal merit thresholds
+ok 128 - fast mode advertises the next single-kill promotion and does not use normal merit thresholds
+  ---
+  duration_ms: 58.5156
+  type: 'test'
+  ...
+# Subtest: network state keeps allied growth while compacting enemy-only inspector fields
+ok 129 - network state keeps allied growth while compacting enemy-only inspector fields
+  ---
+  duration_ms: 44.3915
+  type: 'test'
+  ...
+# Human Defense 3.0.0 listening on http://localhost:0
+# Subtest: a disconnected participant resumes the running game with assets, inventory, class and cooldowns intact
+ok 130 - a disconnected participant resumes the running game with assets, inventory, class and cooldowns intact
+  ---
+  duration_ms: 1245.0635
+  type: 'test'
+  ...
+# Subtest: only a valid credential can reclaim a reserved seat after waves start; fresh joins and impostors are rejected
+ok 131 - only a valid credential can reclaim a reserved seat after waves start; fresh joins and impostors are rejected
+  ---
+  duration_ms: 619.3524
+  type: 'test'
+  ...
+# Subtest: resuming in another page replaces the old socket and its delayed close does not disconnect the player
+ok 132 - resuming in another page replaces the old socket and its delayed close does not disconnect the player
+  ---
+  duration_ms: 240.8895
+  type: 'test'
+  ...
+# Subtest: all offline pauses and expires once, while a delayed old socket cannot detach the new owner
+ok 133 - all offline pauses and expires once, while a delayed old socket cannot detach the new owner
+  ---
+  duration_ms: 3.4933
+  type: 'test'
+  ...
+# Subtest: the browser stores the credential, waits for authentication before sending and does not replay actions
+ok 134 - the browser stores the credential, waits for authentication before sending and does not replay actions
+  ---
+  duration_ms: 2.1713
+  type: 'test'
+  ...
+# Subtest: finished matches reject saved credentials and new joins, then release the room when everyone leaves
+ok 135 - finished matches reject saved credentials and new joins, then release the room when everyone leaves
+  ---
+  duration_ms: 1582.8126
+  type: 'test'
+  ...
+# Subtest: returning home invalidates only that player and disconnected teammates can still resume
+ok 136 - returning home invalidates only that player and disconnected teammates can still resume
+  ---
+  duration_ms: 671.9985
+  type: 'test'
+  ...
+# Subtest: a delayed close from a finished room cannot delete a new match using the same code
+ok 137 - a delayed close from a finished room cannot delete a new match using the same code
+  ---
+  duration_ms: 1.4907
+  type: 'test'
+  ...
+# Subtest: match results clear persisted resume credentials, and leaving cancels retries and ignores late messages
+ok 138 - match results clear persisted resume credentials, and leaving cancels retries and ignores late messages
+  ---
+  duration_ms: 10.671
+  type: 'test'
+  ...
+# Subtest: an old result or exit in another page cannot erase the new match resume credential
+ok 139 - an old result or exit in another page cannot erase the new match resume credential
+  ---
+  duration_ms: 3.6346
+  type: 'test'
+  ...
+# Subtest: original water elementals, treants, wolves, bears, lava spawns and infernals accept player movement and retain summon lifetime
+ok 140 - original water elementals, treants, wolves, bears, lava spawns and infernals accept player movement and retain summon lifetime
+  ---
+  duration_ms: 209.7387
+  type: 'test'
+  ...
+# Subtest: summoned melee and ranged units acquire targets before weapon range and attack automatically
+ok 141 - summoned melee and ranged units acquire targets before weapon range and attack automatically
+  ---
+  duration_ms: 51.568
+  type: 'test'
+  ...
+# Subtest: ground summons obey walkability, flying summons cross ground obstacles and ground units, and no-fly barriers stay blocked
+ok 142 - ground summons obey walkability, flying summons cross ground obstacles and ground units, and no-fly barriers stay blocked
+  ---
+  duration_ms: 26.415
+  type: 'test'
+  ...
+# Subtest: fixed summoned factories and towers cannot move, and other players cannot command summons
+ok 143 - fixed summoned factories and towers cannot move, and other players cannot command summons
+  ---
+  duration_ms: 105.5848
+  type: 'test'
+  ...
+# Subtest: teammates transfer gold and lumber atomically and invalid or excessive gifts change neither balance
+ok 144 - teammates transfer gold and lumber atomically and invalid or excessive gifts change neither balance
+  ---
+  duration_ms: 163.6525
+  type: 'test'
+  ...
+# Subtest: a farmer can pick up, drop and hand equipment to a teammate without duplicating or losing charges
+ok 145 - a farmer can pick up, drop and hand equipment to a teammate without duplicating or losing charges
+  ---
+  duration_ms: 114.4608
+  type: 'test'
+  ...
+# Subtest: all six professions build three permanent item towers, upgrade them and trigger the original set ability and links
+ok 146 - all six professions build three permanent item towers, upgrade them and trigger the original set ability and links
+  ---
+  duration_ms: 534.5352
+  type: 'test'
+  ...
+# Subtest: pickup capacity comes from the original inventory ability and buildings without inventory cannot take drops
+ok 147 - pickup capacity comes from the original inventory ability and buildings without inventory cannot take drops
+  ---
+  duration_ms: 29.8956
+  type: 'test'
+  ...
+# Subtest: set construction rejects blocked terrain without consuming equipment and approaches distant valid locations
+ok 148 - set construction rejects blocked terrain without consuming equipment and approaches distant valid locations
+  ---
+  duration_ms: 108.2484
+  type: 'test'
+  ...
+# Subtest: set activation retains the original profession and pairwise distance limits and crazy mode exceptions
+ok 149 - set activation retains the original profession and pairwise distance limits and crazy mode exceptions
+  ---
+  duration_ms: 178.1194
+  type: 'test'
+  ...
+# Subtest: profession set auras affect armor, attack speed, mana recovery and enemy movement without stacking three copies
+ok 150 - profession set auras affect armor, attack speed, mana recovery and enemy movement without stacking three copies
+  ---
+  duration_ms: 146.4661
+  type: 'test'
+  ...
+# Subtest: the completed barbarian set applies its source bash damage and permanent leg-breaking stun
+ok 151 - the completed barbarian set applies its source bash damage and permanent leg-breaking stun
+  ---
+  duration_ms: 45.3272
+  type: 'test'
+  ...
+# Subtest: the completed rogue set increases source theft rewards by 50 percent
+ok 152 - the completed rogue set increases source theft rewards by 50 percent
+  ---
+  duration_ms: 45.173
+  type: 'test'
+  ...
+# Subtest: all 56 wave models remain visible when the camera moves beyond the old cylinder threshold
+ok 153 - all 56 wave models remain visible when the camera moves beyond the old cylinder threshold
+  ---
+  duration_ms: 248.561
+  type: 'test'
+  ...
+# Subtest: offscreen animation work stays culled and a selected or targeted model animates immediately
+ok 154 - offscreen animation work stays culled and a selected or targeted model animates immediately
+  ---
+  duration_ms: 4.3338
+  type: 'test'
+  ...
+# Subtest: a native model draws its cached pose between animation updates and refreshes attack and death cues
+ok 155 - a native model draws its cached pose between animation updates and refreshes attack and death cues
+  ---
+  duration_ms: 10.8593
+  type: 'test'
+  ...
+# Subtest: original class builders, buildings, waves and bosses resolve to source MDX models
+ok 156 - original class builders, buildings, waves and bosses resolve to source MDX models
+  ---
+  duration_ms: 60.4078
+  type: 'test'
+  ...
+# Subtest: source units marked without a model do not receive a fabricated mesh
+ok 157 - source units marked without a model do not receive a fabricated mesh
+  ---
+  duration_ms: 29.7816
+  type: 'test'
+  ...
+# Subtest: doodad texture overrides keep their original BLP resource paths
+ok 158 - doodad texture overrides keep their original BLP resource paths
+  ---
+  duration_ms: 7.1087
+  type: 'test'
+  ...
+# Subtest: original Lordaeron tree crowns resolve the native replaceable foliage texture
+ok 159 - original Lordaeron tree crowns resolve the native replaceable foliage texture
+  ---
+  duration_ms: 229.2045
+  type: 'test'
+  ...
+# Subtest: native model texture uploads ignore terrain flip state and restore the shared context
+ok 160 - native model texture uploads ignore terrain flip state and restore the shared context
+  ---
+  duration_ms: 14.7282
+  type: 'test'
+  ...
+# Subtest: the extracted Peasant keeps its original model and playable animation sequences
+ok 161 - the extracted Peasant keeps its original model and playable animation sequences
+  ---
+  duration_ms: 29.8317
+  type: 'test'
+  ...
+# Subtest: map conversion and default camera retain the original coordinates and values
+ok 162 - map conversion and default camera retain the original coordinates and values
+  ---
+  duration_ms: 0.9814
+  type: 'test'
+  ...
+# Subtest: terrain retains source texture masks and cliff levels for 3D rendering
+ok 163 - terrain retains source texture masks and cliff levels for 3D rendering
+  ---
+  duration_ms: 1.6989
+  type: 'test'
+  ...
+# Subtest: ground variants use opaque atlas squares while corner masks keep their north/south orientation
+ok 164 - ground variants use opaque atlas squares while corner masks keep their north/south orientation
+  ---
+  duration_ms: 4.6975
+  type: 'test'
+  ...
+# Subtest: both surfaces at a ravine boundary use their own ground textures, including flat triangles
+ok 165 - both surfaces at a ravine boundary use their own ground textures, including flat triangles
+  ---
+  duration_ms: 1.9344
+  type: 'test'
+  ...
+# Subtest: cliff walls follow the boundary and match the height used for units
+ok 166 - cliff walls follow the boundary and match the height used for units
+  ---
+  duration_ms: 9.6297
+  type: 'test'
+  ...
+# Subtest: terrain points without a cliff texture do not receive a fallback dirt wall
+ok 167 - terrain points without a cliff texture do not receive a fallback dirt wall
+  ---
+  duration_ms: 1.1623
+  type: 'test'
+  ...
+# Subtest: camera pan bounds include the full visible viewport and allow map-wide navigation
+ok 168 - camera pan bounds include the full visible viewport and allow map-wide navigation
+  ---
+  duration_ms: 24.1882
+  type: 'test'
+  ...
+# Subtest: original spell identifiers still classify fallback effects
+ok 169 - original spell identifiers still classify fallback effects
+  ---
+  duration_ms: 1.4719
+  type: 'test'
+  ...
+# Subtest: projectile visuals follow server corrections and end at their impact cue
+ok 170 - projectile visuals follow server corrections and end at their impact cue
+  ---
+  duration_ms: 28.3974
+  type: 'test'
+  ...
+# Subtest: all six professions retain bounty and wave rewards across the leave-player timer intervals
+ok 171 - all six professions retain bounty and wave rewards across the leave-player timer intervals
+  ---
+  duration_ms: 4388.851
+  type: 'test'
+  ...
+# Subtest: disabled periodic events are skipped and enabling resumes the existing timer schedule
+ok 172 - disabled periodic events are skipped and enabling resumes the existing timer schedule
+  ---
+  duration_ms: 26.8093
+  type: 'test'
+  ...
+# Subtest: a disabled one-shot event expires without being replayed after enabling
+ok 173 - a disabled one-shot event expires without being replayed after enabling
+  ---
+  duration_ms: 8.07
+  type: 'test'
+  ...
+1..173
+# tests 173
+# suites 0
+# pass 173
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11191.5794

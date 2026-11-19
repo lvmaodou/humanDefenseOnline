@@ -1,4 +1,5 @@
 import {fourCC,rawId,clean} from './runtime.js';
+import {abilityControls} from './ability-data.js';
 
 export function installNatives(V){
   const N=V.natives,G=V.globals,C=()=>V.ctx;
@@ -30,10 +31,10 @@ export function installNatives(V){
     GetUnitStateSwap:(state,u)=>state==='UNIT_STATE_LIFE'?u?.hp??0:state==='UNIT_STATE_MAX_LIFE'?u?.maxHp??0:state==='UNIT_STATE_MAX_MANA'?u?.maxMana??0:u?.mana??0,
     SetUnitManaBJ:(u,n)=>{if(u)u.mana=Math.min(u.maxMana,n);},SetUnitManaPercentBJ:(u,n)=>{if(u)u.mana=u.maxMana*n/100;},
     IsUnitAliveBJ:u=>!!u&&!u.death&&!u.removed,IsUnitHidden:u=>!!u?.hidden,IsUnitType:(u,t)=>!!u&&(t==='UNIT_TYPE_STRUCTURE'?u.building:t==='UNIT_TYPE_HERO'?u.raw[0]===u.raw[0].toUpperCase():t==='UNIT_TYPE_FLYING'?V.data.units[u.raw]?.movetp==='fly':false),
-    UnitAddAbility:(u,id)=>{if(u){u.abilities.set(id,1);if(String(V.data.units[u.raw]?.auto||'_').split(',').includes(rawId(id)))u.autoCast?.add(id);}return true;},UnitAddAbilityBJ:(id,u)=>N.UnitAddAbility(u,id),UnitRemoveAbilityBJ:(id,u)=>u?.abilities.delete(id),GetUnitAbilityLevel:(u,id)=>u?.abilities.get(id)||0,
+    UnitAddAbility:(u,id)=>{if(u){u.abilities.set(id,1);if(String(V.data.units[u.raw]?.auto||'').split(',').includes(rawId(id))&&abilityControls(V.data,u.raw,rawId(id),V.ability(id)).autocastSupported)u.autoCast?.add(id);V.refreshItemStats(u);}return true;},UnitAddAbilityBJ:(id,u)=>N.UnitAddAbility(u,id),UnitRemoveAbilityBJ:(id,u)=>{const removed=u?.abilities.delete(id);if(u)V.refreshItemStats(u);return removed;},GetUnitAbilityLevel:(u,id)=>u?.abilities.get(id)||0,
     RemoveUnit:u=>V.removeUnit(u),KillUnit:u=>V.kill(u),ExplodeUnitBJ:u=>{V.effect('explosion',u,u);V.kill(u);},
     UnitDamageTarget:(source,target,damage,attack,ranged,attackType,damageType)=>{V.damage(source,target,damage,attack,damageType,attackType);return true;},
-    SetUnitOwner:(u,p)=>{if(!u)return;const previous=u.owner;if(u.useFood){previous.food-=u.food;p.food+=u.food;}u.owner=p;V.fire('EVENT_UNIT_CHANGE_OWNER',{unit:u,player:p,previousOwner:previous});},
+    SetUnitOwner:(u,p)=>{if(!u)return;const previous=u.owner;if(u.useFood){previous.food-=u.food;p.food+=u.food;}u.owner=p;V.refreshUnitStats(u);V.fire('EVENT_UNIT_CHANGE_OWNER',{unit:u,player:p,previousOwner:previous});},
     SetHeroLevel:(u,level)=>{if(u)u.level=level;},SetHeroStr:(u,n)=>{if(u)u.str=n;},SetHeroAgi:(u,n)=>{if(u)u.agi=n;},SetHeroInt:(u,n)=>{if(u)u.int=n;},
     UnitApplyTimedLifeBJ:(duration,buff,u)=>{if(u)u.expires=V.time+duration;},
     CreateTrigger:()=>{const t=V.handle({enabled:true,conditions:[],actions:[],events:[]});V.triggers.push(t);return t;},

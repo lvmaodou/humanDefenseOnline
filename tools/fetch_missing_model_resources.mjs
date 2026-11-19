@@ -3,6 +3,8 @@ import { resolve, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { deflateSync } from 'node:zlib';
 import { parseMDX, decodeBLP, getBLPImageData } from 'war3-model';
+import { resolveAbility } from '../engine/ability-data.js';
+import { professionAudit } from './audit_professions.mjs';
 
 const root = resolve('.');
 const manifestPath = resolve(root, 'public/warcraft/manifest.json');
@@ -55,6 +57,23 @@ const targets = new Set([
   // dependency of the source model rather than a direct unit data entry.
   'sharedmodels/leaves.mdx',
 ]);
+if (process.argv.includes('--ability-effects')) {
+  const data=JSON.parse(await readFile(resolve(root,'content/original-3.0/data.json'),'utf8'));
+  const script=await readFile(resolve(root,'content/original-3.0/script.j'),'utf8');
+  const unitIds=new Set([...script.matchAll(/'([A-Za-z0-9]{4})'/g)].map(match=>match[1]).filter(id=>data.units[id]));
+  const abilityIds=new Set([...script.matchAll(/'([A-Za-z0-9]{4})'/g)].map(match=>match[1]).filter(id=>data.abilityData[id]||data.abilities[id]));
+  for(const id of unitIds)for(const ability of String(data.units[id].abilList||'').split(','))if(ability&&ability!=='_')abilityIds.add(ability);
+  for(const id of [...abilityIds]){
+    const ability=resolveAbility(data,id);
+    for(let level=1;level<=Math.max(1,Number(ability.levels)||1);level++)for(const field of ['BuffID','EfctID'])for(const reference of String(ability[`${field}${level}`]||'').split(','))if(reference&&reference!=='_')abilityIds.add(reference);
+  }
+  for(const id of abilityIds){
+    const visual={...data.abilityStrings[resolveAbility(data,id).code],...data.abilityStrings[id]};
+    for(const [field,value]of Object.entries(visual))if(/art$/i.test(field))for(const path of String(value).split(','))if(/\.(mdx|mdl)$/i.test(path.trim()))targets.add(modelPath(path.trim()));
+  }
+  const functions=JSON.parse(await readFile(resolve(root,'content/original-3.0/functions.json'),'utf8'));
+  for(const profession of professionAudit(data,functions,manifest))for(const model of profession.models)targets.add(model.path);
+}
 const queue = [...targets];
 const source = new Set();
 const images = new Set();

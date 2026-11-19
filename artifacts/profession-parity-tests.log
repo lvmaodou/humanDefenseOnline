@@ -1,0 +1,204 @@
+TAP version 13
+# Subtest: all original dummy-caster order IDs resolve to their actual native spell family
+ok 1 - all original dummy-caster order IDs resolve to their actual native spell family
+  ---
+  duration_ms: 25.9302
+  type: 'test'
+  ...
+# Subtest: hunter starfall actually damages nearby enemies through the original dummy order
+ok 2 - hunter starfall actually damages nearby enemies through the original dummy order
+  ---
+  duration_ms: 5.7206
+  type: 'test'
+  ...
+# Subtest: forked lightning is a single hit on the source number of targets and does not stun
+ok 3 - forked lightning is a single hit on the source number of targets and does not stun
+  ---
+  duration_ms: 6.0902
+  type: 'test'
+  ...
+# Subtest: warlock automatic casts require and consume the original mana cost
+ok 4 - warlock automatic casts require and consume the original mana cost
+  ---
+  duration_ms: 36.9462
+  type: 'test'
+  ...
+# Subtest: ranger barrage launches original missiles at ground and air secondary targets
+ok 5 - ranger barrage launches original missiles at ground and air secondary targets
+  ---
+  duration_ms: 10.0053
+  type: 'test'
+  ...
+# Subtest: high-tier barrage keeps the source target count without an eight-target cap
+ok 6 - high-tier barrage keeps the source target count without an eight-target cap
+  ---
+  duration_ms: 2.2387
+  type: 'test'
+  ...
+# Subtest: black arrow suppresses barrage and a marked enemy raises a skeleton when an ally kills it
+ok 7 - black arrow suppresses barrage and a marked enemy raises a skeleton when an ally kills it
+  ---
+  duration_ms: 3.4137
+  type: 'test'
+  ...
+# Subtest: impale uses wave distance, travel time, damage and hero stun from separate source fields
+ok 8 - impale uses wave distance, travel time, damage and hero stun from separate source fields
+  ---
+  duration_ms: 3.7253
+  type: 'test'
+  ...
+# Subtest: frost nova slows, ensnare roots and shackles disable attacks using hero duration
+ok 9 - frost nova slows, ensnare roots and shackles disable attacks using hero duration
+  ---
+  duration_ms: 3.6901
+  type: 'test'
+  ...
+# Subtest: shadow strike initial and periodic damage survive the short-lived dummy caster
+ok 10 - shadow strike initial and periodic damage survive the short-lived dummy caster
+  ---
+  duration_ms: 2.2074
+  type: 'test'
+  ...
+# Subtest: pocket factories produce militia every four seconds with independent ten-second lives
+ok 11 - pocket factories produce militia every four seconds with independent ten-second lives
+  ---
+  duration_ms: 19.836
+  type: 'test'
+  ...
+# Subtest: doom persists until death, silences its target and creates the specified warrior
+ok 12 - doom persists until death, silences its target and creates the specified warrior
+  ---
+  duration_ms: 2.2552
+  type: 'test'
+  ...
+# Subtest: infernals retain their source lifetime, permanent immolation and magic immunity
+ok 13 - infernals retain their source lifetime, permanent immolation and magic immunity
+  ---
+  duration_ms: 4.4684
+  type: 'test'
+  ...
+# Subtest: locust swarm releases real source units and removes them when the spell ends
+ok 14 - locust swarm releases real source units and removes them when the spell ends
+  ---
+  duration_ms: 38.4386
+  type: 'test'
+  ...
+# Subtest: frost attack refreshes its native slow instead of stacking it once per arrow
+ok 15 - frost attack refreshes its native slow instead of stacking it once per arrow
+  ---
+  duration_ms: 2.9636
+  type: 'test'
+  ...
+# Subtest: roar defense is armor rather than attack speed and repeated casts refresh one buff
+ok 16 - roar defense is armor rather than attack speed and repeated casts refresh one buff
+  ---
+  duration_ms: 2.1192
+  type: 'test'
+  ...
+# Subtest: range and difficulty technologies affect only the unit types listed by the map
+ok 17 - range and difficulty technologies affect only the unit types listed by the map
+  ---
+  duration_ms: 1.539
+  type: 'test'
+  ...
+# Subtest: all 56 source waves have their disabled weapons respected near vulnerable summons
+ok 18 - all 56 source waves have their disabled weapons respected near vulnerable summons
+  ---
+  duration_ms: 3.7031
+  type: 'test'
+  ...
+# Subtest: script attack classes, physical armor and weapon bonuses are independent
+ok 19 - script attack classes, physical armor and weapon bonuses are independent
+  ---
+  duration_ms: 2.1114
+  type: 'test'
+  ...
+# Subtest: manual commands distinguish native passives, real autocasts and point versus unit targets
+ok 20 - manual commands distinguish native passives, real autocasts and point versus unit targets
+  ---
+  duration_ms: 2.8136
+  type: 'test'
+  ...
+# Subtest: all six professions include every merit tier, manual upgrade and set building with available native models
+ok 21 - all six professions include every merit tier, manual upgrade and set building with available native models
+  ---
+  duration_ms: 85.8777
+  type: 'test'
+  ...
+# Subtest: all 54 native building upgrade edges enforce prerequisites, costs and construction time
+ok 22 - all 54 native building upgrade edges enforce prerequisites, costs and construction time
+  ---
+  duration_ms: 161.4856
+  type: 'test'
+  ...
+# Subtest: source merit promotion and learned abilities execute for all six professions
+ok 23 - source merit promotion and learned abilities execute for all six professions
+  ---
+  duration_ms: 51.1646
+  type: 'test'
+  ...
+# Subtest: set frost and fire arrows honor autocast, native bonuses and frost duration
+ok 24 - set frost and fire arrows honor autocast, native bonuses and frost duration
+  ---
+  duration_ms: 5.2846
+  type: 'test'
+  ...
+# Subtest: set poison and directly attached equipment abilities contribute their source properties
+ok 25 - set poison and directly attached equipment abilities contribute their source properties
+  ---
+  duration_ms: 2.1532
+  type: 'test'
+  ...
+# Subtest: learned marksman and percentage armor auras follow native target masks
+ok 26 - learned marksman and percentage armor auras follow native target masks
+  ---
+  duration_ms: 1.5386
+  type: 'test'
+  ...
+# Subtest: sacrifice war stomp deals native global damage and stun before the scripted death
+ok 27 - sacrifice war stomp deals native global damage and stun before the scripted death
+  ---
+  duration_ms: 50.136
+  type: 'test'
+  ...
+# Subtest: native buff effects refresh once and are destroyed on expiry or unit removal
+ok 28 - native buff effects refresh once and are destroyed on expiry or unit removal
+  ---
+  duration_ms: 2.3849
+  type: 'test'
+  ...
+# Subtest: learned friendly spells expose autocast and heal mana without selecting an enemy
+not ok 29 - learned friendly spells expose autocast and heal mana without selecting an enemy
+  ---
+  duration_ms: 13.0754
+  type: 'test'
+  location: 'C:\\Users\\tdx\\Desktop\\human-defense-online\\tests\\profession-parity.test.js:286:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(friend.mana>0)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/tdx/Desktop/human-defense-online/tests/profession-parity.test.js:291:28)
+    Test.runInAsyncScope (node:async_hooks:228:14)
+    Test.run (node:internal/test_runner/test:1118:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+    Test.postRun (node:internal/test_runner/test:1247:19)
+    Test.run (node:internal/test_runner/test:1175:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:787:7)
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 28
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 765.9724

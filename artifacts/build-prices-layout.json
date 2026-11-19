@@ -1,0 +1,1751 @@
+{
+  "results": [
+    {
+      "device": "landscape",
+      "profession": "h001",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h01N",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01E",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01R",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01O",
+          "price": "800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01D",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h024",
+          "price": "2000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01Y",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01K",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h022",
+          "price": "6000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h026",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01M",
+          "price": "14000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "landscape",
+      "profession": "h002",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h00L",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00H",
+          "price": "250",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00P",
+          "price": "400",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00R",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00T",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00X",
+          "price": "2000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h018",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h010",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h011",
+          "price": "5000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h019",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01A",
+          "price": "13000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "landscape",
+      "profession": "h000",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h044",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04E",
+          "price": "400",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04J",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h049",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04M",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04O",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04D",
+          "price": "4000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04S",
+          "price": "6000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04U",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04X",
+          "price": "10000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04R",
+          "price": "16000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "landscape",
+      "profession": "h004",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h02A",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02L",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02O",
+          "price": "500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02D",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02Q",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02T",
+          "price": "2500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02G",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02Z",
+          "price": "4000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02X",
+          "price": "6500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h032",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02F",
+          "price": "13000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "landscape",
+      "profession": "h003",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h03J",
+          "price": "120",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03N",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03M",
+          "price": "500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03Q",
+          "price": "800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03D",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03S",
+          "price": "2500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03Y",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03G",
+          "price": "3600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03W",
+          "price": "5000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h041",
+          "price": "10000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h043",
+          "price": "15000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "landscape",
+      "profession": "h06C",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h06E",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06N",
+          "price": "350",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06P",
+          "price": "650",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06H",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06T",
+          "price": "1450",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06W",
+          "price": "2800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06K",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06Z",
+          "price": "4500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h073",
+          "price": "6500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h075",
+          "price": "9500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h077",
+          "price": "14500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "portrait",
+      "profession": "h001",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h01N",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01E",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01R",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01O",
+          "price": "800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01D",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h024",
+          "price": "2000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01Y",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01K",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h022",
+          "price": "6000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h026",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01M",
+          "price": "14000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "portrait",
+      "profession": "h002",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h00L",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00H",
+          "price": "250",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00P",
+          "price": "400",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00R",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00T",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00X",
+          "price": "2000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h018",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h010",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h011",
+          "price": "5000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h019",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01A",
+          "price": "13000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "portrait",
+      "profession": "h000",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h044",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04E",
+          "price": "400",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04J",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h049",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04M",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04O",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04D",
+          "price": "4000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04S",
+          "price": "6000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04U",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04X",
+          "price": "10000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04R",
+          "price": "16000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "portrait",
+      "profession": "h004",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h02A",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02L",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02O",
+          "price": "500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02D",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02Q",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02T",
+          "price": "2500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02G",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02Z",
+          "price": "4000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02X",
+          "price": "6500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h032",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02F",
+          "price": "13000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "portrait",
+      "profession": "h003",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h03J",
+          "price": "120",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03N",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03M",
+          "price": "500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03Q",
+          "price": "800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03D",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03S",
+          "price": "2500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03Y",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03G",
+          "price": "3600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03W",
+          "price": "5000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h041",
+          "price": "10000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h043",
+          "price": "15000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "portrait",
+      "profession": "h06C",
+      "panelWidth": 298,
+      "listWidth": 280,
+      "listContentWidth": 280,
+      "rows": [
+        {
+          "unit": "h06E",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06N",
+          "price": "350",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06P",
+          "price": "650",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06H",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06T",
+          "price": "1450",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06W",
+          "price": "2800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06K",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06Z",
+          "price": "4500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h073",
+          "price": "6500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h075",
+          "price": "9500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h077",
+          "price": "14500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "small",
+      "profession": "h001",
+      "panelWidth": 287,
+      "listWidth": 269,
+      "listContentWidth": 269,
+      "rows": [
+        {
+          "unit": "h01N",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01E",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01R",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01O",
+          "price": "800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01D",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h024",
+          "price": "2000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01Y",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01K",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h022",
+          "price": "6000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h026",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01M",
+          "price": "14000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "small",
+      "profession": "h002",
+      "panelWidth": 287,
+      "listWidth": 269,
+      "listContentWidth": 269,
+      "rows": [
+        {
+          "unit": "h00L",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00H",
+          "price": "250",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00P",
+          "price": "400",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00R",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00T",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h00X",
+          "price": "2000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h018",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h010",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h011",
+          "price": "5000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h019",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h01A",
+          "price": "13000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "small",
+      "profession": "h000",
+      "panelWidth": 287,
+      "listWidth": 269,
+      "listContentWidth": 269,
+      "rows": [
+        {
+          "unit": "h044",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04E",
+          "price": "400",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04J",
+          "price": "600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h049",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04M",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04O",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04D",
+          "price": "4000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04S",
+          "price": "6000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04U",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04X",
+          "price": "10000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h04R",
+          "price": "16000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "small",
+      "profession": "h004",
+      "panelWidth": 287,
+      "listWidth": 269,
+      "listContentWidth": 269,
+      "rows": [
+        {
+          "unit": "h02A",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02L",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02O",
+          "price": "500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02D",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02Q",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02T",
+          "price": "2500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02G",
+          "price": "3000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02Z",
+          "price": "4000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02X",
+          "price": "6500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h032",
+          "price": "9000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h02F",
+          "price": "13000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "small",
+      "profession": "h003",
+      "panelWidth": 287,
+      "listWidth": 269,
+      "listContentWidth": 269,
+      "rows": [
+        {
+          "unit": "h03J",
+          "price": "120",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03N",
+          "price": "300",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03M",
+          "price": "500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03Q",
+          "price": "800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03D",
+          "price": "1200",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03S",
+          "price": "2500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03Y",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03G",
+          "price": "3600",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h03W",
+          "price": "5000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h041",
+          "price": "10000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h043",
+          "price": "15000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    },
+    {
+      "device": "small",
+      "profession": "h06C",
+      "panelWidth": 287,
+      "listWidth": 269,
+      "listContentWidth": 269,
+      "rows": [
+        {
+          "unit": "h06E",
+          "price": "100",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06N",
+          "price": "350",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06P",
+          "price": "650",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06H",
+          "price": "1000",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06T",
+          "price": "1450",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06W",
+          "price": "2800",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06K",
+          "price": "3500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h06Z",
+          "price": "4500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h073",
+          "price": "6500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h075",
+          "price": "9500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        },
+        {
+          "unit": "h077",
+          "price": "14500",
+          "width": 33,
+          "contentWidth": 33,
+          "fits": true,
+          "rowFits": true
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -1,4 +1,19 @@
 import { CLIFF_STEP, sampleTerrainHeight } from './terrain-height.js';
+import { splitTerrainTriangle } from './terrain-triangles.js';
+import { buildingFootprints } from './building-footprints.js';
+import { convexHull, rectangle, polygonBounds, polygonsOverlap, clipPolygon, polygonArea } from './footprint-geometry.js';
+
+const footprintCache=new Map();
+export function buildingFootprint(type,x=0,y=0,facing=270,{reserveUpgrades=true}={}) {
+  const key=`${type}:${facing}:${reserveUpgrades}`;
+  let polygon=footprintCache.get(key);
+  if(!polygon){
+    const profile=buildingFootprints[type],path=(reserveUpgrades?profile?.reservedPathing:null)||profile?.pathing||[128,128],radians=facing*Math.PI/180,c=Math.cos(radians),s=Math.sin(radians);
+    polygon=convexHull([...rectangle(0,0,...path),...((reserveUpgrades?profile?.reserved:profile?.base)||[]).map(([px,py])=>[px*c-py*s,px*s+py*c])]);
+    footprintCache.set(key,polygon);if(footprintCache.size>1024)footprintCache.delete(footprintCache.keys().next().value);
+  }
+  return polygon.map(([px,py])=>[x+px,y+py]);
+}
 
 export function originalBuildBlockers(placements) {
   return placements.flatMap(placement => {
@@ -10,18 +25,18 @@ export function originalBuildBlockers(placements) {
   });
 }
 
-export function checkBuildPlacement(terrain, units, x, y) {
+export function checkBuildPlacement(terrain, units, x, y, options={}) {
   if (!Number.isFinite(x) || !Number.isFinite(y)) return { valid: false, reason: '无效位置' };
-  x = Math.round(x / 64) * 64;y = Math.round(y / 64) * 64;
+  if(options.snap!==false){x = Math.round(x / 64) * 64;y = Math.round(y / 64) * 64;}
   const invalid = reason => ({ valid: false, reason, x, y });
   if (!terrain) return invalid('地图数据同步中');
-  // All 66 original profession buildings use 4x4SimpleSolid: 4 pathing cells
-  // of 32 units, with no player-start radius restriction in the map script.
-  const half = 64, path = terrain.pathing, maxX = terrain.offset[0] + (terrain.width - 1) * terrain.tileSize, maxY = terrain.offset[1] + (terrain.height - 1) * terrain.tileSize;
-  if (x - half < terrain.offset[0] || y - half < terrain.offset[1] || x + half > maxX || y + half > maxY) return invalid('建筑占地超出地图边界');
-  let levelFootprint;
-  if (path?.flags) for (let sy = y - 48; sy <= y + 48; sy += 32) for (let sx = x - 48; sx <= x + 48; sx += 32) {
-    const column = Math.floor((sx - terrain.offset[0]) / path.cell), row = Math.floor((sy - terrain.offset[1]) / path.cell);
+  const polygon=buildingFootprint(options.type,x,y,options.facing??270),bounds=polygonBounds(polygon),path=terrain.pathing;
+  const maxX=terrain.offset[0]+(terrain.width-1)*terrain.tileSize,maxY=terrain.offset[1]+(terrain.height-1)*terrain.tileSize;
+  if(bounds.minX<terrain.offset[0]||bounds.minY<terrain.offset[1]||bounds.maxX>maxX||bounds.maxY>maxY)return invalid('建筑占地超出地图边界');
+  if(!footprintFitsSurface(terrain,polygon,x,y))return invalid('建筑底座跨越沟壑边缘或地面不平');
+  if(path?.flags)for(let row=Math.floor((bounds.minY-terrain.offset[1])/path.cell);row<=Math.floor((bounds.maxY-terrain.offset[1]-1e-5)/path.cell);row++)for(let column=Math.floor((bounds.minX-terrain.offset[0])/path.cell);column<=Math.floor((bounds.maxX-terrain.offset[0]-1e-5)/path.cell);column++){
+    const sx=terrain.offset[0]+(column+.5)*path.cell,sy=terrain.offset[1]+(row+.5)*path.cell;
+    if(!polygonsOverlap(polygon,rectangle(sx,sy,path.cell)))continue;
     // WPM 0x08 is unbuildable. 0x04 blocks flying, and cannot substitute for it.
     if (column < 0 || row < 0 || column >= path.width || row >= path.height) return invalid('地形不允许建造');
     const flags = path.flags[row * path.width + column];
@@ -30,11 +45,9 @@ export function checkBuildPlacement(terrain, units, x, y) {
     // Permit that margin only when the entire footprint fits the same rendered
     // upper surface. Explicit no-build/no-fly cells and rock roads stay blocked.
     if (flags !== 202 || !upperCliffGround(terrain, sx, sy, x, y)) return invalid('地形不允许建造');
-    levelFootprint ??= footprintFitsSurface(terrain, x, y, half);
-    if (!levelFootprint) return invalid('建筑占地跨越沟壑边缘');
   }
-  if (terrain.buildBlockers?.some(blocker => Math.abs(blocker.x - x) < blocker.halfWidth + half && Math.abs(blocker.y - y) < blocker.halfHeight + half)) return invalid('树木或装饰物占用此位置');
-  if (units.some(unit => unit.building && !unit.dead && !unit.death && !unit.removed && Math.abs(unit.x - x) < half * 2 && Math.abs(unit.y - y) < half * 2)) return invalid('与已有建筑重叠');
+  if(terrain.buildBlockers?.some(blocker=>polygonsOverlap(polygon,rectangle(blocker.x,blocker.y,blocker.halfWidth*2,blocker.halfHeight*2))))return invalid('树木或装饰物占用此位置');
+  if(units.some(unit=>unit.building&&!unit.dead&&!unit.death&&!unit.removed&&(options.exclude===undefined||(unit.id??unit.hid)!==options.exclude)&&polygonsOverlap(polygon,buildingFootprint(unit.raw||unit.type,unit.x,unit.y,unit.facing??270))))return invalid('与已有建筑底座重叠');
   return { valid: true, x, y, reason: '位置可以建造' };
 }
 function upperCliffGround(terrain, sx, sy, x, y) {
@@ -46,7 +59,17 @@ function upperCliffGround(terrain, sx, sy, x, y) {
     indices.filter((index, i) => heights[i] === high).every(index => terrain.buildableTiles[terrain.textures[index]]);
 }
 
-function footprintFitsSurface(terrain, x, y, half) {
-  const height = sampleTerrainHeight(terrain, x, y), samples = [-half + .001, -32, 0, 32, half - .001];
-  return samples.every(dy => samples.every(dx => Math.abs(sampleTerrainHeight(terrain, x + dx, y + dy) - height) < .001));
+function footprintFitsSurface(terrain, polygon, x, y) {
+  if(!terrain.heights)return true;
+  const height=sampleTerrainHeight(terrain,x,y),bounds=polygonBounds(polygon),cell=terrain.tileSize;
+  const minX=Math.max(0,Math.floor((bounds.minX-terrain.offset[0])/cell)),maxX=Math.min(terrain.width-2,Math.floor((bounds.maxX-terrain.offset[0]-1e-5)/cell));
+  const minY=Math.max(0,Math.floor((bounds.minY-terrain.offset[1])/cell)),maxY=Math.min(terrain.height-2,Math.floor((bounds.maxY-terrain.offset[1]-1e-5)/cell));
+  for(let row=minY;row<=maxY;row++)for(let column=minX;column<=maxX;column++){
+    const corners=[[0,0],[1,0],[0,1],[1,1]].map(([dx,dy])=>({x:terrain.offset[0]+(column+dx)*cell,z:terrain.offset[1]+(row+dy)*cell,height:terrain.heights[(row+dy)*terrain.width+column+dx]||0,u:dx,v:dy}));
+    for(const triangle of [[corners[0],corners[1],corners[2]],[corners[1],corners[3],corners[2]]])for(const surface of splitTerrainTriangle(triangle).surfaces){
+      const clipped=clipPolygon(surface.map(point=>[point.x,point.z,point.height]),polygon);
+      if(clipped.length>=3&&polygonArea(clipped)>1e-4&&clipped.some(point=>Math.abs(point[2]-height)>.001))return false;
+    }
+  }
+  return true;
 }

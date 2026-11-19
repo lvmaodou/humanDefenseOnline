@@ -1,0 +1,4 @@
+Human Defense 3.0.0 listening on http://localhost:0
+{"device":"desktop","passed":true,"gold":600,"buildings":3}
+{"device":"mobile","passed":true,"gold":600,"buildings":3}
+{"device":"portrait","passed":true,"gold":600,"buildings":3}

@@ -43,7 +43,7 @@ test('all 18 item towers use the five-second ability duration and ten-second set
   for (const [index, type] of ['h001', 'h002', 'h000', 'h004', 'h003', 'h06C'].entries()) {
     const { game, worker } = make(type);game.globals.udg_playerzz[0] = index + 1;
     for (const [position, piece] of game.equipment[index].pieces.entries()) {
-      const point = { x: -3008, y: 2816 + position * 128 };game.moveUnit(worker, point.x + 64, point.y);
+      const point = { x: -3008, y: 2816 + position * 192 };game.moveUnit(worker, point.x + 64, point.y);
       const item = game.createItem(piece.item, worker);assert.equal(game.pickup(worker, item), true);
       assert.equal(game.action(0, { type: 'item', unit: worker.hid, item: item.hid, ...point }), true);
       const tower = [...game.units.values()].find(unit => unit.raw === piece.base && !unit.upgradeTo);

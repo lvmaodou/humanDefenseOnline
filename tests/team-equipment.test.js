@@ -55,7 +55,7 @@ test('all six professions build three permanent item towers, upgrade them and tr
     assert.equal(set.pieces.length, 3);
     const towers = [];
     for (const [position, piece] of set.pieces.entries()) {
-      const point = { x: -3008, y: 2816 + position * 128 };game.moveUnit(worker, point.x + 64, point.y);
+      const point = { x: -3008, y: 2816 + position * 192 };game.moveUnit(worker, point.x + 64, point.y);
       const item = game.createItem(piece.item, worker);assert.equal(game.pickup(worker, item), true);
       assert.equal(game.dropItem(worker, item), true);assert.equal(item.charges, 1);
       assert.equal(game.snapshot().items.some(drop => drop.id === item.hid), true);
@@ -110,7 +110,7 @@ test('set construction rejects blocked terrain without consuming equipment and a
   assert.ok([...game.units.values()].some(unit => unit.raw === 'h05G' && unit.x === -3008 && unit.y === 2944));
 });
 
-function upgradeSet(game, setIndex, classId, spacing = 128) {
+function upgradeSet(game, setIndex, classId, spacing = 192) {
   const set = game.equipment[setIndex];game.globals.udg_playerzz[0] = classId;
   const towers = set.pieces.map((piece, index) => {
     const tower = game.createUnit(game.players[0], game.fourCC(piece.base), -3008, 2816 + index * spacing);
@@ -129,7 +129,8 @@ test('profession set auras affect armor, attack speed, mana recovery and enemy m
   const ranger = make();const rangerTowers = upgradeSet(ranger, 4, 5);ranger.updateEquipmentAuras();assert.equal(rangerTowers[0].auraAttackSpeed, .3);
   const warlock = make();const warlocks = upgradeSet(warlock, 3, 4);warlock.updateEquipmentAuras();assert.equal(warlocks[0].auraMana, 3);
   warlocks[0].mana=100;warlock.tick(.2);assert.ok(Math.abs(warlocks[0].mana-102.6)<1e-6,'the native +3 mana/sec aura adds 30% to the source tower regeneration of 10/sec');
-  const mage = warlock.createUnit(warlock.players[0], warlock.fourCC('h07D'), -2752, 2816);warlock.updateEquipmentAuras();assert.equal(mage.auraMana, 0);
+  const mage = warlock.createUnit(warlock.players[0], warlock.fourCC('h06E'), -2752, 2816);warlock.updateEquipmentAuras();assert.equal(mage.auraMana, 0);
+  const setTower=warlock.createUnit(warlock.players[0],warlock.fourCC('h07D'),-2752,2816);warlock.updateEquipmentAuras();assert.equal(setTower.auraMana,3,'the set tower does not have the source sapper classification');
   const sword = make();upgradeSet(sword, 5, 6);const victim = sword.createUnit(sword.players[8], sword.fourCC('hfoo'), -2752, 2944);sword.updateEquipmentAuras();assert.equal(victim.auraMove, -.25);assert.equal(sword.moveSpeed(victim), Number(data.units.hfoo.spd) * .75);
 });
 

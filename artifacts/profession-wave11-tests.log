@@ -1,0 +1,2 @@
+Human Defense 3.0.0 listening on http://localhost:0
+{"wave":11,"profession":"swordsman","units":299,"towers":12,"flyingEnemies":72,"advanced":72,"attacksInFiveSeconds":91,"tickP95Ms":6.62,"tickMaxMs":8.64,"fps":36,"p95FrameMs":67,"packets":67,"p95PacketGapMs":135,"calls":45,"modelFailures":[],"errors":[]}

@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: the original warlock summon spell credits its building and counts gold and player kills once
+ok 1 - the original warlock summon spell credits its building and counts gold and player kills once
+  ---
+  duration_ms: 76.9942
+  type: 'test'
+  ...
+# Subtest: summons retain their specific building through multiple merit promotions
+ok 2 - summons retain their specific building through multiple merit promotions
+  ---
+  duration_ms: 31.2253
+  type: 'test'
+  ...
+# Subtest: native summons and summons created by another summon return merit to their root building
+ok 3 - native summons and summons created by another summon return merit to their root building
+  ---
+  duration_ms: 104.5276
+  type: 'test'
+  ...
+# Subtest: original JASS helper units carry their caster ownership through a delayed trigger
+ok 4 - original JASS helper units carry their caster ownership through a delayed trigger
+  ---
+  duration_ms: 16.5035
+  type: 'test'
+  ...
+# Subtest: dead, sold, transferred, unrelated and hostile sources cannot give a nearby building merit
+ok 5 - dead, sold, transferred, unrelated and hostile sources cannot give a nearby building merit
+  ---
+  duration_ms: 73.2334
+  type: 'test'
+  ...
+# Subtest: building upgrades preserve pending summon merit and each kill keeps its original wave value
+ok 6 - building upgrades preserve pending summon merit and each kill keeps its original wave value
+  ---
+  duration_ms: 18.1142
+  type: 'test'
+  ...
+# Subtest: construction queues merit and flushes it when the building completes
+ok 7 - construction queues merit and flushes it when the building completes
+  ---
+  duration_ms: 19.677
+  type: 'test'
+  ...
+# Subtest: visible merit thresholds agree with actual original promotions across all six professions
+ok 8 - visible merit thresholds agree with actual original promotions across all six professions
+  ---
+  duration_ms: 133.0691
+  type: 'test'
+  ...
+# Subtest: set-building progress advances through both original skill milestones
+ok 9 - set-building progress advances through both original skill milestones
+  ---
+  duration_ms: 28.8647
+  type: 'test'
+  ...
+# Subtest: learned skills, paid upgrades, training and attack-triggered growth display their own requirements
+ok 10 - learned skills, paid upgrades, training and attack-triggered growth display their own requirements
+  ---
+  duration_ms: 24.8448
+  type: 'test'
+  ...
+# Subtest: fast mode advertises the next single-kill promotion and does not use normal merit thresholds
+ok 11 - fast mode advertises the next single-kill promotion and does not use normal merit thresholds
+  ---
+  duration_ms: 19.2843
+  type: 'test'
+  ...
+# Subtest: network state keeps allied growth while compacting enemy-only inspector fields
+ok 12 - network state keeps allied growth while compacting enemy-only inspector fields
+  ---
+  duration_ms: 13.3526
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 761.6355

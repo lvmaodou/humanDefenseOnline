@@ -1,41 +1,8 @@
 import { sourceToWorld } from './coordinates.js';
 import { CLIFF_STEP } from './terrain-height.js';
+import { splitTerrainTriangle } from './terrain-triangles.js';
 export { sampleTerrainHeight } from './terrain-height.js';
-
-// Split each original ground triangle at the middle of a cliff step. Keeping
-// both halves flat leaves a continuous edge on which to build the cliff face.
-export function splitTerrainTriangle(corners) {
-  const low = Math.min(...corners.map(point => point.height));
-  const high = Math.max(...corners.map(point => point.height));
-  if (high - low < CLIFF_STEP) return { surfaces: [corners], wall: null };
-
-  const middle = (low + high) / 2;
-  const crossings = [];
-  const clip = upper => {
-    const polygon = [];
-    for (let i = 0; i < corners.length; i++) {
-      const current = corners[i], next = corners[(i + 1) % corners.length];
-      const inside = upper ? current.height >= middle : current.height < middle;
-      const nextInside = upper ? next.height >= middle : next.height < middle;
-      if (inside) polygon.push({ ...current, height: upper ? high : low });
-      if (inside !== nextInside) {
-        const t = (middle - current.height) / (next.height - current.height);
-        const point = {
-          x: current.x + (next.x - current.x) * t,
-          z: current.z + (next.z - current.z) * t,
-          u: current.u + (next.u - current.u) * t,
-          v: current.v + (next.v - current.v) * t,
-          height: upper ? high : low
-        };
-        polygon.push(point);
-        if (upper) crossings.push(point);
-      }
-    }
-    return polygon;
-  };
-  const surfaces = [clip(true), clip(false)];
-  return { surfaces, wall: { ends: crossings, low, high, lowIndex: corners.find(point => point.height === low).index } };
-}
+export { splitTerrainTriangle } from './terrain-triangles.js';
 
 export function createTerrainGeometry(data, uvForCell, relief = 1) {
   const surface = { positions: [], uvs: [], indices: [] };

@@ -1,0 +1,1817 @@
+{
+  "results": [
+    {
+      "device": "desktop",
+      "zoom": 2.8,
+      "originalModels": 56,
+      "minimumDistance": 42.030654644119416,
+      "maximumDistance": 51.37616013284588,
+      "failedAssets": [],
+      "models": [
+        {
+          "visible": true,
+          "drawCount": 29,
+          "distance": 42.13377413181068,
+          "id": 431,
+          "animation": {
+            "name": "Stand",
+            "frame": 395.5
+          },
+          "type": "nanc",
+          "model": "original-mdx",
+          "path": "units/creeps/archnathidgreen/archnathidgreen.mdx",
+          "source": "Units\\Creeps\\ArchnathidGreen\\ArchnathidGreen",
+          "available": true,
+          "scale": 0.65
+        },
+        {
+          "visible": true,
+          "drawCount": 23,
+          "distance": 43.17393191976966,
+          "id": 432,
+          "animation": {
+            "name": "Stand",
+            "frame": 1197.5
+          },
+          "type": "nano",
+          "model": "original-mdx",
+          "path": "units/creeps/archnathidpurple/archnathidpurple.mdx",
+          "source": "Units\\Creeps\\Archnathidpurple\\Archnathidpurple",
+          "available": true,
+          "scale": 0.7
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 42.580617421055,
+          "id": 433,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1628.8000001907349
+          },
+          "type": "nban",
+          "model": "original-mdx",
+          "path": "units/creeps/bandit/bandit.mdx",
+          "source": "units\\creeps\\Bandit\\Bandit",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 43.26479464620705,
+          "id": 434,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 3128.800000190735
+          },
+          "type": "nbld",
+          "model": "original-mdx",
+          "path": "units/creeps/banditlord/banditlord.mdx",
+          "source": "units\\creeps\\BanditLord\\BanditLord",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 42.06949553875997,
+          "id": 435,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 4667.60000038147
+          },
+          "type": "nbdm",
+          "model": "original-mdx",
+          "path": "units/creeps/dragonspawnblue/dragonspawnblue.mdx",
+          "source": "Units\\Creeps\\DragonSpawnBlue\\DragonSpawnBlue",
+          "available": true,
+          "scale": 0.6
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 43.701744299063385,
+          "id": 436,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 4667.60000038147
+          },
+          "type": "nbdo",
+          "model": "original-mdx",
+          "path": "units/creeps/dragonspawnblue/dragonspawnblue.mdx",
+          "source": "Units\\Creeps\\DragonSpawnBlue\\DragonSpawnBlue",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 44.45869915551884,
+          "id": 437,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1333
+          },
+          "type": "ncer",
+          "model": "original-mdx",
+          "path": "units/creeps/centaur/centaur.mdx",
+          "source": "units\\creeps\\Centaur\\Centaur",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 42.94852652298919,
+          "id": 438,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1333
+          },
+          "type": "ncnk",
+          "model": "original-mdx",
+          "path": "units/creeps/centaurkhan/centaurkhan.mdx",
+          "source": "units\\creeps\\CentaurKhan\\CentaurKhan",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 42.81886671606087,
+          "id": 439,
+          "animation": {
+            "name": "Stand - Var1",
+            "frame": 11334.60000038147
+          },
+          "type": "nscb",
+          "model": "original-mdx",
+          "path": "units/creeps/spidercrabcreep/spidercrabcreep.mdx",
+          "source": "units\\creeps\\SpiderCrabCreep\\SpiderCrabCreep",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 42.030654644119416,
+          "id": 440,
+          "animation": {
+            "name": "Stand - Var1",
+            "frame": 11334.60000038147
+          },
+          "type": "nsc3",
+          "model": "original-mdx",
+          "path": "units/creeps/spidercrabcreep/spidercrabcreep.mdx",
+          "source": "units\\creeps\\SpiderCrabCreep\\SpiderCrabCreep",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 43.29637317037319,
+          "id": 441,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 752.1999998092651
+          },
+          "type": "ugar",
+          "model": "original-mdx",
+          "path": "units/undead/gargoyle/gargoyle.mdx",
+          "source": "units\\undead\\Gargoyle\\Gargoyle",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 44.884027555503366,
+          "id": 442,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 4552.199999809265
+          },
+          "type": "unec",
+          "model": "original-mdx",
+          "path": "units/undead/necromancer/necromancer.mdx",
+          "source": "units\\undead\\Necromancer\\Necromancer",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 46.55437042293571,
+          "id": 443,
+          "animation": {
+            "name": "Stand",
+            "frame": 3511.6000003814697
+          },
+          "type": "ucry",
+          "model": "original-mdx",
+          "path": "units/undead/cryptfiend/cryptfiend.mdx",
+          "source": "units\\undead\\CryptFiend\\CryptFiend",
+          "available": true,
+          "scale": 0.7
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 44.93672668731986,
+          "id": 444,
+          "animation": {
+            "name": "Stand",
+            "frame": 8619.199999809265
+          },
+          "type": "umtw",
+          "model": "original-mdx",
+          "path": "units/undead/meatwagon/meatwagon.mdx",
+          "source": "units\\undead\\MeatWagon\\MeatWagon",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 43.626934401420634,
+          "id": 445,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1021
+          },
+          "type": "nrdk",
+          "model": "original-mdx",
+          "path": "units/creeps/reddragonwelp/reddragonwelp.mdx",
+          "source": "units\\creeps\\RedDragonWelp\\RedDragonWelp",
+          "available": true,
+          "scale": 0.7
+        },
+        {
+          "visible": true,
+          "drawCount": 25,
+          "distance": 42.653363351098506,
+          "id": 446,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 901.8000001907349
+          },
+          "type": "nbzd",
+          "model": "original-mdx",
+          "path": "units/creeps/bronzedragon/bronzedragon.mdx",
+          "source": "units\\creeps\\BronzeDragon\\BronzeDragon",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 42.03937921824973,
+          "id": 447,
+          "animation": {
+            "name": "Stand",
+            "frame": 920.6000003814697
+          },
+          "type": "nndr",
+          "model": "original-mdx",
+          "path": "units/creeps/netherdragon/netherdragon.mdx",
+          "source": "units\\creeps\\NetherDragon\\NetherDragon",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 42.46539066982346,
+          "id": 448,
+          "animation": {
+            "name": "stand",
+            "frame": 753.6000003814697
+          },
+          "type": "nrel",
+          "model": "original-mdx",
+          "path": "units/creeps/seaelemental/seaelemental.mdx",
+          "source": "Units\\Creeps\\SeaElemental\\SeaElemental",
+          "available": true,
+          "scale": 0.7
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 43.35100234868513,
+          "id": 449,
+          "animation": {
+            "name": "stand",
+            "frame": 753.6000003814697
+          },
+          "type": "nelb",
+          "model": "original-mdx",
+          "path": "units/human/waterelemental/waterelemental.mdx",
+          "source": "units\\human\\WaterElemental\\WaterElemental",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 44.57924858642951,
+          "id": 450,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1086.6000003814697
+          },
+          "type": "nenc",
+          "model": "original-mdx",
+          "path": "units/creeps/corruptedent/corruptedent.mdx",
+          "source": "units\\creeps\\CorruptedEnt\\CorruptedEnt",
+          "available": true,
+          "scale": 0.9
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 46.12276449244615,
+          "id": 451,
+          "animation": {
+            "name": "Stand",
+            "frame": 920.6000003814697
+          },
+          "type": "ners",
+          "model": "original-mdx",
+          "path": "units/demon/eredarwarlock/eredarwarlock.mdx",
+          "source": "units\\demon\\EredarWarlock\\EredarWarlock",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 49.62783792195461,
+          "id": 452,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 2586.6000003814697
+          },
+          "type": "nfot",
+          "model": "original-mdx",
+          "path": "units/creeps/facelessone/facelessone.mdx",
+          "source": "Units\\Creeps\\FacelessOne\\FacelessOne",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 47.94707808305705,
+          "id": 453,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 3920.6000003814697
+          },
+          "type": "nfgb",
+          "model": "original-mdx",
+          "path": "units/demon/felgaurd/felgaurd.mdx",
+          "source": "units\\demon\\Felgaurd\\Felgaurd",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 46.55021263751374,
+          "id": 454,
+          "animation": {
+            "name": "Stand",
+            "frame": 1086.6000003814697
+          },
+          "type": "npfl",
+          "model": "original-mdx",
+          "path": "units/creeps/felstalkerpurple/felstalkerpurple.mdx",
+          "source": "units\\creeps\\FelstalkerPurple\\FelstalkerPurple",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 45.46341712292112,
+          "id": 455,
+          "animation": {
+            "name": "Walk",
+            "frame": 10214.320000457765
+          },
+          "type": "nfrp",
+          "model": "original-mdx",
+          "path": "units/creeps/furbolgpanda/furbolgpanda.mdx",
+          "source": "units\\creeps\\FurbolgPanda\\FurbolgPanda",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 44.70930883370589,
+          "id": 456,
+          "animation": {
+            "name": "Stand",
+            "frame": 14086.60000038147
+          },
+          "type": "nfra",
+          "model": "original-mdx",
+          "path": "units/creeps/furbolgelder/furbolgelder.mdx",
+          "source": "units\\creeps\\FurbolgElder\\FurbolgElder",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 44.30487892188247,
+          "id": 457,
+          "animation": {
+            "name": "Stand",
+            "frame": 886.6000003814697
+          },
+          "type": "ngh2",
+          "model": "original-mdx",
+          "path": "units/creeps/bansheeghost/bansheeghost.mdx",
+          "source": "units\\creeps\\BansheeGhost\\BansheeGhost",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 44.259714144780006,
+          "id": 458,
+          "animation": {
+            "name": "Stand Ready",
+            "frame": 1420.6000003814697
+          },
+          "type": "nsgb",
+          "model": "original-mdx",
+          "path": "units/creeps/seagiant/seagiant.mdx",
+          "source": "Units\\Creeps\\SeaGiant\\SeaGiant",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 44.57490657390785,
+          "id": 459,
+          "animation": {
+            "name": "Stand",
+            "frame": 29086.60000038147
+          },
+          "type": "nsbm",
+          "model": "original-mdx",
+          "path": "units/creeps/spiderblue/spiderblue.mdx",
+          "source": "units\\creeps\\SpiderBlue\\SpiderBlue",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 45.24292536925069,
+          "id": 460,
+          "animation": {
+            "name": "Stand",
+            "frame": 920.6000003814697
+          },
+          "type": "ngnv",
+          "model": "original-mdx",
+          "path": "units/creeps/gnolloverseer/gnolloverseer.mdx",
+          "source": "units\\creeps\\GnollOverseer\\GnollOverseer",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 46.2484842547576,
+          "id": 461,
+          "animation": {
+            "name": "Stand",
+            "frame": 786.6000003814697
+          },
+          "type": "nggr",
+          "model": "original-mdx",
+          "path": "units/creeps/rockgolem/rockgolem.mdx",
+          "source": "units\\creeps\\RockGolem\\RockGolem",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 47.57018284343183,
+          "id": 462,
+          "animation": {
+            "name": "Stand",
+            "frame": 786.6000003814697
+          },
+          "type": "nwrg",
+          "model": "original-mdx",
+          "path": "units/creeps/golemstatue/golemstatue.mdx",
+          "source": "units\\creeps\\GolemStatue\\GolemStatue",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 49.18254055711752,
+          "id": 463,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1086.6000003814697
+          },
+          "type": "nhrq",
+          "model": "original-mdx",
+          "path": "units/creeps/harpyqueen/harpyqueen.mdx",
+          "source": "units\\creeps\\HarpyQueen\\HarpyQueen",
+          "available": true,
+          "scale": 1.5
+        },
+        {
+          "visible": true,
+          "drawCount": 22,
+          "distance": 49.16071963591302,
+          "id": 464,
+          "animation": {
+            "name": "Stand",
+            "frame": 6553.60000038147
+          },
+          "type": "nhhr",
+          "model": "original-mdx",
+          "path": "units/undead/acolyte/acolyte.mdx",
+          "source": "units\\undead\\Acolyte\\Acolyte",
+          "available": true,
+          "scale": 1.5
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 47.63167386325844,
+          "id": 465,
+          "animation": {
+            "name": "Stand",
+            "frame": 13968.10000038147
+          },
+          "type": "nahy",
+          "model": "original-mdx",
+          "path": "units/creeps/hydra/hydra.mdx",
+          "source": "Units\\Creeps\\Hydra\\Hydra",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 46.398021023647026,
+          "id": 466,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1702.1000003814697
+          },
+          "type": "nitp",
+          "model": "original-mdx",
+          "path": "units/creeps/icetrollshadowpriest/icetrollshadowpriest.mdx",
+          "source": "units\\creeps\\IceTrollShadowPriest\\IceTrollShadowPriest",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 45.48380321395481,
+          "id": 467,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1702.1000003814697
+          },
+          "type": "nitw",
+          "model": "original-mdx",
+          "path": "units/creeps/icetroll/icetroll.mdx",
+          "source": "units\\creeps\\IceTroll\\IceTroll",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 44.90853320584785,
+          "id": 468,
+          "animation": {
+            "name": "Stand",
+            "frame": 93968.10000038147
+          },
+          "type": "nina",
+          "model": "original-mdx",
+          "path": "units/creeps/infernalcannonflame/infernalcannonflame.mdx",
+          "source": "units\\creeps\\InfernalCannonFlame\\InfernalCannonFlame",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 44.6853035638756,
+          "id": 469,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 968.1000003814697
+          },
+          "type": "nkol",
+          "model": "original-mdx",
+          "path": "units/creeps/kobold/kobold.mdx",
+          "source": "units\\creeps\\Kobold\\Kobold",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 44.81937476684261,
+          "id": 470,
+          "animation": {
+            "name": "Stand",
+            "frame": 167968.10000038147
+          },
+          "type": "nstw",
+          "model": "original-mdx",
+          "path": "units/creeps/thunderlizard/thunderlizard.mdx",
+          "source": "units\\creeps\\ThunderLizard\\ThunderLizard",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 45.30757502212694,
+          "id": 471,
+          "animation": {
+            "name": "Stand",
+            "frame": 3968.1000003814697
+          },
+          "type": "nlpr",
+          "model": "original-mdx",
+          "path": "units/creeps/lobstrokkred/lobstrokkred.mdx",
+          "source": "Units\\Creeps\\Lobstrokkred\\Lobstrokkred",
+          "available": true,
+          "scale": 0.5
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 46.13866441804135,
+          "id": 472,
+          "animation": {
+            "name": "Stand",
+            "frame": 3968.1000003814697
+          },
+          "type": "nlkl",
+          "model": "original-mdx",
+          "path": "units/creeps/lobstrokkgreen/lobstrokkgreen.mdx",
+          "source": "Units\\Creeps\\Lobstrokkgreen\\Lobstrokkgreen",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 47.29457002844628,
+          "id": 473,
+          "animation": {
+            "name": "Stand 1",
+            "frame": 2435.1000003814697
+          },
+          "type": "nwzd",
+          "model": "original-mdx",
+          "path": "units/creeps/banditmage/banditmage.mdx",
+          "source": "units\\creeps\\BanditMage\\BanditMage",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 48.752193325742624,
+          "id": 474,
+          "animation": {
+            "name": "Stand",
+            "frame": 167968.10000038147
+          },
+          "type": "nmgd",
+          "model": "original-mdx",
+          "path": "units/creeps/magnataurblue/magnataurblue.mdx",
+          "source": "Units\\Creeps\\MagnataurBlue\\MagnataurBlue",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 51.37616013284588,
+          "id": 475,
+          "animation": {
+            "name": "Stand 2",
+            "frame": 1302.1000003814697
+          },
+          "type": "nmsc",
+          "model": "original-mdx",
+          "path": "units/creeps/murgulshadowcaster/murgulshadowcaster.mdx",
+          "source": "Units\\Creeps\\MurgulShadowCaster\\MurgulShadowCaster",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 49.754495574679446,
+          "id": 476,
+          "animation": {
+            "name": "Stand 2",
+            "frame": 1302.1000003814697
+          },
+          "type": "nmmu",
+          "model": "original-mdx",
+          "path": "units/creeps/murlocmutant/murlocmutant.mdx",
+          "source": "units\\creeps\\MurlocMutant\\MurlocMutant",
+          "available": true,
+          "scale": 2
+        },
+        {
+          "visible": true,
+          "drawCount": 21,
+          "distance": 48.40981129673788,
+          "id": 477,
+          "animation": {
+            "name": "Stand",
+            "frame": 3968.1000003814697
+          },
+          "type": "nnwq",
+          "model": "original-mdx",
+          "path": "units/creeps/nerubianqueen/nerubianqueen.mdx",
+          "source": "units\\creeps\\NerubianQueen\\NerubianQueen",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 48.294815934400766,
+          "id": 478,
+          "animation": {
+            "name": "Stand",
+            "frame": 846.4000005722046
+          },
+          "type": "nogl",
+          "model": "original-mdx",
+          "path": "units/creeps/ogrelord/ogrelord.mdx",
+          "source": "units\\creeps\\OgreLord\\OgreLord",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 46.6423608919587,
+          "id": 479,
+          "animation": {
+            "name": "Stand",
+            "frame": 846.4000005722046
+          },
+          "type": "nowe",
+          "model": "original-mdx",
+          "path": "units/creeps/owlbear/owlbear.mdx",
+          "source": "units\\creeps\\Owlbear\\Owlbear",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 46.254835741473485,
+          "id": 480,
+          "animation": {
+            "name": "Stand",
+            "frame": 207180.4000005722
+          },
+          "type": "nplb",
+          "model": "original-mdx",
+          "path": "units/creeps/polarbear/polarbear.mdx",
+          "source": "units\\creeps\\PolarBear\\PolarBear",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 46.21157678943304,
+          "id": 481,
+          "animation": {
+            "name": "Stand",
+            "frame": 13846.400000572205
+          },
+          "type": "nfpc",
+          "model": "original-mdx",
+          "path": "units/creeps/polarfurbolg/polarfurbolg.mdx",
+          "source": "units\\creeps\\PolarFurbolg\\PolarFurbolg",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 46.51354457854874,
+          "id": 482,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 3846.4000005722046
+          },
+          "type": "nrzg",
+          "model": "original-mdx",
+          "path": "units/creeps/razormanechief/razormanechief.mdx",
+          "source": "units\\creeps\\RazorManeChief\\RazorManeChief",
+          "available": true,
+          "scale": 1.5
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 47.15410723527288,
+          "id": 483,
+          "animation": {
+            "name": "Stand",
+            "frame": 7180.400000572205
+          },
+          "type": "nlrv",
+          "model": "original-mdx",
+          "path": "units/creeps/revenantofthewaves/revenantofthewaves.mdx",
+          "source": "units\\creeps\\RevenantOfTheWaves\\RevenantOfTheWaves",
+          "available": true,
+          "scale": 1.5
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 48.11974469020579,
+          "id": 484,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1180.4000005722046
+          },
+          "type": "nvdw",
+          "model": "original-mdx",
+          "path": "units/creeps/voidwalker/voidwalker.mdx",
+          "source": "units\\creeps\\VoidWalker\\VoidWalker",
+          "available": true,
+          "scale": 1.15
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 49.39139428023431,
+          "id": 485,
+          "animation": {
+            "name": "Stand ",
+            "frame": 846.4000005722046
+          },
+          "type": "nwna",
+          "model": "original-mdx",
+          "path": "units/creeps/wendigo/wendigo.mdx",
+          "source": "units\\creeps\\Wendigo\\Wendigo",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 20,
+          "distance": 50.94614635907741,
+          "id": 486,
+          "animation": {
+            "name": "Stand",
+            "frame": 546.4000005722046
+          },
+          "type": "ninf",
+          "model": "original-mdx",
+          "path": "units/demon/infernal/infernal.mdx",
+          "source": "units\\demon\\Infernal\\Infernal",
+          "available": true,
+          "scale": 0.8
+        }
+      ]
+    },
+    {
+      "device": "portrait",
+      "zoom": 2.8,
+      "originalModels": 56,
+      "minimumDistance": 42.1502749031314,
+      "maximumDistance": 54.96246491161166,
+      "failedAssets": [],
+      "models": [
+        {
+          "visible": true,
+          "drawCount": 34,
+          "distance": 42.20074948148481,
+          "id": 431,
+          "animation": {
+            "name": "Stand",
+            "frame": 1817.1999998092651
+          },
+          "type": "nanc",
+          "model": "original-mdx",
+          "path": "units/creeps/archnathidgreen/archnathidgreen.mdx",
+          "source": "Units\\Creeps\\ArchnathidGreen\\ArchnathidGreen",
+          "available": true,
+          "scale": 0.65
+        },
+        {
+          "visible": true,
+          "drawCount": 31,
+          "distance": 42.1502749031314,
+          "id": 432,
+          "animation": {
+            "name": "Stand",
+            "frame": 1476.8999996185303
+          },
+          "type": "nano",
+          "model": "original-mdx",
+          "path": "units/creeps/archnathidpurple/archnathidpurple.mdx",
+          "source": "Units\\Creeps\\Archnathidpurple\\Archnathidpurple",
+          "available": true,
+          "scale": 0.7
+        },
+        {
+          "visible": true,
+          "drawCount": 29,
+          "distance": 42.74574703192147,
+          "id": 433,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1080.8999996185303
+          },
+          "type": "nban",
+          "model": "original-mdx",
+          "path": "units/creeps/bandit/bandit.mdx",
+          "source": "units\\creeps\\Bandit\\Bandit",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 45.8069318060306,
+          "id": 434,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 2472.1000003814697
+          },
+          "type": "nbld",
+          "model": "original-mdx",
+          "path": "units/creeps/banditlord/banditlord.mdx",
+          "source": "units\\creeps\\BanditLord\\BanditLord",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 33,
+          "distance": 42.86355029220736,
+          "id": 435,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 4701.199999809265
+          },
+          "type": "nbdm",
+          "model": "original-mdx",
+          "path": "units/creeps/dragonspawnblue/dragonspawnblue.mdx",
+          "source": "Units\\Creeps\\DragonSpawnBlue\\DragonSpawnBlue",
+          "available": true,
+          "scale": 0.6
+        },
+        {
+          "visible": true,
+          "drawCount": 33,
+          "distance": 46.76546243674485,
+          "id": 436,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 4701.199999809265
+          },
+          "type": "nbdo",
+          "model": "original-mdx",
+          "path": "units/creeps/dragonspawnblue/dragonspawnblue.mdx",
+          "source": "Units\\Creeps\\DragonSpawnBlue\\DragonSpawnBlue",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 33,
+          "distance": 42.715513630365734,
+          "id": 437,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1333
+          },
+          "type": "ncer",
+          "model": "original-mdx",
+          "path": "units/creeps/centaur/centaur.mdx",
+          "source": "units\\creeps\\Centaur\\Centaur",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 42.909075234213276,
+          "id": 438,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 2138.1000003814697
+          },
+          "type": "ncnk",
+          "model": "original-mdx",
+          "path": "units/creeps/centaurkhan/centaurkhan.mdx",
+          "source": "units\\creeps\\CentaurKhan\\CentaurKhan",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 46.99525720215638,
+          "id": 439,
+          "animation": {
+            "name": "Stand - Var1",
+            "frame": 10805.10000038147
+          },
+          "type": "nscb",
+          "model": "original-mdx",
+          "path": "units/creeps/spidercrabcreep/spidercrabcreep.mdx",
+          "source": "units\\creeps\\SpiderCrabCreep\\SpiderCrabCreep",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 45.778720131424336,
+          "id": 440,
+          "animation": {
+            "name": "Stand - Var1",
+            "frame": 10805.10000038147
+          },
+          "type": "nsc3",
+          "model": "original-mdx",
+          "path": "units/creeps/spidercrabcreep/spidercrabcreep.mdx",
+          "source": "units\\creeps\\SpiderCrabCreep\\SpiderCrabCreep",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 42.9671649260652,
+          "id": 441,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1138.1000003814697
+          },
+          "type": "ugar",
+          "model": "original-mdx",
+          "path": "units/undead/gargoyle/gargoyle.mdx",
+          "source": "units\\undead\\Gargoyle\\Gargoyle",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 43.14039326730993,
+          "id": 442,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 4138.10000038147
+          },
+          "type": "unec",
+          "model": "original-mdx",
+          "path": "units/undead/necromancer/necromancer.mdx",
+          "source": "units\\undead\\Necromancer\\Necromancer",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 45.99542994875221,
+          "id": 443,
+          "animation": {
+            "name": "Stand",
+            "frame": 4138.10000038147
+          },
+          "type": "ucry",
+          "model": "original-mdx",
+          "path": "units/undead/cryptfiend/cryptfiend.mdx",
+          "source": "units\\undead\\CryptFiend\\CryptFiend",
+          "available": true,
+          "scale": 0.7
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 47.9541031682802,
+          "id": 444,
+          "animation": {
+            "name": "Stand",
+            "frame": 8205.10000038147
+          },
+          "type": "umtw",
+          "model": "original-mdx",
+          "path": "units/undead/meatwagon/meatwagon.mdx",
+          "source": "units\\undead\\MeatWagon\\MeatWagon",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 45.01202123418224,
+          "id": 445,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1472.1000003814697
+          },
+          "type": "nrdk",
+          "model": "original-mdx",
+          "path": "units/creeps/reddragonwelp/reddragonwelp.mdx",
+          "source": "units\\creeps\\RedDragonWelp\\RedDragonWelp",
+          "available": true,
+          "scale": 0.7
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 42.714963426168175,
+          "id": 446,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1472.1000003814697
+          },
+          "type": "nbzd",
+          "model": "original-mdx",
+          "path": "units/creeps/bronzedragon/bronzedragon.mdx",
+          "source": "units\\creeps\\BronzeDragon\\BronzeDragon",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 28,
+          "distance": 42.85055009475928,
+          "id": 447,
+          "animation": {
+            "name": "Stand",
+            "frame": 972.1000003814697
+          },
+          "type": "nndr",
+          "model": "original-mdx",
+          "path": "units/creeps/netherdragon/netherdragon.mdx",
+          "source": "units\\creeps\\NetherDragon\\NetherDragon",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 45.19574856483612,
+          "id": 448,
+          "animation": {
+            "name": "stand",
+            "frame": 698.1999998092651
+          },
+          "type": "nrel",
+          "model": "original-mdx",
+          "path": "units/creeps/seaelemental/seaelemental.mdx",
+          "source": "Units\\Creeps\\SeaElemental\\SeaElemental",
+          "available": true,
+          "scale": 0.7
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 50.18814433723181,
+          "id": 449,
+          "animation": {
+            "name": "stand",
+            "frame": 698.1999998092651
+          },
+          "type": "nelb",
+          "model": "original-mdx",
+          "path": "units/human/waterelemental/waterelemental.mdx",
+          "source": "units\\human\\WaterElemental\\WaterElemental",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 49.1154709446455,
+          "id": 450,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1031.1999998092651
+          },
+          "type": "nenc",
+          "model": "original-mdx",
+          "path": "units/creeps/corruptedent/corruptedent.mdx",
+          "source": "units\\creeps\\CorruptedEnt\\CorruptedEnt",
+          "available": true,
+          "scale": 0.9
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 46.24732998808395,
+          "id": 451,
+          "animation": {
+            "name": "Stand",
+            "frame": 865.1999998092651
+          },
+          "type": "ners",
+          "model": "original-mdx",
+          "path": "units/demon/eredarwarlock/eredarwarlock.mdx",
+          "source": "units\\demon\\EredarWarlock\\EredarWarlock",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 44.01478815056527,
+          "id": 452,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 2531.199999809265
+          },
+          "type": "nfot",
+          "model": "original-mdx",
+          "path": "units/creeps/facelessone/facelessone.mdx",
+          "source": "Units\\Creeps\\FacelessOne\\FacelessOne",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 42.19734947231903,
+          "id": 453,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 3865.199999809265
+          },
+          "type": "nfgb",
+          "model": "original-mdx",
+          "path": "units/demon/felgaurd/felgaurd.mdx",
+          "source": "units\\demon\\Felgaurd\\Felgaurd",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 42.59597485621521,
+          "id": 454,
+          "animation": {
+            "name": "Stand",
+            "frame": 1031.1999998092651
+          },
+          "type": "npfl",
+          "model": "original-mdx",
+          "path": "units/creeps/felstalkerpurple/felstalkerpurple.mdx",
+          "source": "units\\creeps\\FelstalkerPurple\\FelstalkerPurple",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 44.14638285141525,
+          "id": 455,
+          "animation": {
+            "name": "Stand",
+            "frame": 14031.199999809265
+          },
+          "type": "nfrp",
+          "model": "original-mdx",
+          "path": "units/creeps/furbolgpanda/furbolgpanda.mdx",
+          "source": "units\\creeps\\FurbolgPanda\\FurbolgPanda",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 46.426168954331594,
+          "id": 456,
+          "animation": {
+            "name": "Stand",
+            "frame": 14031.199999809265
+          },
+          "type": "nfra",
+          "model": "original-mdx",
+          "path": "units/creeps/furbolgelder/furbolgelder.mdx",
+          "source": "units\\creeps\\FurbolgElder\\FurbolgElder",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 51.298960101107994,
+          "id": 457,
+          "animation": {
+            "name": "Stand",
+            "frame": 831.1999998092651
+          },
+          "type": "ngh2",
+          "model": "original-mdx",
+          "path": "units/creeps/bansheeghost/bansheeghost.mdx",
+          "source": "units\\creeps\\BansheeGhost\\BansheeGhost",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 51.20490580680349,
+          "id": 458,
+          "animation": {
+            "name": "Stand Ready",
+            "frame": 1365.1999998092651
+          },
+          "type": "nsgb",
+          "model": "original-mdx",
+          "path": "units/creeps/seagiant/seagiant.mdx",
+          "source": "Units\\Creeps\\SeaGiant\\SeaGiant",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 48.46058629026303,
+          "id": 459,
+          "animation": {
+            "name": "Stand",
+            "frame": 29031.199999809265
+          },
+          "type": "nsbm",
+          "model": "original-mdx",
+          "path": "units/creeps/spiderblue/spiderblue.mdx",
+          "source": "units\\creeps\\SpiderBlue\\SpiderBlue",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 46.33480838968087,
+          "id": 460,
+          "animation": {
+            "name": "Stand",
+            "frame": 865.1999998092651
+          },
+          "type": "ngnv",
+          "model": "original-mdx",
+          "path": "units/creeps/gnolloverseer/gnolloverseer.mdx",
+          "source": "units\\creeps\\GnollOverseer\\GnollOverseer",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 44.9154818901106,
+          "id": 461,
+          "animation": {
+            "name": "Stand",
+            "frame": 731.1999998092651
+          },
+          "type": "nggr",
+          "model": "original-mdx",
+          "path": "units/creeps/rockgolem/rockgolem.mdx",
+          "source": "units\\creeps\\RockGolem\\RockGolem",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 44.234774103308546,
+          "id": 462,
+          "animation": {
+            "name": "Stand",
+            "frame": 731.1999998092651
+          },
+          "type": "nwrg",
+          "model": "original-mdx",
+          "path": "units/creeps/golemstatue/golemstatue.mdx",
+          "source": "units\\creeps\\GolemStatue\\GolemStatue",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 44.66767606315722,
+          "id": 463,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1031.1999998092651
+          },
+          "type": "nhrq",
+          "model": "original-mdx",
+          "path": "units/creeps/harpyqueen/harpyqueen.mdx",
+          "source": "units\\creeps\\HarpyQueen\\HarpyQueen",
+          "available": true,
+          "scale": 1.5
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 45.88776884743428,
+          "id": 464,
+          "animation": {
+            "name": "Stand",
+            "frame": 6498.199999809265
+          },
+          "type": "nhhr",
+          "model": "original-mdx",
+          "path": "units/undead/acolyte/acolyte.mdx",
+          "source": "units\\undead\\Acolyte\\Acolyte",
+          "available": true,
+          "scale": 1.5
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 47.83485522825351,
+          "id": 465,
+          "animation": {
+            "name": "Stand",
+            "frame": 14031.199999809265
+          },
+          "type": "nahy",
+          "model": "original-mdx",
+          "path": "units/creeps/hydra/hydra.mdx",
+          "source": "Units\\Creeps\\Hydra\\Hydra",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 27,
+          "distance": 51.41486264941155,
+          "id": 466,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1765.1999998092651
+          },
+          "type": "nitp",
+          "model": "original-mdx",
+          "path": "units/creeps/icetrollshadowpriest/icetrollshadowpriest.mdx",
+          "source": "units\\creeps\\IceTrollShadowPriest\\IceTrollShadowPriest",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 53.70418115677668,
+          "id": 467,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1650.1999998092651
+          },
+          "type": "nitw",
+          "model": "original-mdx",
+          "path": "units/creeps/icetroll/icetroll.mdx",
+          "source": "units\\creeps\\IceTroll\\IceTroll",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 50.62237764696853,
+          "id": 468,
+          "animation": {
+            "name": "Stand",
+            "frame": 93916.19999980927
+          },
+          "type": "nina",
+          "model": "original-mdx",
+          "path": "units/creeps/infernalcannonflame/infernalcannonflame.mdx",
+          "source": "units\\creeps\\InfernalCannonFlame\\InfernalCannonFlame",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 48.09481431032572,
+          "id": 469,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 916.1999998092651
+          },
+          "type": "nkol",
+          "model": "original-mdx",
+          "path": "units/creeps/kobold/kobold.mdx",
+          "source": "units\\creeps\\Kobold\\Kobold",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 45.74304198558065,
+          "id": 470,
+          "animation": {
+            "name": "Stand",
+            "frame": 167916.19999980927
+          },
+          "type": "nstw",
+          "model": "original-mdx",
+          "path": "units/creeps/thunderlizard/thunderlizard.mdx",
+          "source": "units\\creeps\\ThunderLizard\\ThunderLizard",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 44.843192738775926,
+          "id": 471,
+          "animation": {
+            "name": "Stand",
+            "frame": 3916.199999809265
+          },
+          "type": "nlpr",
+          "model": "original-mdx",
+          "path": "units/creeps/lobstrokkred/lobstrokkred.mdx",
+          "source": "Units\\Creeps\\Lobstrokkred\\Lobstrokkred",
+          "available": true,
+          "scale": 0.5
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 44.73698671032078,
+          "id": 472,
+          "animation": {
+            "name": "Stand",
+            "frame": 3916.199999809265
+          },
+          "type": "nlkl",
+          "model": "original-mdx",
+          "path": "units/creeps/lobstrokkgreen/lobstrokkgreen.mdx",
+          "source": "Units\\Creeps\\Lobstrokkgreen\\Lobstrokkgreen",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 45.4299903679478,
+          "id": 473,
+          "animation": {
+            "name": "Stand 1",
+            "frame": 2383.199999809265
+          },
+          "type": "nwzd",
+          "model": "original-mdx",
+          "path": "units/creeps/banditmage/banditmage.mdx",
+          "source": "units\\creeps\\BanditMage\\BanditMage",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 46.886779263927295,
+          "id": 474,
+          "animation": {
+            "name": "Stand",
+            "frame": 167916.19999980927
+          },
+          "type": "nmgd",
+          "model": "original-mdx",
+          "path": "units/creeps/magnataurblue/magnataurblue.mdx",
+          "source": "Units\\Creeps\\MagnataurBlue\\MagnataurBlue",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 49.89674133943142,
+          "id": 475,
+          "animation": {
+            "name": "Stand 2",
+            "frame": 1250.1999998092651
+          },
+          "type": "nmsc",
+          "model": "original-mdx",
+          "path": "units/creeps/murgulshadowcaster/murgulshadowcaster.mdx",
+          "source": "Units\\Creeps\\MurgulShadowCaster\\MurgulShadowCaster",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 52.84099583852046,
+          "id": 476,
+          "animation": {
+            "name": "Stand 2",
+            "frame": 1250.1999998092651
+          },
+          "type": "nmmu",
+          "model": "original-mdx",
+          "path": "units/creeps/murlocmutant/murlocmutant.mdx",
+          "source": "units\\creeps\\MurlocMutant\\MurlocMutant",
+          "available": true,
+          "scale": 2
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 54.96246491161166,
+          "id": 477,
+          "animation": {
+            "name": "Stand",
+            "frame": 3916.199999809265
+          },
+          "type": "nnwq",
+          "model": "original-mdx",
+          "path": "units/creeps/nerubianqueen/nerubianqueen.mdx",
+          "source": "units\\creeps\\NerubianQueen\\NerubianQueen",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 51.95535192906074,
+          "id": 478,
+          "animation": {
+            "name": "Stand",
+            "frame": 916.1999998092651
+          },
+          "type": "nogl",
+          "model": "original-mdx",
+          "path": "units/creeps/ogrelord/ogrelord.mdx",
+          "source": "units\\creeps\\OgreLord\\OgreLord",
+          "available": true,
+          "scale": 1.2
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 49.71471349360753,
+          "id": 479,
+          "animation": {
+            "name": "Stand",
+            "frame": 916.1999998092651
+          },
+          "type": "nowe",
+          "model": "original-mdx",
+          "path": "units/creeps/owlbear/owlbear.mdx",
+          "source": "units\\creeps\\Owlbear\\Owlbear",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 26,
+          "distance": 47.21397426117452,
+          "id": 480,
+          "animation": {
+            "name": "Stand",
+            "frame": 207250.19999980927
+          },
+          "type": "nplb",
+          "model": "original-mdx",
+          "path": "units/creeps/polarbear/polarbear.mdx",
+          "source": "units\\creeps\\PolarBear\\PolarBear",
+          "available": true,
+          "scale": 0.8
+        },
+        {
+          "visible": true,
+          "drawCount": 25,
+          "distance": 46.34269532997905,
+          "id": 481,
+          "animation": {
+            "name": "Stand",
+            "frame": 13801.300000190735
+          },
+          "type": "nfpc",
+          "model": "original-mdx",
+          "path": "units/creeps/polarfurbolg/polarfurbolg.mdx",
+          "source": "units\\creeps\\PolarFurbolg\\PolarFurbolg",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 25,
+          "distance": 46.239933557042164,
+          "id": 482,
+          "animation": {
+            "name": "Stand -1",
+            "frame": 3801.300000190735
+          },
+          "type": "nrzg",
+          "model": "original-mdx",
+          "path": "units/creeps/razormanechief/razormanechief.mdx",
+          "source": "units\\creeps\\RazorManeChief\\RazorManeChief",
+          "available": true,
+          "scale": 1.5
+        },
+        {
+          "visible": true,
+          "drawCount": 25,
+          "distance": 47.301650942747834,
+          "id": 483,
+          "animation": {
+            "name": "Stand",
+            "frame": 7135.300000190735
+          },
+          "type": "nlrv",
+          "model": "original-mdx",
+          "path": "units/creeps/revenantofthewaves/revenantofthewaves.mdx",
+          "source": "units\\creeps\\RevenantOfTheWaves\\RevenantOfTheWaves",
+          "available": true,
+          "scale": 1.5
+        },
+        {
+          "visible": true,
+          "drawCount": 25,
+          "distance": 48.94826071294024,
+          "id": 484,
+          "animation": {
+            "name": "Stand - 1",
+            "frame": 1135.3000001907349
+          },
+          "type": "nvdw",
+          "model": "original-mdx",
+          "path": "units/creeps/voidwalker/voidwalker.mdx",
+          "source": "units\\creeps\\VoidWalker\\VoidWalker",
+          "available": true,
+          "scale": 1.15
+        },
+        {
+          "visible": true,
+          "drawCount": 25,
+          "distance": 51.248592875652506,
+          "id": 485,
+          "animation": {
+            "name": "Stand ",
+            "frame": 801.3000001907349
+          },
+          "type": "nwna",
+          "model": "original-mdx",
+          "path": "units/creeps/wendigo/wendigo.mdx",
+          "source": "units\\creeps\\Wendigo\\Wendigo",
+          "available": true,
+          "scale": 1
+        },
+        {
+          "visible": true,
+          "drawCount": 25,
+          "distance": 54.119352515036546,
+          "id": 486,
+          "animation": {
+            "name": "Stand",
+            "frame": 501.30000019073486
+          },
+          "type": "ninf",
+          "model": "original-mdx",
+          "path": "units/demon/infernal/infernal.mdx",
+          "source": "units\\demon\\Infernal\\Infernal",
+          "available": true,
+          "scale": 0.8
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

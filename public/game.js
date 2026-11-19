@@ -1,14 +1,13 @@
 import * as THREE from 'three';
-import { configureModels, getModelAssets, createUnitModel, animateUnit, cueUnitAnimation, updateUnitConstruction, releaseUnitModel, lowDetailResources } from './models.js';
+import { configureModels, getModelAssets, createUnitModel, animateUnit, cueUnitAnimation, updateUnitConstruction, releaseUnitModel } from './models.js';
 import { createItemModel, animateItem, releaseItemModel } from './item-models.js';
-import { TEAM_COLORS } from './warcraft.js';
 import { BattleEffects, effectStyle } from './effects.js';
 import { createWorldMaterials } from './surface.js';
 import { CLASSIC_CAMERA, cameraOffset, cameraVerticalFov, cameraGroundFootprint, cameraFootprintFits, clampCameraTarget, setCameraTarget, sourceToWorld, worldToSource, terrainSourceBounds } from './coordinates.js';
 import { createOriginalWorld, OriginalEffects } from './original-world.js';
 import { createTerrainGeometry, sampleTerrainHeight } from './terrain-relief.js';
 import { createTerrainAtlas } from './terrain-textures.js';
-import { checkBuildPlacement, originalBuildBlockers } from './placement.js';
+import { checkBuildPlacement, originalBuildBlockers, buildingFootprint } from './placement.js';
 import { enableRotatedListScroll } from './scroll-list.js';
 import { pickBattleObject } from './selection.js';
 import { BattleConnection } from './connection.js';
@@ -35,13 +34,17 @@ const isMovableUnit=unit=>unit?.owner===mySlot&&!unit.dead&&!unit.building&&(uni
 // A small vertical lift makes the map's single-level cliffs readable at game zoom.
 const TERRAIN_RELIEF=1.45;
 window.__itemVisualDebug=()=>[...objects.values()].filter(object=>object.userData.item).map(object=>({id:object.userData.item.id,type:object.userData.item.type,path:object.userData.itemModel,loaded:Boolean(object.userData.warcraft),frame:object.userData.warcraft?.renderer.getFrame()}));
-window.__originalVisualDebug=()=>{camera.updateMatrixWorld(true);return{assets:assets?.stats,effects:effects.stats(),modelLod:{simplified:[...objects.values()].filter(object=>object.userData.lowDetail).length,units:[...objects.values()].filter(object=>object.userData.entity).length},originalEffects:originalEffects?.stats(),originalDoodads:originalDoodads.length,terrainTexture:Boolean(worldMaterials.terrain.map),camera:{target:cameraTarget.toArray(),focus:cameraFocus.toArray(),position:camera.position.toArray(),zoom,far:camera.far,footprint:cameraGroundFootprint(camera,cameraTarget,cameraTarget.y),bounds:meta?.visuals?.camera?.bounds,projectedCorners:[[-64,64],[64,64],[-64,-64],[64,-64]].map(([x,z])=>new THREE.Vector3(x,0,z).project(camera).toArray())},units:[...objects.values()].filter(object=>object.userData.entity).slice(0,18).map(object=>({id:object.userData.entity.id,construction:object.userData.entity.construction,animation:object.userData.warcraft?{name:object.userData.warcraft.resource.model.Sequences[object.userData.warcraft.renderer.getSequence()]?.Name,frame:object.userData.warcraft.renderer.getFrame(),progress:object.userData.warcraft.construction?.progress}:null,type:object.userData.entity.type,model:object.userData.style?.representation,path:object.userData.style?.sourceModel,source:meta?.units[object.userData.entity.type]?.file,available:assets?.has(meta?.units[object.userData.entity.type]?.file),scale:object.userData.baseScale})),renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles}};};
+window.__buildPlacementDebug=()=>{
+  const footprint=previewObject?.visible&&previewObject.userData.footprint;if(!footprint)return null;
+  const position=footprint.geometry.getAttribute('position'),polygon=[];
+  for(let i=0;i<position.count;i++){const point=footprint.localToWorld(new THREE.Vector3().fromBufferAttribute(position,i));polygon.push(worldToSource(point.x,point.z));}
+  return{type:buildingId,...previewSourcePoint,polygon,scale:previewObject.userData.baseScale};
+};
+window.__originalVisualDebug=()=>{camera.updateMatrixWorld(true);return{assets:assets?.stats,effects:effects.stats(),unitRendering:{units:[...objects.values()].filter(object=>object.userData.entity).length,native:[...objects.values()].filter(object=>object.userData.entity&&object.userData.warcraft).length,throttled:[...objects.values()].filter(object=>object.userData.entity&&object.userData.animationState?.interval>0).length},originalEffects:originalEffects?.stats(),originalDoodads:originalDoodads.length,terrainTexture:Boolean(worldMaterials.terrain.map),camera:{target:cameraTarget.toArray(),focus:cameraFocus.toArray(),position:camera.position.toArray(),zoom,far:camera.far,footprint:cameraGroundFootprint(camera,cameraTarget,cameraTarget.y),bounds:meta?.visuals?.camera?.bounds,projectedCorners:[[-64,64],[64,64],[-64,-64],[64,-64]].map(([x,z])=>new THREE.Vector3(x,0,z).project(camera).toArray())},units:[...objects.values()].filter(object=>object.userData.entity).map(object=>({visible:Boolean(object.userData.warcraft?.coordinate.visible&&!object.userData.animationState?.culled),drawCount:object.userData.warcraft?.drawCount||0,distance:camera.position.distanceTo(object.position),id:object.userData.entity.id,construction:object.userData.entity.construction,animation:object.userData.warcraft?{name:object.userData.warcraft.resource.model.Sequences[object.userData.warcraft.renderer.getSequence()]?.Name,frame:object.userData.warcraft.renderer.getFrame(),progress:object.userData.warcraft.construction?.progress}:null,type:object.userData.entity.type,model:object.userData.style?.representation,path:object.userData.style?.sourceModel,source:meta?.units[object.userData.entity.type]?.file,available:assets?.has(meta?.units[object.userData.entity.type]?.file),scale:object.userData.baseScale})),renderer:{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles}};};
 window.__modelDistanceDebug=()=>{const distances=[...objects.values()].filter(object=>object.userData.entity?.owner>=4).map(object=>camera.position.distanceTo(object.position)).sort((a,b)=>a-b);return{min:distances[0]||0,median:distances[Math.floor(distances.length*.5)]||0,p90:distances[Math.floor(distances.length*.9)]||0,max:distances.at(-1)||0};};
 const dayBackground=new THREE.Color('#93a9b5'),nightBackground=new THREE.Color('#202b40'),dayFog=new THREE.Color('#93a9b5'),nightFog=new THREE.Color('#293448'),daySun=new THREE.Color('#ffe5c0'),nightSun=new THREE.Color('#9bb7e8');
 const scene=new THREE.Scene();scene.background=dayBackground.clone();scene.fog=new THREE.Fog(dayFog,112,245);
 const camera=new THREE.PerspectiveCamera(cameraVerticalFov(CLASSIC_CAMERA.fieldOfView),initialViewport.width/initialViewport.height,.1,CLASSIC_CAMERA.farZ/128),cameraProbe=camera.clone(),frameFrustum=new THREE.Frustum(),frameProjection=new THREE.Matrix4();let cameraTarget=new THREE.Vector3(0,0,0),cameraFocus=cameraTarget.clone();camera.position.fromArray(cameraOffset());camera.lookAt(cameraFocus);
-const lowDetailBatchResources=lowDetailResources(),lowDetailBatch=new THREE.InstancedMesh(lowDetailBatchResources.geometry,lowDetailBatchResources.material,16384),instanceTransform=new THREE.Object3D(),instanceTint=new THREE.Color();lowDetailBatch.count=0;lowDetailBatch.frustumCulled=false;lowDetailBatch.renderOrder=3;lowDetailBatch.instanceMatrix.setUsage(THREE.DynamicDrawUsage);scene.add(lowDetailBatch);
-window.__lowDetailInstanceCount=()=>lowDetailBatch.count;
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.setSize(initialViewport.width,initialViewport.height);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const worldMaterials=createWorldMaterials(renderer);
 const hemisphere=new THREE.HemisphereLight(0xe3edf0,0x41483a,.8);scene.add(hemisphere);const sun=new THREE.DirectionalLight(daySun,1.15);sun.position.set(-45,105,60);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-72;sun.shadow.camera.right=72;sun.shadow.camera.top=72;sun.shadow.camera.bottom=-72;sun.shadow.camera.near=1;sun.shadow.camera.far=240;sun.shadow.camera.updateProjectionMatrix();sun.shadow.bias=-.0002;sun.shadow.normalBias=.02;scene.add(sun);
@@ -110,7 +113,8 @@ function renderHud(){
   $('#clock').textContent=`${state.status==='victory'?'守卫成功':state.status==='defeat'?'基地失守':state.wave?`游戏时间 ${Math.floor(state.time/60)}:${String(Math.floor(state.time%60)).padStart(2,'0')}`:'等待开战'}`;
   if(selectedUnit&&!state.units.some(u=>u.id===selectedUnit&&u.owner===mySlot)){
     const previous=unitsById.get(selectedUnit);
-    selectedUnit=previous?.building?state.units.find(unit=>unit.owner===mySlot&&unit.building&&!unit.dead&&Math.hypot(unit.x-previous.x,unit.y-previous.y)<1)?.id||null:null;
+    const replacement=state.units.find(unit=>unit.owner===mySlot&&!unit.dead&&unit.replaces?.includes(selectedUnit));
+    selectedUnit=replacement?.id||(previous?.building?state.units.find(unit=>unit.owner===mySlot&&unit.building&&!unit.dead&&Math.hypot(unit.x-previous.x,unit.y-previous.y)<1)?.id||null:null);
     targetMode=false;
   }
   renderBuildList(self);renderDialogs();updateObjects();renderUnitInspector();renderMobileUnitActions();renderPlayerControls();
@@ -161,13 +165,14 @@ function renderItems(filter=''){
   list.innerHTML=rows.map(([id,item])=>`<div class="item-row" data-catalog-item="${id}"><div class="item-mark">✦</div><div><b>${esc(item.name)}</b><small>${esc(item.description)}</small></div><div class="item-actions">${item.purchasable?`<em>${item.cost||0} 金</em><button data-buy="${id}">购买</button>`:`<span class="item-source">${esc(item.sources.join(' / ')||'装备')}</span>`}</div></div>`).join('')||'<div class="empty-build">没有匹配的物品</div>';
   list.querySelectorAll('[data-buy]').forEach(button=>button.onclick=()=>{const worker=state?.units.find(isPlayerWorker);if(worker)act({type:'buy',unit:worker.id,item:button.dataset.buy});});
 }
+const definitionForAbility=(unit,id)=>meta?.units[unit?.type]?.abilities.find(entry=>entry.id===id)||meta?.abilities?.[id];
 function renderAbilities(){
   const list=$('#ability-list'),autoList=$('#autocast-list'),passiveList=$('#passive-list'),unit=state?.units.find(u=>u.id===selectedUnit&&u.owner===mySlot);
   if(!list||!unit||!meta){if(list)list.innerHTML='';if(autoList)autoList.innerHTML='';if(passiveList)passiveList.innerHTML='';abilitySignature='';return;}
-  const definitions=new Map((meta.units[unit.type]?.abilities||[]).map(a=>[a.id,a]));
+  const definitions=new Map(unit.abilities.map(ability=>[ability.id,definitionForAbility(unit,ability.id)]).filter(([,definition])=>definition));
   const abilities=unit.abilities.filter(a=>a.level>0&&definitions.get(a.id)?.castable&&!['A01H','A07F'].includes(a.id));
   const autos=unit.abilities.filter(a=>a.level>0&&a.autocastSupported);
-  const passives=unit.abilities.filter(a=>a.level>0&&definitions.has(a.id)&&(!definitions.get(a.id).castable||a.id==='A07F')&&!a.autocastSupported&&!['Avul','AInv','A00U'].includes(a.id));
+  const passives=unit.abilities.filter(a=>a.level>0&&definitions.has(a.id)&&(!definitions.get(a.id).castable||a.id==='A07F')&&!a.autocastSupported&&!['Avul','AInv','A00U','A01H'].includes(a.id));
   const goldDrain=Boolean(state.players.find(player=>player.slot===mySlot)?.goldDrain);
   const busy=unit.construct>0||Boolean(unit.upgrade),busyText=unit.upgrade?'升级中':'建造中';
   const signature=`${unit.id}:${castingAbility}:${goldDrain}:${abilities.map(a=>`${a.id}.${a.level}`).join(',')}:${autos.map(a=>`${a.id}.${a.autocast}`).join(',')}:${passives.map(a=>`${a.id}.${a.level}`).join(',')}`;
@@ -181,10 +186,12 @@ function renderAbilities(){
   }
   for(const ability of abilities){
     const button=list.querySelector(`[data-spell="${ability.id}"]`);
-    if(button){button.querySelector('small').textContent=busy?busyText:ability.id==='A098'?(goldDrain?'已开启 · 每0.5秒扣1金':'已关闭 · 点击切换'):ability.cooldown>0?`${ability.cooldown.toFixed(1)}s`:`Lv ${ability.level}`;button.classList.toggle('toggle-active',ability.id==='A098'&&goldDrain);button.disabled=busy||ability.cooldown>0;}
+    if(button){const cost=ability.cost??definitions.get(ability.id)?.cost??0;button.querySelector('small').textContent=busy?busyText:ability.id==='A098'?(goldDrain?'已开启 · 每0.5秒扣1金':'已关闭 · 点击切换'):ability.cooldown>0?`${ability.cooldown.toFixed(1)}s`:cost>unit.mana?`需要 ${cost} 魔法`:cost?`${cost} 魔法`:`Lv ${ability.level}`;button.classList.toggle('toggle-active',ability.id==='A098'&&goldDrain);button.disabled=busy||ability.cooldown>0||cost>unit.mana;}
   }
   autoList.querySelectorAll('button').forEach(button=>button.disabled=busy);
 }
+function growthLabel(growth){return growth.source==='cast'?'技能功勋':growth.kind==='training'?'训练进度':['ability','learn'].includes(growth.kind)?'技能功勋':growth.required===null?'累计功勋':'晋升功勋';}
+function growthValue(growth){return growth.required===null?`${growth.current}`:`${growth.current} / ${growth.required}`;}
 function renderUnitInspector(){
   const unit=state?.units.find(u=>u.id===selectedUnit&&u.owner===mySlot),panel=$('#unit-inspector'),context=$('#context-panel');
   panel.hidden=!unit;context.hidden=!unit&&!buildAreaOpen;
@@ -195,13 +202,21 @@ function renderUnitInspector(){
   $('#context-eyebrow').textContent=unit.building?'BUILDING':isPlayerWorker(unit)?'PLAYER':'UNIT';$('#context-title').textContent=def.name||unit.type;
   if(signature!==inspectorSignature){inspectorSignature=signature;$('#unit-name').textContent=def.name||unit.type;$('#unit-description').textContent=def.tip||'';$('#unit-build').hidden=!def.builds;}
   $('#unit-type').textContent=unit.building?(unit.upgrade?`升级中 ${unit.upgrade.remaining.toFixed(1)} 秒`:unit.construct>0?`建造中 ${unit.construct.toFixed(1)} 秒`:'防御建筑'):unit.itemBuild?'前往装备建造位置':(def.weaponType?'战斗单位':'可操作单位');
-  const upgrade=meta.units[def.upgradeTo];$('#unit-upgrade').hidden=!upgrade;$('#unit-upgrade').disabled=Boolean(unit.upgrade)||unit.construct>0;
-  if(upgrade)$('#unit-upgrade').textContent=unit.upgrade?`升级中 · ${unit.upgrade.remaining.toFixed(1)} 秒`:`升级为${upgrade.name} · ${upgrade.cost}金${upgrade.lumberCost?` / ${upgrade.lumberCost}木`:''} / ${upgrade.food}人口`;
+  const upgrade=meta.units[def.upgradeTo],upgradePlacement=upgrade?checkBuildPlacement(terrain,state.units,unit.x,unit.y,{type:def.upgradeTo,facing:unit.facing,exclude:unit.id,snap:false}):null;
+  $('#unit-upgrade').hidden=!upgrade;$('#unit-upgrade').disabled=Boolean(unit.upgrade)||unit.construct>0||upgradePlacement?.valid===false;
+  if(upgrade)$('#unit-upgrade').textContent=unit.upgrade?`升级中 · ${unit.upgrade.remaining.toFixed(1)} 秒`:upgradePlacement?.valid===false?`无法升级：${upgradePlacement.reason}`:`升级为${upgrade.name} · ${upgrade.cost}金${upgrade.lumberCost?` / ${upgrade.lumberCost}木`:''} / ${upgrade.food}人口`;
   const construction=unit.construction,busy=unit.construct>0||Boolean(unit.upgrade);
   $('#construction-row').hidden=!construction;
-  if(construction){$('#unit-construction-label').textContent=construction.kind==='upgrade'?'升级进度':'建造进度';$('#unit-construction-text').textContent=`${Math.floor(construction.progress*100)}% · 剩余 ${construction.remaining.toFixed(1)} 秒`;$('#unit-construction-bar').style.width=`${construction.progress*100}%`;}
+  if(construction){$('#unit-construction-label').textContent=construction.kind==='upgrade'?'升级进度':'建造进度';$('#unit-construction-text').textContent=`${Math.floor(construction.progress*100+1e-8)}% · 剩余 ${construction.remaining.toFixed(1)} 秒`;$('#unit-construction-bar').style.width=`${construction.progress*100}%`;}
+  const growth=unit.growth;$('#growth-row').hidden=!growth;$('#health-row').hidden=Boolean(growth);
+  if(growth){
+    $('#unit-growth-label').textContent=growthLabel(growth);$('#unit-growth-text').textContent=growthValue(growth);$('#unit-growth-track').hidden=growth.required===null;
+    $('#unit-growth-bar').style.width=`${Math.max(0,Math.min(100,growth.current/Math.max(1,growth.required||1)*100))}%`;
+    $('#unit-growth-next').textContent=[growth.next,growth.fast?'快速模式：再击杀 1 只':null,growth.pending?`含 ${growth.pending} 待结算功勋，建造或升级完成后生效`:null].filter(Boolean).join(' · ');
+    if(!targetMode&&!castingAbility&&!targetingItem)$('#hint').textContent=`${def.name||unit.type} · ${growthLabel(growth)} ${growthValue(growth)}`;
+  }
   $('#unit-health-text').textContent=`${Math.ceil(unit.hp)} / ${Math.ceil(unit.maxHp)}`;$('#unit-health-bar').style.width=`${Math.max(0,Math.min(100,unit.hp/Math.max(1,unit.maxHp)*100))}%`;$('#mana-row').hidden=unit.maxMana<=0;$('#unit-mana-text').textContent=`${Math.ceil(unit.mana)} / ${Math.ceil(unit.maxMana)}`;$('#unit-mana-bar').style.width=`${Math.max(0,Math.min(100,unit.mana/Math.max(1,unit.maxMana)*100))}%`;
-  const stats=[['攻击',def.weaponType?`${def.attackMin}-${def.attackMax}`:'—'],['射程',unit.attackRange?Math.round(unit.attackRange):'—'],['护甲',Number(unit.armor??def.armor??0).toFixed(1)]];$('#unit-stats').innerHTML=stats.map(([name,value])=>`<div class="unit-stat">${name}<b>${esc(value)}</b></div>`).join('');
+  const stats=[['攻击',def.weaponType?`${Math.round(unit.attackMin??def.attackMin)}-${Math.round(unit.attackMax??def.attackMax)}`:'—'],['射程',def.weaponType&&unit.attackRange?Math.round(unit.attackRange):'—'],['护甲',Number(unit.armor??def.armor??0).toFixed(1)]];$('#unit-stats').innerHTML=stats.map(([name,value])=>`<div class="unit-stat">${name}<b title="${esc(value)}">${esc(value)}</b></div>`).join('');
   $('#target-mode').classList.toggle('active',targetMode);$('#target-mode').textContent=targetMode?'点选敌方单位':'指定攻击目标';$('#clear-target').disabled=!unit.target;$('#unit-target').textContent=target?`当前目标：${meta.units[target.type]?.name||target.type}`:targetMode?'请选择一名敌方单位':'当前目标：自动选择';targetUnit=unit.target||null;
   $('#target-mode').disabled=busy;$('#clear-target').disabled=busy||!unit.target;
 }
@@ -220,13 +235,13 @@ function buildCheck(id,x,y){
   const player=state?.players.find(entry=>entry.slot===mySlot),definition=meta?.units[id],builder=buildingItem?state?.units.find(unit=>unit.id===buildingItem.unit&&unit.owner===mySlot&&!unit.dead&&unit.items.some(item=>item.id===buildingItem.item)):state?.units.find(unit=>unit.owner===mySlot&&!unit.dead&&String(meta.units[unit.type]?.builds||'').split(',').includes(id));
   if(state?.status!=='playing')return buildingRequirement(definition||{},player,state?.units||[],meta?.units||{},state?.status);
   if(!definition?.isBuilding||!builder)return{valid:false,reason:'当前职业不能建造该建筑'};
-  const placement=checkBuildPlacement(terrain,state.units,x,y);if(!placement.valid)return placement;
+  const placement=checkBuildPlacement(terrain,state.units,x,y,{type:id});if(!placement.valid)return placement;
   const requirement=buildingRequirement(definition,player,state.units,meta.units,state.status,{item:Boolean(buildingItem)});
   if(!requirement.valid)return{...placement,...requirement};
   return placement;
 }
 function positionBuildPreview(point){if(!buildingId||!point)return;const [sourceX,sourceY]=worldToSource(point.x,point.z),check=buildCheck(buildingId,sourceX,sourceY);previewSourcePoint={x:check.x??Math.round(sourceX/64)*64,y:check.y??Math.round(sourceY/64)*64,check};const [x,z]=sourceToWorld(previewSourcePoint.x,previewSourcePoint.y);ensureBuildPreview();if(!previewObject)return;previewObject.visible=true;previewObject.position.set(x,terrainHeight(previewSourcePoint.x,previewSourcePoint.y),z);previewObject.rotation.y=270*Math.PI/180;previewObject.traverse(object=>{if(!object.isMesh)return;for(const material of(Array.isArray(object.material)?object.material:[object.material]))material.color?.set(check.valid?'#91d684':'#e16c58');});const status=$('#placement-status');status.textContent=check.valid?'绿色位置可以建造':`不可建造：${check.reason}`;status.classList.toggle('invalid',!check.valid);}
-function activateAbility(id){const unit=unitsById.get(selectedUnit),ability=unit?.abilities.find(entry=>entry.id===id),definition=meta.units[unit?.type]?.abilities.find(entry=>entry.id===id);if(!unit||!ability||!definition?.castable||unit.construct>0||unit.upgrade)return;if(ability.cooldown>0){notify(`技能冷却中：${ability.cooldown.toFixed(1)} 秒`);return;}targetMode=false;if(definition.targeting==='unit'||definition.targeting==='point'||definition.targeting==='either'){castingAbility=id;$('#hint').textContent=definition.targeting==='unit'?'选择技能目标':'选择技能施放位置';renderAbilities();return;}act({type:'cast',unit:unit.id,ability:id});}
+function activateAbility(id){const unit=unitsById.get(selectedUnit),ability=unit?.abilities.find(entry=>entry.id===id),definition=definitionForAbility(unit,id);if(!unit||!ability||!definition?.castable||unit.construct>0||unit.upgrade)return;if(ability.cooldown>0){notify(`技能冷却中：${ability.cooldown.toFixed(1)} 秒`);return;}targetMode=false;if(definition.targeting==='unit'||definition.targeting==='point'||definition.targeting==='either'){castingAbility=id;$('#hint').textContent=definition.targeting==='unit'?'选择技能目标':'选择技能施放位置';renderAbilities();return;}act({type:'cast',unit:unit.id,ability:id});}
 function groundAt(clientX,clientY){setPointerFromClient(clientX,clientY);camera.updateMatrixWorld(true);raycaster.setFromCamera(pointer,camera);const floor=objects.get('terrain');const hitGround=floor&&raycaster.intersectObject(floor,false)[0];if(hitGround)return hitGround.point.clone();return raycaster.ray.intersectPlane(groundPlane,new THREE.Vector3());}
 function panPointAt(clientX,clientY){setPointerFromClient(clientX,clientY);camera.updateMatrixWorld(true);raycaster.setFromCamera(pointer,camera);return raycaster.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),-cameraTarget.y),new THREE.Vector3());}
 function footprintAt(distance){cameraProbe.aspect=camera.aspect;cameraProbe.updateProjectionMatrix();cameraProbe.position.copy(cameraTarget).add(new THREE.Vector3(...cameraOffset(CLASSIC_CAMERA,distance)));cameraProbe.lookAt(cameraTarget);cameraProbe.updateMatrixWorld(true);return cameraGroundFootprint(cameraProbe,cameraTarget,cameraTarget.y);}
@@ -239,8 +254,11 @@ function ensureBuildPreview(){
   previewObject=meshEntity(unit);previewObject.visible=false;previewObject.userData.preview=true;previewObject.userData.selection.visible=false;
   // Native MDX materials do not inherit a Three mesh tint. Use a separate
   // ground footprint so valid/invalid placement remains visible for every model.
-  const size=1/previewObject.userData.baseScale,footprint=new THREE.Mesh(new THREE.PlaneGeometry(size,size),new THREE.MeshBasicMaterial({color:0x91d684,transparent:true,opacity:.5,depthWrite:false,side:THREE.DoubleSide}));
-  footprint.rotation.x=-Math.PI/2;footprint.position.y=.04*size;
+  const size=1/previewObject.userData.baseScale,polygon=buildingFootprint(buildingId),vertices=[],indices=[],angle=270*Math.PI/180,c=Math.cos(angle),s=Math.sin(angle);
+  for(const [x,y]of polygon)vertices.push((x*c+y*s)/128*size,.04*size,(x*s-y*c)/128*size);
+  for(let i=1;i<polygon.length-1;i++)indices.push(0,i,i+1);
+  const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.setIndex(indices);geometry.computeBoundingSphere();
+  const footprint=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:0x91d684,transparent:true,opacity:.5,depthWrite:false,side:THREE.DoubleSide}));
   previewObject.add(footprint);previewObject.userData.footprint=footprint;scene.add(previewObject);
 }
 function dropBuildPreview(){if(previewObject){const footprint=previewObject.userData.footprint;footprint?.geometry.dispose();footprint?.material.dispose();releaseUnitModel(previewObject);previewObject=null;}previewSourcePoint=null;}
@@ -249,7 +267,7 @@ function placeAt(point){if(!point||pendingBuild)return false;const [sourceX,sour
 
 function selectUnit(unit){
   selectedUnit=unit.id;targetUnit=unit.target||null;targetMode=false;buildAreaOpen=false;followHero=false;buildingId=null;castingAbility=null;targetingItem=null;buildingItem=null;dropBuildPreview();updatePlacementControls();
-  $('#hint').textContent=isPlayerWorker(unit)?'单击地面移动；建造和装备操作在此面板':isMovableUnit(unit)?'单击地面移动；点击敌人指定攻击':(meta.units[unit.type]?.name||unit.type)+' · HP '+Math.ceil(unit.hp)+' / '+Math.ceil(unit.maxHp);
+  $('#hint').textContent=isPlayerWorker(unit)?'单击地面移动；建造和装备操作在此面板':isMovableUnit(unit)?'单击地面移动；点击敌人指定攻击':unit.growth?`${meta.units[unit.type]?.name||unit.type} · ${growthLabel(unit.growth)} ${growthValue(unit.growth)}`:(meta.units[unit.type]?.name||unit.type)+' · HP '+Math.ceil(unit.hp)+' / '+Math.ceil(unit.maxHp);
   buildSignature='';abilitySignature='';renderBuildList(state.players.find(p=>p.slot===mySlot));renderUnitInspector();
 }
 
@@ -276,7 +294,7 @@ function battleTap(clientX,clientY){
     const point=groundAt(clientX,clientY);if(point){const [x,y]=worldToSource(point.x,point.z);targetingItem=null;act({type:'item',unit:pending.unit,item:pending.item,x,y});}return;
   }
   if(castingAbility&&selectedUnit){
-    const caster=unitsById.get(selectedUnit),definition=meta.units[caster?.type]?.abilities.find(entry=>entry.id===castingAbility),useUnit=definition?.targeting==='unit'&&unit||definition?.targeting==='either'&&unit;
+    const caster=unitsById.get(selectedUnit),definition=definitionForAbility(caster,castingAbility),useUnit=definition?.targeting==='unit'&&unit||definition?.targeting==='either'&&unit;
     if(useUnit)act({type:'cast',unit:selectedUnit,ability:castingAbility,target:unit.id});
     else{const point=groundAt(clientX,clientY);if(point){const [x,y]=worldToSource(point.x,point.z);act({type:'cast',unit:selectedUnit,ability:castingAbility,x,y});}}
     castingAbility=null;abilitySignature='';renderAbilities();return;
@@ -531,26 +549,13 @@ $('#center').addEventListener('click',()=>setTimeout(()=>{followHero=true;zoom=1
 for(const [selector,delta]of [['#zoom-in',-.1],['#zoom-out',.1]])$(selector).addEventListener('click',e=>{e.stopImmediatePropagation();followHero=false;zoom=THREE.MathUtils.clamp(zoom+delta,.55,2.8);constrainCamera();},{capture:true});
 function advanceRemotePosition(obj,dt){const move=obj.userData.remoteMove;if(!move)return;move.elapsed=Math.min(move.elapsed+dt,move.duration);const progress=move.elapsed/move.duration;obj.position.lerpVectors(move.from,move.to,progress);if(progress===1)obj.userData.remoteMove=null;}
 function updateUnitViews(dt,time){
-  let instances=0;
   for(const[key,obj]of objects){
     if(key.startsWith('i')){animateItem(obj,dt);continue;}
     if(!key.startsWith('u'))continue;
     advanceRemotePosition(obj,dt);
     const unit=obj.userData.entity,selected=unit?.id===selectedUnit&&unit?.owner===mySlot;
     obj.userData.forceDetail=unit?.id===targetUnit;
-    const outside=frameFrustum.planes.some(plane=>plane.distanceToPoint(obj.position)<-12);
     animateUnit(obj,dt,time,selected,camera,frameFrustum);
-    if(!obj.userData.lowDetail||outside)continue;
-    instanceTransform.position.copy(obj.position);instanceTransform.position.y+=.42*obj.userData.baseScale;instanceTransform.rotation.copy(obj.rotation);instanceTransform.scale.setScalar(obj.userData.baseScale);instanceTransform.updateMatrix();
-    lowDetailBatch.setMatrixAt(instances,instanceTransform.matrix);
-    const ownerColor=Number(unit.ownerColor??unit.owner);
-    instanceTint.setHex(ownerColor>=4?0xff2626:TEAM_COLORS[ownerColor]||0x23fa35);
-    lowDetailBatch.setColorAt(instances,instanceTint);instances++;
-  }
-  lowDetailBatch.count=instances;
-  if(instances){
-    lowDetailBatch.instanceMatrix.clearUpdateRanges();lowDetailBatch.instanceMatrix.addUpdateRange(0,instances*16);lowDetailBatch.instanceMatrix.needsUpdate=true;
-    if(lowDetailBatch.instanceColor){lowDetailBatch.instanceColor.clearUpdateRanges();lowDetailBatch.instanceColor.addUpdateRange(0,instances*3);lowDetailBatch.instanceColor.needsUpdate=true;}
   }
 }
 let lastFrame=performance.now(),gameClock=0;
@@ -575,7 +580,7 @@ function frame(){
       return originalEffects?.handle(fx)||false;
     });
     updateUnitViews(dt,gameClock);effects.update(dt,state.effects);originalEffects?.update(dt,objects,state.effects);
-  }else lowDetailBatch.count=0;
+  }
   renderer.render(scene,camera);
 }
 frame();

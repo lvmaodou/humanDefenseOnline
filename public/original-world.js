@@ -110,7 +110,7 @@ export class OriginalEffects{
     const latest=new Map(effects.map(effect=>[effect.id,effect]));
     for(const [key,record]of this.live){
       const snapshot=latest.get(record.eventId);
-      if(snapshot&&record.effect.kind==='model'){record.effect=snapshot;if(snapshot.destroyed)this.stop(record);}
+      if(snapshot){record.effect=snapshot;if(snapshot.destroyed)this.stop(record);}
       else if(record.effect.persistent&&!snapshot)this.stop(record);
       if(record.phase==='loading'){
         record.root.visible=false;

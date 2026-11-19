@@ -34653,6 +34653,3836 @@
           158.66400146484375
         ]
       }
+    },
+    "abilities/spells/human/thunderclap/thunderclaptarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/thunderclap/thunderclaptarget.mdx",
+      "bytes": 2668,
+      "sha256": "8c0090549b8e86f8e2cb55e78b0da192b4334ea58f22e989fd6f9a0856870e5f",
+      "name": "ThunderclapTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2533,
+            2967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3433,
+            5800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            13333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Magic1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -68.41339874267578,
+          -68.40779876708984,
+          -2.8904600143432617
+        ],
+        "max": [
+          68.78790283203125,
+          68.79350280761719,
+          17.545900344848633
+        ]
+      }
+    },
+    "abilities/spells/nightelf/battleroar/roartarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/battleroar/roartarget.mdx",
+      "bytes": 1680,
+      "sha256": "aa8b08c76a2f9ca8fb532cce1877e8724a40840942012ce76d44ce6e05e1c9e8",
+      "name": "RoarTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            667,
+            1033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\NightElf\\BattleRoar\\BattleRoar.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -25.109899520874023,
+          -24.775999069213867,
+          -9.597169876098633
+        ],
+        "max": [
+          25.1033992767334,
+          25.437299728393555,
+          40.6161003112793
+        ]
+      }
+    },
+    "abilities/spells/other/breathoffire/breathoffiredamage.mdx": {
+      "url": "/warcraft/abilities/spells/other/breathoffire/breathoffiredamage.mdx",
+      "bytes": 1399,
+      "sha256": "6e4ee10ed7154328cc600e5161bb9bc2db8056d0a4bc5dc71a03793a7d92f6c1",
+      "name": "BreathOfFireDamage",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            2100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            2633,
+            2733
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            3967,
+            4067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/howlofterror/howltarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/howlofterror/howltarget.mdx",
+      "bytes": 4834,
+      "sha256": "6e17cd5b20ad8f6f273d884e5a5e4133ef1851b856d309b4d9db52ad8feea33e",
+      "name": "HowlTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1267,
+            1933
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            4600,
+            4700
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\HowlOfTerror\\Skull1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlow2b.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -73.86090087890625,
+          -87.50669860839844,
+          -12.300700187683105
+        ],
+        "max": [
+          69.49320220947266,
+          88.08390045166016,
+          84.41190338134766
+        ]
+      }
+    },
+    "abilities/spells/undead/impale/impalehittarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/impale/impalehittarget.mdx",
+      "bytes": 5900,
+      "sha256": "871e51f85c3877f8560011cd88041022b99a317184f238244338a333f64a3b57",
+      "name": "ImpaleHitTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2233,
+            3600
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Undead\\Impale\\ImpaleArm.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\BloodWhiteSmall.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -19.332700729370117,
+          -24.032100677490234,
+          -827.7579956054688
+        ],
+        "max": [
+          18.65530014038086,
+          19.939800262451172,
+          358.0379943847656
+        ]
+      }
+    },
+    "abilities/spells/human/stormbolt/stormbolttarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/stormbolt/stormbolttarget.mdx",
+      "bytes": 2668,
+      "sha256": "405fbfc986001375ab17d97e05f621142f6d1be0e474a5bb39bf7e32ac3a4abf",
+      "name": "ThunderBoltTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2533,
+            2967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3433,
+            5800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            13333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Magic1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -68.41339874267578,
+          -68.40779876708984,
+          -2.8904600143432617
+        ],
+        "max": [
+          68.78790283203125,
+          68.79350280761719,
+          17.545900344848633
+        ]
+      }
+    },
+    "abilities/spells/other/frostdamage/frostdamage.mdx": {
+      "url": "/warcraft/abilities/spells/other/frostdamage/frostdamage.mdx",
+      "bytes": 2158,
+      "sha256": "5c4685612e159a0014f7baed3a45407c9826e5d4431dc36cc94fb96f42e954b2",
+      "name": "FrostDamage",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2833,
+            2867
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            4500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            4600,
+            4633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\snowflake.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star2_32.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/human/blizzard/blizzardtarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/blizzard/blizzardtarget.mdx",
+      "bytes": 9697,
+      "sha256": "b135cd4e4663d9ee390706c31f6abbd5baafea772742f8a52f33004066eb29ec",
+      "name": "BlizzardTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            33,
+            3333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Ice.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Frost3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\snowflake2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust5A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave_blue.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\Blizzard\\Frost3test.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 5,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -230.1739959716797,
+          -229.2050018310547,
+          26.317899703979492
+        ],
+        "max": [
+          429.6130065917969,
+          228.31300354003906,
+          1178.5
+        ]
+      }
+    },
+    "abilities/spells/other/drain/draincaster.mdx": {
+      "url": "/warcraft/abilities/spells/other/drain/draincaster.mdx",
+      "bytes": 2046,
+      "sha256": "8fc168c1d494728bb36bee20d9a1d7e3aead56429e2d991e10bd752ddb721b0a",
+      "name": "DrainCaster",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Drain\\DrainOut.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\CloudSingle.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/drain/manadraincaster.mdx": {
+      "url": "/warcraft/abilities/spells/other/drain/manadraincaster.mdx",
+      "bytes": 2789,
+      "sha256": "b55b7b420e3fd7b4845aa89c4ac6cca0fece5b4eae6c9272169fea85b6bbb774",
+      "name": "ManaDrainCaster",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Drain\\ManaDrainOut.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\CloudSingle.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Rune1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/drain/draintarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/drain/draintarget.mdx",
+      "bytes": 2046,
+      "sha256": "cf4b1ec5fea41b94d79f29a513fd9eb6c3e8c5859801dc078076fc4cd442429a",
+      "name": "DrainTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\DrainIn.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\CloudSingle.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/drain/manadraintarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/drain/manadraintarget.mdx",
+      "bytes": 2657,
+      "sha256": "8e502cc216829e740f8bc8e0f3e468d9e929da64fa391a7c481fb70afd474221",
+      "name": "ManaDrainTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ManaDrainIn.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\CloudSingle.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ManaDrainIn2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/human/flamestrike/flamestrikedamagetarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/flamestrike/flamestrikedamagetarget.mdx",
+      "bytes": 1399,
+      "sha256": "3a31b1fd061f1b1279ad1a64ae9b24ba48bb9ea6550582f254c5ef5e1bc3a13f",
+      "name": "FlameStrikeDamageTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            2100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            2633,
+            2733
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            3967,
+            4967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/demon/rainoffire/rainoffiretarget.mdx": {
+      "url": "/warcraft/abilities/spells/demon/rainoffire/rainoffiretarget.mdx",
+      "bytes": 11526,
+      "sha256": "0d58cfbc50ed00332dfbdb0d208a7423e59a83010de2e7227da4dd1c8b0ba34e",
+      "name": "RainOfFireTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            33,
+            3333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Flame4.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\EQ_Rock2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -411.9530029296875,
+          -115.4219970703125,
+          -30.609500885009766
+        ],
+        "max": [
+          122.2239990234375,
+          106.4260025024414,
+          1151.0899658203125
+        ]
+      }
+    },
+    "abilities/spells/human/aerialshackles/aerialshacklestarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/aerialshackles/aerialshacklestarget.mdx",
+      "bytes": 14736,
+      "sha256": "2a32a605b0c168114c43f117ae645f9ea6e456a89ef2cb31aa131e83a75ed8c0",
+      "name": "AerialShacklesTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            8500,
+            9000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            9667,
+            11667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death medium",
+          "interval": [
+            12000,
+            12667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            15033,
+            15533
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            16200,
+            18200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            18533,
+            19200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\AerialShackles\\ensnare.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -102.71700286865234,
+          -58.54610061645508,
+          -34.84049987792969
+        ],
+        "max": [
+          69.60440063476562,
+          71.24700164794922,
+          84.96600341796875
+        ]
+      }
+    },
+    "abilities/spells/orc/liquidfire/liquidfire.mdx": {
+      "url": "/warcraft/abilities/spells/orc/liquidfire/liquidfire.mdx",
+      "bytes": 4974,
+      "sha256": "94366fee0762b15f77b893283da8588cabb51f8d16e39d2fcb8eea134f8534f5",
+      "name": "Liquidfire",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            1333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3333,
+            6667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            10033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            11467,
+            12800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            14800,
+            18133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            21467,
+            21500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            23533,
+            24867
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            26867,
+            30200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            33533,
+            33567
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8ModFire.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 6,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/monsoon/monsoonbolttarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/monsoon/monsoonbolttarget.mdx",
+      "bytes": 12142,
+      "sha256": "2e1e19b51d0f6667513bd3f9b7c42b85dbb0da20146bc48f33e3d3b8fffe7a95",
+      "name": "MonsoonBoltTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            33,
+            4033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 8,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\Lightning2b.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\Lightning1b.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\HitBase.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\Lightning4b.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\lensflare1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star6.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -1607.050048828125,
+          -1607.719970703125,
+          -2015.4300537109375
+        ],
+        "max": [
+          1607.6099853515625,
+          1606.93994140625,
+          1199.239990234375
+        ]
+      }
+    },
+    "abilities/spells/other/monsoon/monsoonrain.mdx": {
+      "url": "/warcraft/abilities/spells/other/monsoon/monsoonrain.mdx",
+      "bytes": 2214,
+      "sha256": "288319925a27f3a44cf4cd33e2b40b4b4b1e4392e52d2b988535da056342bad9",
+      "name": "MonsoonRain",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            2667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3567,
+            5633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5833,
+            6067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust3x.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust5A.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/doom/doomtarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/doom/doomtarget.mdx",
+      "bytes": 5909,
+      "sha256": "cae05f4762cd6225efb77ed73b195fd0481de8152b097a23f7a5c4f52c13532c",
+      "name": "DoomTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1033,
+            2067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Tail_Dust3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\firering6.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -99.8770980834961,
+          -100.8270034790039,
+          15.086799621582031
+        ],
+        "max": [
+          101.03099822998047,
+          100.08100128173828,
+          127.35600280761719
+        ]
+      }
+    },
+    "abilities/spells/other/doom/doomdeath.mdx": {
+      "url": "/warcraft/abilities/spells/other/doom/doomdeath.mdx",
+      "bytes": 10532,
+      "sha256": "56b9bea3942fc6d02ac543b7f196b8d3e189e03c0f77df184599eac24438116d",
+      "name": "DoomDeath",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2133,
+            6667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\firering6.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave9.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 4,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -232.55099487304688,
+          -232.64500427246094,
+          -0.01536440011113882
+        ],
+        "max": [
+          233.7050018310547,
+          233.61000061035156,
+          745.708984375
+        ]
+      }
+    },
+    "abilities/spells/undead/deathanddecay/deathanddecaydamage.mdx": {
+      "url": "/warcraft/abilities/spells/undead/deathanddecay/deathanddecaydamage.mdx",
+      "bytes": 1159,
+      "sha256": "26a273698c97dd1e5a9aeb8436d71875bfce898f0402db38b96a924a3e6fed37",
+      "name": "DeathandDecayDamage",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            2100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8Fire.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/generalauratarget/generalauratarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/generalauratarget/generalauratarget.mdx",
+      "bytes": 3040,
+      "sha256": "1ebf57636483cfc7b0e424090f22d2eeb589436b0af420a7c2fd9644d6b17bc1",
+      "name": "GeneralAuraTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            333,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2833,
+            3167
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            3833,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            6333,
+            6667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            7567,
+            9733
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            10067,
+            10400
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlowFaded.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -82.12969970703125,
+          -82.32279968261719,
+          -45.32899856567383
+        ],
+        "max": [
+          82.4884033203125,
+          82.29530334472656,
+          70.27439880371094
+        ]
+      }
+    },
+    "abilities/spells/nightelf/faeriefire/faeriefiretarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/faeriefire/faeriefiretarget.mdx",
+      "bytes": 32227,
+      "sha256": "c7b670d89ca79000c29064c63775860079f6a17180ce4f692f6c4dfca039b997",
+      "name": "FaerieFireTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            9000,
+            12333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            15000,
+            16667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            18333,
+            20333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star4_32.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ButterFly.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Star7b.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -75.5593032836914,
+          -77.3145980834961,
+          -33.88859939575195
+        ],
+        "max": [
+          64.3395004272461,
+          61.4370002746582,
+          78.60590362548828
+        ]
+      }
+    },
+    "abilities/spells/orc/bloodlust/bloodlusttarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/bloodlust/bloodlusttarget.mdx",
+      "bytes": 3058,
+      "sha256": "c2c08a848de239028f8c999019e6c6e2efaf30e66af115e56f6b5f1a8c682b66",
+      "name": "BloodLustTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            333,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "stand",
+          "interval": [
+            1333,
+            2000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2333,
+            3000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave4white.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_star2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -34.64509963989258,
+          -34.626399993896484,
+          -34.45330047607422
+        ],
+        "max": [
+          34.64509963989258,
+          34.66379928588867,
+          34.83700180053711
+        ]
+      }
+    },
+    "abilities/spells/orc/bloodlust/bloodlustspecial.mdx": {
+      "url": "/warcraft/abilities/spells/orc/bloodlust/bloodlustspecial.mdx",
+      "bytes": 3190,
+      "sha256": "d57159fae2c72b20cc7fb2b35b3c3e75f940ec09d21720950663c65379b4158d",
+      "name": "BloodLustSpecial",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            333,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "stand",
+          "interval": [
+            1333,
+            2000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2333,
+            3000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave4white.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_star2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -35.3380012512207,
+          -35.319400787353516,
+          -35.14619827270508
+        ],
+        "max": [
+          35.3380012512207,
+          35.3567008972168,
+          35.52989959716797
+        ]
+      }
+    },
+    "abilities/spells/human/slow/slowtarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/slow/slowtarget.mdx",
+      "bytes": 1567,
+      "sha256": "2cc41667c23e199e0b3b1f4de683dd3dbf45e28a1eb8eb853976636a44b57bb5",
+      "name": "SlowTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            1667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\Slow\\Tail_Dust3.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/nightelf/entanglingroots/entanglingrootstarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/entanglingroots/entanglingrootstarget.mdx",
+      "bytes": 55171,
+      "sha256": "8d65598fbfea39a718f4f4731c5bb69059ed42d417ff9e04703c68970964b83a",
+      "name": "EntanglingRootsTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            33,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1267,
+            2233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            2767,
+            3600
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            4433,
+            5400
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            5667,
+            6633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            7167,
+            8000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            9867,
+            10833
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            11100,
+            12067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            12600,
+            13433
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\StrangleVines.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust5A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Green_Star.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -168.00799560546875,
+          -155.23800659179688,
+          -11.927900314331055
+        ],
+        "max": [
+          181.58700561523438,
+          168.7729949951172,
+          172.94900512695312
+        ]
+      }
+    },
+    "abilities/weapons/lavaspawnmissile/lavaspawnbirthmissile.mdx": {
+      "url": "/warcraft/abilities/weapons/lavaspawnmissile/lavaspawnbirthmissile.mdx",
+      "bytes": 23779,
+      "sha256": "1984d5ead9ca5881bd79400125eb470f86d75d7ca0597df1adf8c7a2bde2fc70",
+      "name": "LavaSpawnBirthMissile",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "stand",
+          "interval": [
+            2167,
+            3667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "death",
+          "interval": [
+            5500,
+            7000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 6,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\clouds_anim1_bw.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 2,
+          "Image": "",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\HeroAvatarFlame.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\firering1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave1b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust5A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\rock64.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 4,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -287.09600830078125,
+          -331.6919860839844,
+          -49.373199462890625
+        ],
+        "max": [
+          284.90301513671875,
+          328.7929992675781,
+          304.32598876953125
+        ]
+      }
+    },
+    "abilities/spells/undead/possession/possessiontarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/possession/possessiontarget.mdx",
+      "bytes": 7132,
+      "sha256": "f9c7f0e05cdc8c78cf5c882852352c329deefd67240a93386c289b64d354e98e",
+      "name": "PossessionTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            300,
+            667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            867,
+            1233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            1867
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Tornado2b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlow2_32.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Green_Glow2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -58.09450149536133,
+          -57.84989929199219,
+          -15.147500038146973
+        ],
+        "max": [
+          58.08000183105469,
+          58.35329818725586,
+          79.46369934082031
+        ]
+      }
+    },
+    "abilities/spells/human/cloudoffog/cloudoffog.mdx": {
+      "url": "/warcraft/abilities/spells/human/cloudoffog/cloudoffog.mdx",
+      "bytes": 2006,
+      "sha256": "8ad9015ccd3110876790a976c1f1e10ed5716679c4da8b58659fcdacb42a0cc6",
+      "name": "CloudOfFog",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            333,
+            667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            1200,
+            1533
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1933,
+            2267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ShockwaveWater1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/undead/cripple/crippletarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/cripple/crippletarget.mdx",
+      "bytes": 5384,
+      "sha256": "c76001ea8737e6261e43b52b9226ad175e3c3058c23af3470040fd024e15579d",
+      "name": "CrippleTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            67
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            800,
+            1333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2400,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star4.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 3,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/weapons/poisonsting/poisonstingtarget.mdx": {
+      "url": "/warcraft/abilities/weapons/poisonsting/poisonstingtarget.mdx",
+      "bytes": 1683,
+      "sha256": "f3a9e28389022f849a1da63dac1186569dad39aada31caab7326f29dea83d1b8",
+      "name": "PoisonStingTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            467,
+            1233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            1367,
+            1967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2100,
+            2133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave4.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/undead/web/web_airtarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/web/web_airtarget.mdx",
+      "bytes": 17611,
+      "sha256": "ce46894ee66bbd3ddf0201cb724f22e2378b4205c009ddbb5924a747606e0bda",
+      "name": "Web_AirTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            8200,
+            8700
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            9367,
+            11367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            11700,
+            12367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            14633,
+            15133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            15800,
+            17800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            18133,
+            18800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Undead\\Web\\Web.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\AcidSplash1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -105.12200164794922,
+          -69.98770141601562,
+          -115.79399871826172
+        ],
+        "max": [
+          72.9854965209961,
+          95.86959838867188,
+          78.69429779052734
+        ]
+      }
+    },
+    "abilities/spells/undead/web/webtarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/web/webtarget.mdx",
+      "bytes": 12879,
+      "sha256": "1d7919c41a058c48337dd4c9f442e91ca928e55f22d3fe0d47b6bc808e1a9784",
+      "name": "WebTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Undead\\Web\\Web.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\AcidSplash1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -118.58399963378906,
+          -118.59400177001953,
+          -107.74400329589844
+        ],
+        "max": [
+          126.33399963378906,
+          123.21299743652344,
+          52.2943000793457
+        ]
+      }
+    },
+    "abilities/spells/human/innerfire/innerfiretarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/innerfire/innerfiretarget.mdx",
+      "bytes": 12090,
+      "sha256": "a5bc9a37f1cef9c10760e4761b9e2158417da1b79395b6077bfcc72bd5810c31",
+      "name": "InnerFireTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            3800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            4733,
+            5133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            5400,
+            5900
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 6,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\InnerFire\\Crown1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Yellow_Glow_Dim2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\InnerFire\\Rune7.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Rune1d.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -93.64099884033203,
+          -94.73880004882812,
+          -154.3990020751953
+        ],
+        "max": [
+          92.21510314941406,
+          91.11720275878906,
+          114.39800262451172
+        ]
+      }
+    },
+    "abilities/spells/nightelf/starfall/starfalltarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/starfall/starfalltarget.mdx",
+      "bytes": 17317,
+      "sha256": "378b6391ac847e4f0c4a3d513c4e3a0ac49eaec885d4cb2ed7b0de63d03bbb35",
+      "name": "StarfallTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            33,
+            3333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 7,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\lensflare1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star5tga.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Star2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Purple_Star.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\grad2b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Green_Glow3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Purple_Glow.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 2,
+      "extent": {
+        "min": [
+          -315.13800048828125,
+          -130.593994140625,
+          -56.28620147705078
+        ],
+        "max": [
+          123.80599975585938,
+          182.82899475097656,
+          1249.7099609375
+        ]
+      }
+    },
+    "abilities/spells/nightelf/starfall/starfallcaster.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/starfall/starfallcaster.mdx",
+      "bytes": 16206,
+      "sha256": "dc4922e103dd4387716f322b285dc8bd1a9be5f2ab55533133a51a3aca3c63d4",
+      "name": "StarfallCaster",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            2667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3567,
+            4567
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5200,
+            5467
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 8,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\grad2b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\NightElf\\Starfall\\Moon_Cresent.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlowFaded.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\DemonRune1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave11.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave10.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -376.35101318359375,
+          -359.80999755859375,
+          -340.10699462890625
+        ],
+        "max": [
+          376.45599365234375,
+          359.94500732421875,
+          1290.8399658203125
+        ]
+      }
+    },
+    "abilities/spells/orc/ensnare/ensnare_airtarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/ensnare/ensnare_airtarget.mdx",
+      "bytes": 26480,
+      "sha256": "7802045527497fd3884df4beafb9bbe51309ae25ffacc05c6efa6dc4da4951fb",
+      "name": "ensnare_AirTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            8500,
+            9000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            9667,
+            11667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death medium",
+          "interval": [
+            12000,
+            12667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            15033,
+            15533
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            16200,
+            18200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            18533,
+            19200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Ghost1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ensnare.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 3,
+      "extent": {
+        "min": [
+          -127.5999984741211,
+          -121.53299713134766,
+          -157.4250030517578
+        ],
+        "max": [
+          107.40399932861328,
+          199.35000610351562,
+          129.44200134277344
+        ]
+      }
+    },
+    "abilities/spells/orc/ensnare/ensnaretarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/ensnare/ensnaretarget.mdx",
+      "bytes": 17232,
+      "sha256": "035a1236dec6c637811a12a0542961ac474ed46acfaa309ce98fb24160220224",
+      "name": "ensnareTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            6867,
+            7367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            8033,
+            10033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            10367,
+            11033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            12200,
+            12700
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            13367,
+            15367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            15700,
+            16367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ensnare.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Ghost1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 3,
+      "extent": {
+        "min": [
+          -120.3270034790039,
+          -134.66099548339844,
+          -1.366819977760315
+        ],
+        "max": [
+          134.3419952392578,
+          154.11900329589844,
+          235.16200256347656
+        ]
+      }
+    },
+    "abilities/spells/orc/stasistrap/stasistotemtarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/stasistrap/stasistotemtarget.mdx",
+      "bytes": 2668,
+      "sha256": "332885efcc946fdaadf08917ca8ef911e31ae1e38b80a063596708cc645b08e1",
+      "name": "StasisTotemTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2533,
+            2967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3433,
+            5800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            13333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Magic1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -68.41339874267578,
+          -68.40779876708984,
+          -2.8904600143432617
+        ],
+        "max": [
+          68.78790283203125,
+          68.79350280761719,
+          17.545900344848633
+        ]
+      }
+    },
+    "abilities/spells/nightelf/tranquility/tranquility.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/tranquility/tranquility.mdx",
+      "bytes": 88490,
+      "sha256": "e39de3edaa03f8eeccff31207791f84b97466182cf7689173f4ddfa0ad701c8f",
+      "name": "Tranquility",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            2667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3567,
+            5633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5833,
+            6067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Star7b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\grad2b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlowFaded.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave10.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -800.4569702148438,
+          -745.7880249023438,
+          -209.2899932861328
+        ],
+        "max": [
+          800.5599975585938,
+          784.7479858398438,
+          1293.469970703125
+        ]
+      }
+    },
+    "abilities/spells/undead/freezingbreath/freezingbreathtargetart.mdx": {
+      "url": "/warcraft/abilities/spells/undead/freezingbreath/freezingbreathtargetart.mdx",
+      "bytes": 31511,
+      "sha256": "8f77507bd9861259bd83933b49eb29ff6226c853bdb91f786323ced153692af8",
+      "name": "FreezingBreathTargetArt",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            1333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3333,
+            6667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            10500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            11933,
+            13267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            15267,
+            18600
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            21933,
+            22433
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            24467,
+            25800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            27800,
+            31133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            34467,
+            34967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Ice3b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust3.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star5tga.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\snowflake.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 5,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -262.6839904785156,
+          -149.09500122070312,
+          -328.87701416015625
+        ],
+        "max": [
+          169.46499633789062,
+          259.6289978027344,
+          265.48199462890625
+        ]
+      }
+    },
+    "abilities/spells/orc/lightningshield/lightningshieldtarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/lightningshield/lightningshieldtarget.mdx",
+      "bytes": 43552,
+      "sha256": "e5ce268a6ae3006ac2694ca8d3c93392bb5094918740495c295cfb4e02624e4c",
+      "name": "LightningShieldTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1167,
+            1767
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2900,
+            3233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            3633,
+            4633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            4800,
+            5400
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            6533,
+            6867
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            8000,
+            9000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            9167,
+            9767
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            10900,
+            11233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\lensflare1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Zap1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Star2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 8,
+      "extent": {
+        "min": [
+          -178.05099487304688,
+          -164.96400451660156,
+          -55.71480178833008
+        ],
+        "max": [
+          158.3070068359375,
+          170.6219940185547,
+          168.92799377441406
+        ]
+      }
+    },
+    "abilities/spells/orc/lightningshield/lightningshieldbuff.mdx": {
+      "url": "/warcraft/abilities/spells/orc/lightningshield/lightningshieldbuff.mdx",
+      "bytes": 6712,
+      "sha256": "df06b3c8e267b2a9fc0fcaa570ad1b46564e2daaface04482d84cfbca5b09352",
+      "name": "LightningShieldBuff",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1533
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Zap1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -44.807098388671875,
+          -41.194400787353516,
+          47.805599212646484
+        ],
+        "max": [
+          46.24620056152344,
+          38.742801666259766,
+          129
+        ]
+      }
+    },
+    "abilities/spells/nightelf/shadowstrike/shadowstrike.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/shadowstrike/shadowstrike.mdx",
+      "bytes": 19863,
+      "sha256": "4136ff0118d2fc98775ba3126b7b24453142eee4febefeacf21fa1435458bbb1",
+      "name": "shadowstrike",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            333,
+            667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            1333,
+            2433
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            3333,
+            3667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Black32.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Eyes.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8Mod.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ShockwaveWater1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -26.469999313354492,
+          -25.365999221801758,
+          -11.255000114440918
+        ],
+        "max": [
+          14.890000343322754,
+          27.738300323486328,
+          65.37550354003906
+        ]
+      }
+    },
+    "abilities/spells/undead/curse/cursetarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/curse/cursetarget.mdx",
+      "bytes": 9290,
+      "sha256": "a3ea9ade51d99a45e50e129ddcbed8d2a62ea68254f4673c1f835c1ed1762e27",
+      "name": "CurseTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            900
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1167
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1700,
+            1733
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 4,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Purple_Glow.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ShockwaveWater1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Undead\\Curse\\Skull.blp",
+          "Flags": 1
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlowX.blp",
+          "Flags": 1
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -72.76679992675781,
+          -72.85060119628906,
+          -104.59400177001953
+        ],
+        "max": [
+          72.75399780273438,
+          72.67019653320312,
+          61.904998779296875
+        ]
+      }
+    },
+    "abilities/spells/nightelf/rejuvenation/rejuvenationtarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/rejuvenation/rejuvenationtarget.mdx",
+      "bytes": 5384,
+      "sha256": "03d01b40843bcd76d50cc2a2c9952e1aae7ae7f230be18c7bb9b4ca9055bbef1",
+      "name": "RejuvenationTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            67
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            800,
+            1333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2400,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlow2b.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 3,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/human/manashield/manashieldcaster.mdx": {
+      "url": "/warcraft/abilities/spells/human/manashield/manashieldcaster.mdx",
+      "bytes": 30309,
+      "sha256": "3ca6e21ed8d5b44d810104f632dfd2e6ad8ca82a217486c36a6a9c104cb83d66",
+      "name": "ManaShieldCaster",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "nothing",
+          "interval": [
+            11667,
+            12667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand First",
+          "interval": [
+            18833,
+            19833
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand Second",
+          "interval": [
+            22100,
+            23100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand Third",
+          "interval": [
+            25067,
+            26067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlow2c.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Star2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Yellow_Star_Dim.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -75.80500030517578,
+          -94.73799896240234,
+          4.9248199462890625
+        ],
+        "max": [
+          75.72830200195312,
+          94.73809814453125,
+          186.0800018310547
+        ]
+      }
+    },
+    "abilities/spells/human/flare/flaretarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/flare/flaretarget.mdx",
+      "bytes": 5053,
+      "sha256": "2e7a65a5ce8c365ca63bf5b5960dd9da7a2c47f248d7439d80b8758753178ef4",
+      "name": "FlareTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            4000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\lensflare1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star2_32.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -61.83720016479492,
+          -59.43470001220703,
+          -18.108299255371094
+        ],
+        "max": [
+          55.75920104980469,
+          58.16170120239258,
+          1140.0699462890625
+        ]
+      }
+    },
+    "abilities/spells/nightelf/immolation/immolationdamage.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/immolation/immolationdamage.mdx",
+      "bytes": 1191,
+      "sha256": "f9d4ad59fca3c40577f77cb2702a6cc127995e177d9bb944b0ffdea95437594e",
+      "name": "ImmolationDamage",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            2100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8Fire.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "units/human/militia/militia.mdx": {
+      "url": "/warcraft/units/human/militia/militia.mdx",
+      "bytes": 77631,
+      "sha256": "3529d9fb084d20fe82ff28ae6ebef901f97bad0e1d01b62b33a36c2e08f95f32",
+      "name": "Militia",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            133,
+            1633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand -2",
+          "interval": [
+            1800,
+            4467
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand - 4",
+          "interval": [
+            14133,
+            18133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Attack",
+          "interval": [
+            23200,
+            24200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Attack -2 ",
+          "interval": [
+            27667,
+            28933
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Walk",
+          "interval": [
+            29100,
+            29900
+          ],
+          "moveSpeed": 150,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            34333,
+            37667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Decay Flesh",
+          "interval": [
+            38133,
+            98133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Decay Bone",
+          "interval": [
+            99800,
+            159800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Ready",
+          "interval": [
+            183133,
+            184633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand Work",
+          "interval": [
+            191333,
+            191933
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        }
+      ],
+      "geosets": 4,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "units\\Human\\Militia\\PeasantMilitia.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 1,
+          "Image": "",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\gutz.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -83.310302734375,
+          -51.260398864746094,
+          -50.0255012512207
+        ],
+        "max": [
+          108.16200256347656,
+          73.43370056152344,
+          132.7760009765625
+        ]
+      }
+    },
+    "abilities/weapons/locustmissile/locustmissile.mdx": {
+      "url": "/warcraft/abilities/weapons/locustmissile/locustmissile.mdx",
+      "bytes": 2645,
+      "sha256": "f19051b2ee2dca957afceb711f68494566bd4252802c296d4dd3bd271d9514fd",
+      "name": "LocustMissile",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            67,
+            333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            467,
+            2133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\BloodWhiteSmall.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Star7b.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
     }
   },
   "resources": {
@@ -73385,6 +77215,3991 @@
       "url": "/warcraft/buildings/nightelf/treeoflife/treeoflife.png",
       "bytes": 401460,
       "sha256": "76f2f4b03c25cb7bce6547b927e512ffdf45bedf01421d4f80adc560f0dbaee0"
+    },
+    "abilities/spells/human/thunderclap/thunderclaptarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/thunderclap/thunderclaptarget.mdx",
+      "bytes": 2668,
+      "sha256": "8c0090549b8e86f8e2cb55e78b0da192b4334ea58f22e989fd6f9a0856870e5f",
+      "name": "ThunderclapTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2533,
+            2967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3433,
+            5800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            13333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Magic1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -68.41339874267578,
+          -68.40779876708984,
+          -2.8904600143432617
+        ],
+        "max": [
+          68.78790283203125,
+          68.79350280761719,
+          17.545900344848633
+        ]
+      }
+    },
+    "textures/magic1.blp": {
+      "url": "/warcraft/textures/magic1.png",
+      "bytes": 5001,
+      "sha256": "4e6da24a5fb600537069ded339e5636a3eef030244f542744e7b5db77e7681cc"
+    },
+    "abilities/spells/nightelf/battleroar/roartarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/battleroar/roartarget.mdx",
+      "bytes": 1680,
+      "sha256": "aa8b08c76a2f9ca8fb532cce1877e8724a40840942012ce76d44ce6e05e1c9e8",
+      "name": "RoarTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            667,
+            1033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\NightElf\\BattleRoar\\BattleRoar.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -25.109899520874023,
+          -24.775999069213867,
+          -9.597169876098633
+        ],
+        "max": [
+          25.1033992767334,
+          25.437299728393555,
+          40.6161003112793
+        ]
+      }
+    },
+    "abilities/spells/nightelf/battleroar/battleroar.blp": {
+      "url": "/warcraft/abilities/spells/nightelf/battleroar/battleroar.png",
+      "bytes": 9500,
+      "sha256": "31ddf3d26f6c5f2318712eb5c6d957fa101da4f41ec5def1cc3ca86edbf4a418"
+    },
+    "abilities/spells/other/breathoffire/breathoffiredamage.mdx": {
+      "url": "/warcraft/abilities/spells/other/breathoffire/breathoffiredamage.mdx",
+      "bytes": 1399,
+      "sha256": "6e4ee10ed7154328cc600e5161bb9bc2db8056d0a4bc5dc71a03793a7d92f6c1",
+      "name": "BreathOfFireDamage",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            2100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            2633,
+            2733
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            3967,
+            4067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/howlofterror/howltarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/howlofterror/howltarget.mdx",
+      "bytes": 4834,
+      "sha256": "6e17cd5b20ad8f6f273d884e5a5e4133ef1851b856d309b4d9db52ad8feea33e",
+      "name": "HowlTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1267,
+            1933
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            4600,
+            4700
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\HowlOfTerror\\Skull1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlow2b.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -73.86090087890625,
+          -87.50669860839844,
+          -12.300700187683105
+        ],
+        "max": [
+          69.49320220947266,
+          88.08390045166016,
+          84.41190338134766
+        ]
+      }
+    },
+    "abilities/spells/other/howlofterror/skull1.blp": {
+      "url": "/warcraft/abilities/spells/other/howlofterror/skull1.png",
+      "bytes": 14447,
+      "sha256": "d6df47bc8cd8bc6ee615df3a85b37291d9f70024e9ee2d36df17606b13dd21bd"
+    },
+    "abilities/spells/undead/impale/impalehittarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/impale/impalehittarget.mdx",
+      "bytes": 5900,
+      "sha256": "871e51f85c3877f8560011cd88041022b99a317184f238244338a333f64a3b57",
+      "name": "ImpaleHitTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2233,
+            3600
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Undead\\Impale\\ImpaleArm.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\BloodWhiteSmall.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -19.332700729370117,
+          -24.032100677490234,
+          -827.7579956054688
+        ],
+        "max": [
+          18.65530014038086,
+          19.939800262451172,
+          358.0379943847656
+        ]
+      }
+    },
+    "abilities/spells/human/stormbolt/stormbolttarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/stormbolt/stormbolttarget.mdx",
+      "bytes": 2668,
+      "sha256": "405fbfc986001375ab17d97e05f621142f6d1be0e474a5bb39bf7e32ac3a4abf",
+      "name": "ThunderBoltTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2533,
+            2967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3433,
+            5800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            13333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Magic1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -68.41339874267578,
+          -68.40779876708984,
+          -2.8904600143432617
+        ],
+        "max": [
+          68.78790283203125,
+          68.79350280761719,
+          17.545900344848633
+        ]
+      }
+    },
+    "abilities/spells/other/frostdamage/frostdamage.mdx": {
+      "url": "/warcraft/abilities/spells/other/frostdamage/frostdamage.mdx",
+      "bytes": 2158,
+      "sha256": "5c4685612e159a0014f7baed3a45407c9826e5d4431dc36cc94fb96f42e954b2",
+      "name": "FrostDamage",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2833,
+            2867
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            4500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            4600,
+            4633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\snowflake.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star2_32.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/human/blizzard/blizzardtarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/blizzard/blizzardtarget.mdx",
+      "bytes": 9697,
+      "sha256": "b135cd4e4663d9ee390706c31f6abbd5baafea772742f8a52f33004066eb29ec",
+      "name": "BlizzardTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            33,
+            3333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Ice.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Frost3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\snowflake2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust5A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave_blue.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\Blizzard\\Frost3test.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 5,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -230.1739959716797,
+          -229.2050018310547,
+          26.317899703979492
+        ],
+        "max": [
+          429.6130065917969,
+          228.31300354003906,
+          1178.5
+        ]
+      }
+    },
+    "abilities/spells/human/blizzard/frost3test.blp": {
+      "url": "/warcraft/abilities/spells/human/blizzard/frost3test.png",
+      "bytes": 904,
+      "sha256": "612fe42ec84e94689c260e0480ef7df6dae00754dd4317a7424af7ffd954c34a"
+    },
+    "abilities/spells/other/drain/draincaster.mdx": {
+      "url": "/warcraft/abilities/spells/other/drain/draincaster.mdx",
+      "bytes": 2046,
+      "sha256": "8fc168c1d494728bb36bee20d9a1d7e3aead56429e2d991e10bd752ddb721b0a",
+      "name": "DrainCaster",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Drain\\DrainOut.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\CloudSingle.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/drain/drainout.blp": {
+      "url": "/warcraft/abilities/spells/other/drain/drainout.png",
+      "bytes": 5354,
+      "sha256": "48c37c41d14b05098eda71ac6a5e50c5d5dd18857defecddacf15d9653c9b64d"
+    },
+    "abilities/spells/other/drain/manadraincaster.mdx": {
+      "url": "/warcraft/abilities/spells/other/drain/manadraincaster.mdx",
+      "bytes": 2789,
+      "sha256": "b55b7b420e3fd7b4845aa89c4ac6cca0fece5b4eae6c9272169fea85b6bbb774",
+      "name": "ManaDrainCaster",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Drain\\ManaDrainOut.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\CloudSingle.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Rune1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/drain/manadrainout.blp": {
+      "url": "/warcraft/abilities/spells/other/drain/manadrainout.png",
+      "bytes": 7694,
+      "sha256": "0a10e48b3b8d85f6ae25def612658c5da90aa02724860516e67d90e62cad0569"
+    },
+    "textures/rune1.blp": {
+      "url": "/warcraft/textures/rune1.png",
+      "bytes": 29269,
+      "sha256": "4c4d77f4e20178e69b7eccb78ed748fd484b1e66e7a38a675bcc6b489e016584"
+    },
+    "abilities/spells/other/drain/draintarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/drain/draintarget.mdx",
+      "bytes": 2046,
+      "sha256": "cf4b1ec5fea41b94d79f29a513fd9eb6c3e8c5859801dc078076fc4cd442429a",
+      "name": "DrainTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\DrainIn.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\CloudSingle.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "textures/drainin.blp": {
+      "url": "/warcraft/textures/drainin.png",
+      "bytes": 6841,
+      "sha256": "52ac57e5d6fa4ab9f1f32c59c16057324c0aa5f361686a3b509d8757d6182cb8"
+    },
+    "abilities/spells/other/drain/manadraintarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/drain/manadraintarget.mdx",
+      "bytes": 2657,
+      "sha256": "8e502cc216829e740f8bc8e0f3e468d9e929da64fa391a7c481fb70afd474221",
+      "name": "ManaDrainTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ManaDrainIn.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\CloudSingle.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ManaDrainIn2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/human/flamestrike/flamestrikedamagetarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/flamestrike/flamestrikedamagetarget.mdx",
+      "bytes": 1399,
+      "sha256": "3a31b1fd061f1b1279ad1a64ae9b24ba48bb9ea6550582f254c5ef5e1bc3a13f",
+      "name": "FlameStrikeDamageTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            2100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            2633,
+            2733
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            3967,
+            4967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/demon/rainoffire/rainoffiretarget.mdx": {
+      "url": "/warcraft/abilities/spells/demon/rainoffire/rainoffiretarget.mdx",
+      "bytes": 11526,
+      "sha256": "0d58cfbc50ed00332dfbdb0d208a7423e59a83010de2e7227da4dd1c8b0ba34e",
+      "name": "RainOfFireTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            33,
+            3333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Flame4.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\EQ_Rock2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -411.9530029296875,
+          -115.4219970703125,
+          -30.609500885009766
+        ],
+        "max": [
+          122.2239990234375,
+          106.4260025024414,
+          1151.0899658203125
+        ]
+      }
+    },
+    "abilities/spells/human/aerialshackles/aerialshacklestarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/aerialshackles/aerialshacklestarget.mdx",
+      "bytes": 14736,
+      "sha256": "2a32a605b0c168114c43f117ae645f9ea6e456a89ef2cb31aa131e83a75ed8c0",
+      "name": "AerialShacklesTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            8500,
+            9000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            9667,
+            11667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death medium",
+          "interval": [
+            12000,
+            12667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            15033,
+            15533
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            16200,
+            18200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            18533,
+            19200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\AerialShackles\\ensnare.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -102.71700286865234,
+          -58.54610061645508,
+          -34.84049987792969
+        ],
+        "max": [
+          69.60440063476562,
+          71.24700164794922,
+          84.96600341796875
+        ]
+      }
+    },
+    "abilities/spells/human/aerialshackles/ensnare.blp": {
+      "url": "/warcraft/abilities/spells/human/aerialshackles/ensnare.png",
+      "bytes": 22766,
+      "sha256": "efc18ef1fddbbd107d2f539084ef57f431a7f0ebfaea174de46a64d117f3b97b"
+    },
+    "abilities/spells/orc/liquidfire/liquidfire.mdx": {
+      "url": "/warcraft/abilities/spells/orc/liquidfire/liquidfire.mdx",
+      "bytes": 4974,
+      "sha256": "94366fee0762b15f77b893283da8588cabb51f8d16e39d2fcb8eea134f8534f5",
+      "name": "Liquidfire",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            1333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3333,
+            6667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            10033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            11467,
+            12800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            14800,
+            18133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            21467,
+            21500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            23533,
+            24867
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            26867,
+            30200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            33533,
+            33567
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8ModFire.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 6,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "textures/clouds8x8modfire.blp": {
+      "url": "/warcraft/textures/clouds8x8modfire.png",
+      "bytes": 67558,
+      "sha256": "9c6de3f4f5115d3793b13f528a946041337d38a1d3d3c31b4c4b0cf0934500c7"
+    },
+    "abilities/spells/other/monsoon/monsoonbolttarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/monsoon/monsoonbolttarget.mdx",
+      "bytes": 12142,
+      "sha256": "2e1e19b51d0f6667513bd3f9b7c42b85dbb0da20146bc48f33e3d3b8fffe7a95",
+      "name": "MonsoonBoltTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            33,
+            4033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 8,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\Lightning2b.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\Lightning1b.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\HitBase.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\Lightning4b.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Other\\Monsoon\\lensflare1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star6.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -1607.050048828125,
+          -1607.719970703125,
+          -2015.4300537109375
+        ],
+        "max": [
+          1607.6099853515625,
+          1606.93994140625,
+          1199.239990234375
+        ]
+      }
+    },
+    "abilities/spells/other/monsoon/lightning2b.blp": {
+      "url": "/warcraft/abilities/spells/other/monsoon/lightning2b.png",
+      "bytes": 15171,
+      "sha256": "4f71abda8b1dd04e6947889c8aa78af06e973f0ea2534be62ba28876c1512650"
+    },
+    "abilities/spells/other/monsoon/lightning1b.blp": {
+      "url": "/warcraft/abilities/spells/other/monsoon/lightning1b.png",
+      "bytes": 7069,
+      "sha256": "e860a9a6a10befd6e29b6ffa422b527f4ac19a4341622835d99788be65eaf624"
+    },
+    "abilities/spells/other/monsoon/hitbase.blp": {
+      "url": "/warcraft/abilities/spells/other/monsoon/hitbase.png",
+      "bytes": 10231,
+      "sha256": "348917886c53461d5822187ef85af27403bc795b724350dbf1a80d3dcb1ec940"
+    },
+    "abilities/spells/other/monsoon/lightning4b.blp": {
+      "url": "/warcraft/abilities/spells/other/monsoon/lightning4b.png",
+      "bytes": 19081,
+      "sha256": "765473d8160a1e847e99dcfb43740ca2f55d79f575773d2eb76aaff12e73bd53"
+    },
+    "abilities/spells/other/monsoon/lensflare1a.blp": {
+      "url": "/warcraft/abilities/spells/other/monsoon/lensflare1a.png",
+      "bytes": 2348,
+      "sha256": "be7e6f63ff97dabf1b908fe13a1bc20c1a0332706fbe51bb1b47b66dd65dbdd1"
+    },
+    "abilities/spells/other/monsoon/monsoonrain.mdx": {
+      "url": "/warcraft/abilities/spells/other/monsoon/monsoonrain.mdx",
+      "bytes": 2214,
+      "sha256": "288319925a27f3a44cf4cd33e2b40b4b4b1e4392e52d2b988535da056342bad9",
+      "name": "MonsoonRain",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            2667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3567,
+            5633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5833,
+            6067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust3x.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust5A.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/doom/doomtarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/doom/doomtarget.mdx",
+      "bytes": 5909,
+      "sha256": "cae05f4762cd6225efb77ed73b195fd0481de8152b097a23f7a5c4f52c13532c",
+      "name": "DoomTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1033,
+            2067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Tail_Dust3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\firering6.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -99.8770980834961,
+          -100.8270034790039,
+          15.086799621582031
+        ],
+        "max": [
+          101.03099822998047,
+          100.08100128173828,
+          127.35600280761719
+        ]
+      }
+    },
+    "textures/tail_dust3.blp": {
+      "url": "/warcraft/textures/tail_dust3.png",
+      "bytes": 10437,
+      "sha256": "c09cd3649717fe3eb78b0c7c07c03218e4384cf6c70874b83b0a83d479557f66"
+    },
+    "textures/firering6.blp": {
+      "url": "/warcraft/textures/firering6.png",
+      "bytes": 5116,
+      "sha256": "c5fa07de0b4c733b289c12f3663a15ca7193ffa614f6eb5be6110b4e03b58c07"
+    },
+    "abilities/spells/other/doom/doomdeath.mdx": {
+      "url": "/warcraft/abilities/spells/other/doom/doomdeath.mdx",
+      "bytes": 10532,
+      "sha256": "56b9bea3942fc6d02ac543b7f196b8d3e189e03c0f77df184599eac24438116d",
+      "name": "DoomDeath",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2133,
+            6667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\firering6.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave9.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 4,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -232.55099487304688,
+          -232.64500427246094,
+          -0.01536440011113882
+        ],
+        "max": [
+          233.7050018310547,
+          233.61000061035156,
+          745.708984375
+        ]
+      }
+    },
+    "textures/shockwave9.blp": {
+      "url": "/warcraft/textures/shockwave9.png",
+      "bytes": 17929,
+      "sha256": "ec1d8e2265e4d7f1b22e799d3b311b06014e23638f3673fb9c295963a73143cf"
+    },
+    "abilities/spells/undead/deathanddecay/deathanddecaydamage.mdx": {
+      "url": "/warcraft/abilities/spells/undead/deathanddecay/deathanddecaydamage.mdx",
+      "bytes": 1159,
+      "sha256": "26a273698c97dd1e5a9aeb8436d71875bfce898f0402db38b96a924a3e6fed37",
+      "name": "DeathandDecayDamage",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            2100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8Fire.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/other/generalauratarget/generalauratarget.mdx": {
+      "url": "/warcraft/abilities/spells/other/generalauratarget/generalauratarget.mdx",
+      "bytes": 3040,
+      "sha256": "1ebf57636483cfc7b0e424090f22d2eeb589436b0af420a7c2fd9644d6b17bc1",
+      "name": "GeneralAuraTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            333,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2833,
+            3167
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            3833,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            6333,
+            6667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            7567,
+            9733
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            10067,
+            10400
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlowFaded.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -82.12969970703125,
+          -82.32279968261719,
+          -45.32899856567383
+        ],
+        "max": [
+          82.4884033203125,
+          82.29530334472656,
+          70.27439880371094
+        ]
+      }
+    },
+    "abilities/spells/nightelf/faeriefire/faeriefiretarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/faeriefire/faeriefiretarget.mdx",
+      "bytes": 32227,
+      "sha256": "c7b670d89ca79000c29064c63775860079f6a17180ce4f692f6c4dfca039b997",
+      "name": "FaerieFireTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            9000,
+            12333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            15000,
+            16667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            18333,
+            20333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star4_32.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ButterFly.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Star7b.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -75.5593032836914,
+          -77.3145980834961,
+          -33.88859939575195
+        ],
+        "max": [
+          64.3395004272461,
+          61.4370002746582,
+          78.60590362548828
+        ]
+      }
+    },
+    "textures/butterfly.blp": {
+      "url": "/warcraft/textures/butterfly.png",
+      "bytes": 2765,
+      "sha256": "3b33f3202900c4920354f4c2ade28255a2f8bbd42a97e06b34c68b05068cf62c"
+    },
+    "abilities/spells/orc/bloodlust/bloodlusttarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/bloodlust/bloodlusttarget.mdx",
+      "bytes": 3058,
+      "sha256": "c2c08a848de239028f8c999019e6c6e2efaf30e66af115e56f6b5f1a8c682b66",
+      "name": "BloodLustTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            333,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "stand",
+          "interval": [
+            1333,
+            2000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2333,
+            3000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave4white.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_star2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -34.64509963989258,
+          -34.626399993896484,
+          -34.45330047607422
+        ],
+        "max": [
+          34.64509963989258,
+          34.66379928588867,
+          34.83700180053711
+        ]
+      }
+    },
+    "abilities/spells/orc/bloodlust/bloodlustspecial.mdx": {
+      "url": "/warcraft/abilities/spells/orc/bloodlust/bloodlustspecial.mdx",
+      "bytes": 3190,
+      "sha256": "d57159fae2c72b20cc7fb2b35b3c3e75f940ec09d21720950663c65379b4158d",
+      "name": "BloodLustSpecial",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            333,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "stand",
+          "interval": [
+            1333,
+            2000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2333,
+            3000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave4white.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_star2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow3.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -35.3380012512207,
+          -35.319400787353516,
+          -35.14619827270508
+        ],
+        "max": [
+          35.3380012512207,
+          35.3567008972168,
+          35.52989959716797
+        ]
+      }
+    },
+    "abilities/spells/human/slow/slowtarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/slow/slowtarget.mdx",
+      "bytes": 1567,
+      "sha256": "2cc41667c23e199e0b3b1f4de683dd3dbf45e28a1eb8eb853976636a44b57bb5",
+      "name": "SlowTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            1667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\Slow\\Tail_Dust3.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/human/slow/tail_dust3.blp": {
+      "url": "/warcraft/abilities/spells/human/slow/tail_dust3.png",
+      "bytes": 10437,
+      "sha256": "c09cd3649717fe3eb78b0c7c07c03218e4384cf6c70874b83b0a83d479557f66"
+    },
+    "abilities/spells/nightelf/entanglingroots/entanglingrootstarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/entanglingroots/entanglingrootstarget.mdx",
+      "bytes": 55171,
+      "sha256": "8d65598fbfea39a718f4f4731c5bb69059ed42d417ff9e04703c68970964b83a",
+      "name": "EntanglingRootsTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            33,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1267,
+            2233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            2767,
+            3600
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            4433,
+            5400
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            5667,
+            6633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            7167,
+            8000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            9867,
+            10833
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            11100,
+            12067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            12600,
+            13433
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\StrangleVines.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust5A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Green_Star.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -168.00799560546875,
+          -155.23800659179688,
+          -11.927900314331055
+        ],
+        "max": [
+          181.58700561523438,
+          168.7729949951172,
+          172.94900512695312
+        ]
+      }
+    },
+    "textures/stranglevines.blp": {
+      "url": "/warcraft/textures/stranglevines.png",
+      "bytes": 25504,
+      "sha256": "947869f15cf1c18f638a8109dd429d89becda584c692feccf6bb472d6bf2263e"
+    },
+    "abilities/weapons/lavaspawnmissile/lavaspawnbirthmissile.mdx": {
+      "url": "/warcraft/abilities/weapons/lavaspawnmissile/lavaspawnbirthmissile.mdx",
+      "bytes": 23779,
+      "sha256": "1984d5ead9ca5881bd79400125eb470f86d75d7ca0597df1adf8c7a2bde2fc70",
+      "name": "LavaSpawnBirthMissile",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "stand",
+          "interval": [
+            2167,
+            3667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "death",
+          "interval": [
+            5500,
+            7000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 6,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\clouds_anim1_bw.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 2,
+          "Image": "",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\HeroAvatarFlame.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\firering1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave1b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust5A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\rock64.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 4,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -287.09600830078125,
+          -331.6919860839844,
+          -49.373199462890625
+        ],
+        "max": [
+          284.90301513671875,
+          328.7929992675781,
+          304.32598876953125
+        ]
+      }
+    },
+    "abilities/spells/undead/possession/possessiontarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/possession/possessiontarget.mdx",
+      "bytes": 7132,
+      "sha256": "f9c7f0e05cdc8c78cf5c882852352c329deefd67240a93386c289b64d354e98e",
+      "name": "PossessionTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            300,
+            667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            867,
+            1233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1500,
+            1867
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Tornado2b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlow2_32.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Green_Glow2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -58.09450149536133,
+          -57.84989929199219,
+          -15.147500038146973
+        ],
+        "max": [
+          58.08000183105469,
+          58.35329818725586,
+          79.46369934082031
+        ]
+      }
+    },
+    "abilities/spells/human/cloudoffog/cloudoffog.mdx": {
+      "url": "/warcraft/abilities/spells/human/cloudoffog/cloudoffog.mdx",
+      "bytes": 2006,
+      "sha256": "8ad9015ccd3110876790a976c1f1e10ed5716679c4da8b58659fcdacb42a0cc6",
+      "name": "CloudOfFog",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            333,
+            667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            1200,
+            1533
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1933,
+            2267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ShockwaveWater1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/undead/cripple/crippletarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/cripple/crippletarget.mdx",
+      "bytes": 5384,
+      "sha256": "c76001ea8737e6261e43b52b9226ad175e3c3058c23af3470040fd024e15579d",
+      "name": "CrippleTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            67
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            800,
+            1333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2400,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star4.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 3,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/weapons/poisonsting/poisonstingtarget.mdx": {
+      "url": "/warcraft/abilities/weapons/poisonsting/poisonstingtarget.mdx",
+      "bytes": 1683,
+      "sha256": "f3a9e28389022f849a1da63dac1186569dad39aada31caab7326f29dea83d1b8",
+      "name": "PoisonStingTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            467,
+            1233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            1367,
+            1967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2100,
+            2133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave4.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/undead/web/web_airtarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/web/web_airtarget.mdx",
+      "bytes": 17611,
+      "sha256": "ce46894ee66bbd3ddf0201cb724f22e2378b4205c009ddbb5924a747606e0bda",
+      "name": "Web_AirTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            8200,
+            8700
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            9367,
+            11367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            11700,
+            12367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            14633,
+            15133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            15800,
+            17800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            18133,
+            18800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Undead\\Web\\Web.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\AcidSplash1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -105.12200164794922,
+          -69.98770141601562,
+          -115.79399871826172
+        ],
+        "max": [
+          72.9854965209961,
+          95.86959838867188,
+          78.69429779052734
+        ]
+      }
+    },
+    "abilities/spells/undead/web/web.blp": {
+      "url": "/warcraft/abilities/spells/undead/web/web.png",
+      "bytes": 72940,
+      "sha256": "1f293c94e751e8b674efcf54d30629448b5680066bd2e4e288d7c8e5f5b76623"
+    },
+    "abilities/spells/undead/web/webtarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/web/webtarget.mdx",
+      "bytes": 12879,
+      "sha256": "1d7919c41a058c48337dd4c9f442e91ca928e55f22d3fe0d47b6bc808e1a9784",
+      "name": "WebTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Undead\\Web\\Web.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\AcidSplash1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -118.58399963378906,
+          -118.59400177001953,
+          -107.74400329589844
+        ],
+        "max": [
+          126.33399963378906,
+          123.21299743652344,
+          52.2943000793457
+        ]
+      }
+    },
+    "abilities/spells/human/innerfire/innerfiretarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/innerfire/innerfiretarget.mdx",
+      "bytes": 12090,
+      "sha256": "a5bc9a37f1cef9c10760e4761b9e2158417da1b79395b6077bfcc72bd5810c31",
+      "name": "InnerFireTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            3800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            4733,
+            5133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            5400,
+            5900
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 6,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\InnerFire\\Crown1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Yellow_Glow_Dim2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Human\\InnerFire\\Rune7.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Rune1d.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -93.64099884033203,
+          -94.73880004882812,
+          -154.3990020751953
+        ],
+        "max": [
+          92.21510314941406,
+          91.11720275878906,
+          114.39800262451172
+        ]
+      }
+    },
+    "abilities/spells/human/innerfire/crown1.blp": {
+      "url": "/warcraft/abilities/spells/human/innerfire/crown1.png",
+      "bytes": 4324,
+      "sha256": "e237a909abc4e3ed992e5e796d21b4b3af66bb6669caa2a2b3a719a415d685a8"
+    },
+    "abilities/spells/human/innerfire/rune7.blp": {
+      "url": "/warcraft/abilities/spells/human/innerfire/rune7.png",
+      "bytes": 17319,
+      "sha256": "e3fe53e38306da7a160c6066f1bfb32b8a81d7bb6dc29f0edb01c03d40bbdbfd"
+    },
+    "textures/rune1d.blp": {
+      "url": "/warcraft/textures/rune1d.png",
+      "bytes": 31410,
+      "sha256": "96d57e7c5a362ac9cb7aa9ea28b3804f8c120e6e9398592db0f8a8bb38a544a0"
+    },
+    "abilities/spells/nightelf/starfall/starfalltarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/starfall/starfalltarget.mdx",
+      "bytes": 17317,
+      "sha256": "378b6391ac847e4f0c4a3d513c4e3a0ac49eaec885d4cb2ed7b0de63d03bbb35",
+      "name": "StarfallTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            33,
+            3333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 7,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\lensflare1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star5tga.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Star2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Purple_Star.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\grad2b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Green_Glow3.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Purple_Glow.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 2,
+      "extent": {
+        "min": [
+          -315.13800048828125,
+          -130.593994140625,
+          -56.28620147705078
+        ],
+        "max": [
+          123.80599975585938,
+          182.82899475097656,
+          1249.7099609375
+        ]
+      }
+    },
+    "abilities/spells/nightelf/starfall/starfallcaster.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/starfall/starfallcaster.mdx",
+      "bytes": 16206,
+      "sha256": "dc4922e103dd4387716f322b285dc8bd1a9be5f2ab55533133a51a3aca3c63d4",
+      "name": "StarfallCaster",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            2667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3567,
+            4567
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5200,
+            5467
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 8,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\grad2b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\NightElf\\Starfall\\Moon_Cresent.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlowFaded.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\DemonRune1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave11.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave10.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -376.35101318359375,
+          -359.80999755859375,
+          -340.10699462890625
+        ],
+        "max": [
+          376.45599365234375,
+          359.94500732421875,
+          1290.8399658203125
+        ]
+      }
+    },
+    "abilities/spells/nightelf/starfall/moon_cresent.blp": {
+      "url": "/warcraft/abilities/spells/nightelf/starfall/moon_cresent.png",
+      "bytes": 11142,
+      "sha256": "857e6dfb658878aecaf050dc82a52740a76f482b880a89963c6d1a72334c9f59"
+    },
+    "textures/demonrune1.blp": {
+      "url": "/warcraft/textures/demonrune1.png",
+      "bytes": 6240,
+      "sha256": "b2eef1b4137cbf2856f6b44d31b9012b3ffbc9a3813ab50cd6ce6ffb5a9d2fc6"
+    },
+    "abilities/spells/orc/ensnare/ensnare_airtarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/ensnare/ensnare_airtarget.mdx",
+      "bytes": 26480,
+      "sha256": "7802045527497fd3884df4beafb9bbe51309ae25ffacc05c6efa6dc4da4951fb",
+      "name": "ensnare_AirTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            8500,
+            9000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            9667,
+            11667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death medium",
+          "interval": [
+            12000,
+            12667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            15033,
+            15533
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            16200,
+            18200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            18533,
+            19200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Ghost1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ensnare.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 3,
+      "extent": {
+        "min": [
+          -127.5999984741211,
+          -121.53299713134766,
+          -157.4250030517578
+        ],
+        "max": [
+          107.40399932861328,
+          199.35000610351562,
+          129.44200134277344
+        ]
+      }
+    },
+    "textures/ghost1.blp": {
+      "url": "/warcraft/textures/ghost1.png",
+      "bytes": 2612,
+      "sha256": "1d62f7a7d8581c4d1bd76b1d4678fb421d0a89c7a22b7f4e4a960834db9d28fe"
+    },
+    "abilities/spells/orc/ensnare/ensnaretarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/ensnare/ensnaretarget.mdx",
+      "bytes": 17232,
+      "sha256": "035a1236dec6c637811a12a0542961ac474ed46acfaa309ce98fb24160220224",
+      "name": "ensnareTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            1833,
+            2333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3000,
+            5000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5333,
+            6000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            6867,
+            7367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            8033,
+            10033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            10367,
+            11033
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            12200,
+            12700
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            13367,
+            15367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            15700,
+            16367
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ensnare.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Ghost1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 3,
+      "extent": {
+        "min": [
+          -120.3270034790039,
+          -134.66099548339844,
+          -1.366819977760315
+        ],
+        "max": [
+          134.3419952392578,
+          154.11900329589844,
+          235.16200256347656
+        ]
+      }
+    },
+    "abilities/spells/orc/stasistrap/stasistotemtarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/stasistrap/stasistotemtarget.mdx",
+      "bytes": 2668,
+      "sha256": "332885efcc946fdaadf08917ca8ef911e31ae1e38b80a063596708cc645b08e1",
+      "name": "StasisTotemTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            2533,
+            2967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3433,
+            5800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            13333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Magic1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -68.41339874267578,
+          -68.40779876708984,
+          -2.8904600143432617
+        ],
+        "max": [
+          68.78790283203125,
+          68.79350280761719,
+          17.545900344848633
+        ]
+      }
+    },
+    "abilities/spells/nightelf/tranquility/tranquility.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/tranquility/tranquility.mdx",
+      "bytes": 88490,
+      "sha256": "e39de3edaa03f8eeccff31207791f84b97466182cf7689173f4ddfa0ad701c8f",
+      "name": "Tranquility",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            2667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3567,
+            5633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            5833,
+            6067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Star7b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\grad2b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlowFaded.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Shockwave10.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -800.4569702148438,
+          -745.7880249023438,
+          -209.2899932861328
+        ],
+        "max": [
+          800.5599975585938,
+          784.7479858398438,
+          1293.469970703125
+        ]
+      }
+    },
+    "abilities/spells/undead/freezingbreath/freezingbreathtargetart.mdx": {
+      "url": "/warcraft/abilities/spells/undead/freezingbreath/freezingbreathtargetart.mdx",
+      "bytes": 31511,
+      "sha256": "8f77507bd9861259bd83933b49eb29ff6226c853bdb91f786323ced153692af8",
+      "name": "FreezingBreathTargetArt",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            1333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            3333,
+            6667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            10000,
+            10500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            11933,
+            13267
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            15267,
+            18600
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            21933,
+            22433
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            24467,
+            25800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            27800,
+            31133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            34467,
+            34967
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 1,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Ice3b.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Dust3.blp",
+          "Flags": 3
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star5tga.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\snowflake.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 5,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -262.6839904785156,
+          -149.09500122070312,
+          -328.87701416015625
+        ],
+        "max": [
+          169.46499633789062,
+          259.6289978027344,
+          265.48199462890625
+        ]
+      }
+    },
+    "abilities/spells/orc/lightningshield/lightningshieldtarget.mdx": {
+      "url": "/warcraft/abilities/spells/orc/lightningshield/lightningshieldtarget.mdx",
+      "bytes": 43552,
+      "sha256": "e5ce268a6ae3006ac2694ca8d3c93392bb5094918740495c295cfb4e02624e4c",
+      "name": "LightningShieldTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1167,
+            1767
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2900,
+            3233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Medium",
+          "interval": [
+            3633,
+            4633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth Medium",
+          "interval": [
+            4800,
+            5400
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death Medium",
+          "interval": [
+            6533,
+            6867
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Large",
+          "interval": [
+            8000,
+            9000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth Large",
+          "interval": [
+            9167,
+            9767
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death Large",
+          "interval": [
+            10900,
+            11233
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\lensflare1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Zap1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Star2.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 8,
+      "extent": {
+        "min": [
+          -178.05099487304688,
+          -164.96400451660156,
+          -55.71480178833008
+        ],
+        "max": [
+          158.3070068359375,
+          170.6219940185547,
+          168.92799377441406
+        ]
+      }
+    },
+    "abilities/spells/orc/lightningshield/lightningshieldbuff.mdx": {
+      "url": "/warcraft/abilities/spells/orc/lightningshield/lightningshieldbuff.mdx",
+      "bytes": 6712,
+      "sha256": "df06b3c8e267b2a9fc0fcaa570ad1b46564e2daaface04482d84cfbca5b09352",
+      "name": "LightningShieldBuff",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            1533
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Zap1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -44.807098388671875,
+          -41.194400787353516,
+          47.805599212646484
+        ],
+        "max": [
+          46.24620056152344,
+          38.742801666259766,
+          129
+        ]
+      }
+    },
+    "abilities/spells/nightelf/shadowstrike/shadowstrike.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/shadowstrike/shadowstrike.mdx",
+      "bytes": 19863,
+      "sha256": "4136ff0118d2fc98775ba3126b7b24453142eee4febefeacf21fa1435458bbb1",
+      "name": "shadowstrike",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            333,
+            667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            1333,
+            2433
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            3333,
+            3667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Black32.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Eyes.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8Mod.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ShockwaveWater1.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 2,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -26.469999313354492,
+          -25.365999221801758,
+          -11.255000114440918
+        ],
+        "max": [
+          14.890000343322754,
+          27.738300323486328,
+          65.37550354003906
+        ]
+      }
+    },
+    "textures/eyes.blp": {
+      "url": "/warcraft/textures/eyes.png",
+      "bytes": 5041,
+      "sha256": "026633d2dc3f7a5b9714703b6bfcb2cce7fcb1c2bdb0dd8af3719589068e3afa"
+    },
+    "abilities/spells/undead/curse/cursetarget.mdx": {
+      "url": "/warcraft/abilities/spells/undead/curse/cursetarget.mdx",
+      "bytes": 9290,
+      "sha256": "a3ea9ade51d99a45e50e129ddcbed8d2a62ea68254f4673c1f835c1ed1762e27",
+      "name": "CurseTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            900
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Birth",
+          "interval": [
+            1133,
+            1167
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            1700,
+            1733
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 4,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Purple_Glow.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\ShockwaveWater1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "abilities\\Spells\\Undead\\Curse\\Skull.blp",
+          "Flags": 1
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlowX.blp",
+          "Flags": 1
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -72.76679992675781,
+          -72.85060119628906,
+          -104.59400177001953
+        ],
+        "max": [
+          72.75399780273438,
+          72.67019653320312,
+          61.904998779296875
+        ]
+      }
+    },
+    "abilities/spells/undead/curse/skull.blp": {
+      "url": "/warcraft/abilities/spells/undead/curse/skull.png",
+      "bytes": 13750,
+      "sha256": "780a5b496055e7d96e054ab49fdaee7ca7e3920cafb2c874862e501358f6cd3d"
+    },
+    "abilities/spells/nightelf/rejuvenation/rejuvenationtarget.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/rejuvenation/rejuvenationtarget.mdx",
+      "bytes": 5384,
+      "sha256": "03d01b40843bcd76d50cc2a2c9952e1aae7ae7f230be18c7bb9b4ca9055bbef1",
+      "name": "RejuvenationTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            67
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand",
+          "interval": [
+            800,
+            1333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            2400,
+            2500
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlow2b.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 3,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "abilities/spells/human/manashield/manashieldcaster.mdx": {
+      "url": "/warcraft/abilities/spells/human/manashield/manashieldcaster.mdx",
+      "bytes": 30309,
+      "sha256": "3ca6e21ed8d5b44d810104f632dfd2e6ad8ca82a217486c36a6a9c104cb83d66",
+      "name": "ManaShieldCaster",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "nothing",
+          "interval": [
+            11667,
+            12667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand First",
+          "interval": [
+            18833,
+            19833
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand Second",
+          "interval": [
+            22100,
+            23100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand Third",
+          "interval": [
+            25067,
+            26067
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        }
+      ],
+      "geosets": 3,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\GenericGlow2c.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Star2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Blue_Glow2.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Yellow_Star_Dim.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -75.80500030517578,
+          -94.73799896240234,
+          4.9248199462890625
+        ],
+        "max": [
+          75.72830200195312,
+          94.73809814453125,
+          186.0800018310547
+        ]
+      }
+    },
+    "abilities/spells/human/flare/flaretarget.mdx": {
+      "url": "/warcraft/abilities/spells/human/flare/flaretarget.mdx",
+      "bytes": 5053,
+      "sha256": "2e7a65a5ce8c365ca63bf5b5960dd9da7a2c47f248d7439d80b8758753178ef4",
+      "name": "FlareTarget",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            0,
+            4000
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 2,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\lensflare1A.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Red_Glow1.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\star2_32.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -61.83720016479492,
+          -59.43470001220703,
+          -18.108299255371094
+        ],
+        "max": [
+          55.75920104980469,
+          58.16170120239258,
+          1140.0699462890625
+        ]
+      }
+    },
+    "abilities/spells/nightelf/immolation/immolationdamage.mdx": {
+      "url": "/warcraft/abilities/spells/nightelf/immolation/immolationdamage.mdx",
+      "bytes": 1191,
+      "sha256": "f9d4ad59fca3c40577f77cb2702a6cc127995e177d9bb944b0ffdea95437594e",
+      "name": "ImmolationDamage",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            0,
+            2100
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Clouds8x8Fire.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 1,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "units/human/militia/militia.mdx": {
+      "url": "/warcraft/units/human/militia/militia.mdx",
+      "bytes": 77631,
+      "sha256": "3529d9fb084d20fe82ff28ae6ebef901f97bad0e1d01b62b33a36c2e08f95f32",
+      "name": "Militia",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Stand",
+          "interval": [
+            133,
+            1633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand -2",
+          "interval": [
+            1800,
+            4467
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand - 4",
+          "interval": [
+            14133,
+            18133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Attack",
+          "interval": [
+            23200,
+            24200
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Attack -2 ",
+          "interval": [
+            27667,
+            28933
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Walk",
+          "interval": [
+            29100,
+            29900
+          ],
+          "moveSpeed": 150,
+          "nonLooping": false
+        },
+        {
+          "name": "Death",
+          "interval": [
+            34333,
+            37667
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Decay Flesh",
+          "interval": [
+            38133,
+            98133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Decay Bone",
+          "interval": [
+            99800,
+            159800
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Stand Ready",
+          "interval": [
+            183133,
+            184633
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        },
+        {
+          "name": "Stand Work",
+          "interval": [
+            191333,
+            191933
+          ],
+          "moveSpeed": 0,
+          "nonLooping": false
+        }
+      ],
+      "geosets": 4,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "units\\Human\\Militia\\PeasantMilitia.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 1,
+          "Image": "",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\gutz.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 0,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          -83.310302734375,
+          -51.260398864746094,
+          -50.0255012512207
+        ],
+        "max": [
+          108.16200256347656,
+          73.43370056152344,
+          132.7760009765625
+        ]
+      }
+    },
+    "units/human/militia/peasantmilitia.blp": {
+      "url": "/warcraft/units/human/militia/peasantmilitia.png",
+      "bytes": 207205,
+      "sha256": "a41948a78a45637fd5aaea2dea55e164a423584fdf5243936db5b1ca7b1eece8"
+    },
+    "abilities/weapons/locustmissile/locustmissile.mdx": {
+      "url": "/warcraft/abilities/weapons/locustmissile/locustmissile.mdx",
+      "bytes": 2645,
+      "sha256": "f19051b2ee2dca957afceb711f68494566bd4252802c296d4dd3bd271d9514fd",
+      "name": "LocustMissile",
+      "version": 800,
+      "sequences": [
+        {
+          "name": "Birth",
+          "interval": [
+            67,
+            333
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        },
+        {
+          "name": "Death",
+          "interval": [
+            467,
+            2133
+          ],
+          "moveSpeed": 0,
+          "nonLooping": true
+        }
+      ],
+      "geosets": 0,
+      "textures": [
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\BloodWhiteSmall.blp",
+          "Flags": 0
+        },
+        {
+          "ReplaceableId": 0,
+          "Image": "Textures\\Star7b.blp",
+          "Flags": 0
+        }
+      ],
+      "particleEmitters": 3,
+      "ribbonEmitters": 0,
+      "extent": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0,
+          0,
+          0
+        ]
+      }
     }
   },
   "missing": {}

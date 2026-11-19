@@ -54,6 +54,14 @@ test('attached effects resolve prefixed unit IDs and observe destruction in late
   effects.update(2,units,[]);assert.equal(effects.live.size,0);
 });
 
+test('channel spell models stop when the server interrupts them after the ordinary event retention window',async()=>{
+  const {effects}=fixture(),event={id:60,kind:'spell',code:'AEsf',x:0,y:0,persistent:true,visual:{Casterart:clap}};
+  effects.handle(event);const record=effects.live.get('60:casterart:0');await record.ready;
+  effects.update(5,new Map(),[event]);assert.equal(record.phase,'playing');
+  effects.update(.1,new Map(),[{...event,destroyed:true}]);assert.equal(record.phase,'ending');
+  effects.update(2,new Map(),[]);assert.equal(effects.live.size,0);
+});
+
 test('disposing an effect before asynchronous model loading completes releases the late instance',async()=>{
   const {effects,assets,scene}=fixture();let resolve;
   assets.attach=()=>new Promise(done=>{resolve=done;});

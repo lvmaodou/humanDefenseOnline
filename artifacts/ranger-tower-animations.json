@@ -1,0 +1,442 @@
+{
+  "before": [
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 14.916440060004485,
+      "id": 431,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 64531.5
+      },
+      "type": "h007",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 14.781709679061144,
+      "id": 432,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 64531.5
+      },
+      "type": "h055",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 14.916356727042741,
+      "id": 433,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 64531.5
+      },
+      "type": "h057",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 13.625380796936504,
+      "id": 434,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 63451.699999809265
+      },
+      "type": "h052",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 13.477750510892735,
+      "id": 435,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 63451.699999809265
+      },
+      "type": "h053",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 13.625289567793144,
+      "id": 436,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 63451.699999809265
+      },
+      "type": "h054",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 12.52205333239503,
+      "id": 437,
+      "animation": {
+        "name": "Stand",
+        "frame": 167
+      },
+      "type": "h03C",
+      "model": "original-mdx",
+      "path": "units/nightelf/archer/archer.mdx",
+      "source": "units\\nightelf\\Archer\\Archer.mdl",
+      "available": true,
+      "scale": 1.2
+    },
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 12.361253036472023,
+      "id": 438,
+      "animation": {
+        "name": "Stand - 1",
+        "frame": 2265.5
+      },
+      "type": "h05M",
+      "model": "original-mdx",
+      "path": "units/creeps/darktrollshadowpriest/darktrollshadowpriest.mdx",
+      "source": "units\\creeps\\DarkTrollShadowPriest\\DarkTrollShadowPriest.mdl",
+      "available": true,
+      "scale": 1.2
+    },
+    {
+      "visible": true,
+      "drawCount": 61,
+      "distance": 12.521954064922621,
+      "id": 439,
+      "animation": {
+        "name": "Stand - 1",
+        "frame": 3031.5
+      },
+      "type": "h05J",
+      "model": "original-mdx",
+      "path": "units/creeps/earthpandarenbrewmaster/earthpandarenbrewmaster.mdx",
+      "source": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+      "available": true,
+      "scale": 1
+    }
+  ],
+  "after": [
+    {
+      "visible": true,
+      "drawCount": 54,
+      "distance": 14.913696340832136,
+      "id": 431,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 64690.099999427795
+      },
+      "type": "h007",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 54,
+      "distance": 14.778982715886693,
+      "id": 432,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 64690.099999427795
+      },
+      "type": "h055",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 54,
+      "distance": 14.913695775575057,
+      "id": 433,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 64690.099999427795
+      },
+      "type": "h057",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 54,
+      "distance": 13.622956595742746,
+      "id": 434,
+      "animation": {
+        "name": "Stand Upgrade First Ready Attack",
+        "frame": 146934.19999980927
+      },
+      "type": "h052",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 54,
+      "distance": 13.47534556066814,
+      "id": 435,
+      "animation": {
+        "name": "Stand Upgrade First Ready Attack",
+        "frame": 148024.0999994278
+      },
+      "type": "h053",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 54,
+      "distance": 13.622955976929028,
+      "id": 436,
+      "animation": {
+        "name": "Stand Upgrade First Ready Attack",
+        "frame": 146934.19999980927
+      },
+      "type": "h054",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 54,
+      "distance": 12.520046097056984,
+      "id": 437,
+      "animation": {
+        "name": "Stand",
+        "frame": 351
+      },
+      "type": "h03C",
+      "model": "original-mdx",
+      "path": "units/nightelf/archer/archer.mdx",
+      "source": "units\\nightelf\\Archer\\Archer.mdl",
+      "available": true,
+      "scale": 1.2
+    },
+    {
+      "visible": true,
+      "drawCount": 54,
+      "distance": 12.359269632237963,
+      "id": 438,
+      "animation": {
+        "name": "Stand - 1",
+        "frame": 1147.2999992370605
+      },
+      "type": "h05M",
+      "model": "original-mdx",
+      "path": "units/creeps/darktrollshadowpriest/darktrollshadowpriest.mdx",
+      "source": "units\\creeps\\DarkTrollShadowPriest\\DarkTrollShadowPriest.mdl",
+      "available": true,
+      "scale": 1.2
+    },
+    {
+      "visible": true,
+      "drawCount": 53,
+      "distance": 12.52004542373099,
+      "id": 439,
+      "animation": {
+        "name": "Stand - 1",
+        "frame": 3086.3999996185303
+      },
+      "type": "h05J",
+      "model": "original-mdx",
+      "path": "units/creeps/earthpandarenbrewmaster/earthpandarenbrewmaster.mdx",
+      "source": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+      "available": true,
+      "scale": 1
+    }
+  ],
+  "failedAssets": [],
+  "mobile": [
+    {
+      "visible": true,
+      "drawCount": 17,
+      "distance": 14.913705454791192,
+      "id": 431,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 63759.89999961853
+      },
+      "type": "h007",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 17,
+      "distance": 14.778990347634075,
+      "id": 432,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 63759.89999961853
+      },
+      "type": "h055",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 17,
+      "distance": 14.913701787237592,
+      "id": 433,
+      "animation": {
+        "name": "Stand Ready Attack",
+        "frame": 63759.89999961853
+      },
+      "type": "h057",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 17,
+      "distance": 13.622964951150196,
+      "id": 434,
+      "animation": {
+        "name": "Stand Upgrade First Ready Attack",
+        "frame": 146825.39999961853
+      },
+      "type": "h052",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 17,
+      "distance": 13.475352290884988,
+      "id": 435,
+      "animation": {
+        "name": "Stand Upgrade First Ready Attack",
+        "frame": 147093.89999961853
+      },
+      "type": "h053",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 17,
+      "distance": 13.622960936105333,
+      "id": 436,
+      "animation": {
+        "name": "Stand Upgrade First Ready Attack",
+        "frame": 146825.39999961853
+      },
+      "type": "h054",
+      "model": "original-mdx",
+      "path": "buildings/human/humantower/humantower.mdx",
+      "source": "buildings\\human\\HumanTower\\HumanTower",
+      "available": true,
+      "scale": 1
+    },
+    {
+      "visible": true,
+      "drawCount": 16,
+      "distance": 12.520053423538767,
+      "id": 437,
+      "animation": {
+        "name": "Stand",
+        "frame": 478.6000003814697
+      },
+      "type": "h03C",
+      "model": "original-mdx",
+      "path": "units/nightelf/archer/archer.mdx",
+      "source": "units\\nightelf\\Archer\\Archer.mdl",
+      "available": true,
+      "scale": 1.2
+    },
+    {
+      "visible": true,
+      "drawCount": 16,
+      "distance": 12.359275182285465,
+      "id": 438,
+      "animation": {
+        "name": "Stand - 1",
+        "frame": 1378.6000003814697
+      },
+      "type": "h05M",
+      "model": "original-mdx",
+      "path": "units/creeps/darktrollshadowpriest/darktrollshadowpriest.mdx",
+      "source": "units\\creeps\\DarkTrollShadowPriest\\DarkTrollShadowPriest.mdl",
+      "available": true,
+      "scale": 1.2
+    },
+    {
+      "visible": true,
+      "drawCount": 16,
+      "distance": 12.520049054802062,
+      "id": 439,
+      "animation": {
+        "name": "Stand - 1",
+        "frame": 2144.6000003814697
+      },
+      "type": "h05J",
+      "model": "original-mdx",
+      "path": "units/creeps/earthpandarenbrewmaster/earthpandarenbrewmaster.mdx",
+      "source": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+      "available": true,
+      "scale": 1
+    }
+  ],
+  "errors": []
+}

@@ -13,6 +13,7 @@ test('original water elementals, treants, wolves, bears, lava spawns and inferna
   for (const [ability, type] of [['A008', 'hwat'], ['A01R', 'efon'], ['A02R', 'osw1'], ['A03J', 'n004'], ['A017', 'nlv2'], ['A03U', 'n002']]) {
     const game = make(), caster = game.createUnit(game.players[0], game.fourCC('h004'), 48, 48);
     assert.equal(game.cast(caster, game.fourCC(ability), null, { x: 48, y: 112 }, true), true);
+    if(data.abilityData[ability].code==='AUin')advance(game,Number(data.abilityData[ability].DataC1));
     const summon = [...game.units.values()].find(unit => unit.summoner === caster && unit.raw === type);
     assert.ok(summon, type);const expires = summon.expires;
     assert.equal(game.snapshot().units.find(unit => unit.id === summon.hid).canMove, true);

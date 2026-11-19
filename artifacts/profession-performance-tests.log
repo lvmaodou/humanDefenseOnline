@@ -1,0 +1,2 @@
+Human Defense 3.0.0 listening on http://localhost:0
+{"units":514,"baseline":{"fps":20,"p95FrameMs":17,"statePacketsPerSecond":36,"stateBytes":17641,"unitRendering":{"units":15,"native":10,"throttled":0},"visibleEnemyModels":0,"placeholderModels":0,"renderedCalls":16,"loadedModels":35},"rawBytes":222141,"compactBytes":120228,"fps":53,"p95FrameMs":33,"statePacketsPerSecond":8,"stateBytes":119025,"unitRendering":{"units":514,"native":509,"throttled":64},"visibleEnemyModels":32,"placeholderModels":0,"renderedCalls":48,"loadedModels":36}

@@ -1,0 +1,79 @@
+{
+  "professions": [
+    {
+      "profession": "野蛮人",
+      "buildingModels": 40,
+      "upgrade": "h027",
+      "learnedAbility": "A04B"
+    },
+    {
+      "profession": "猎人",
+      "buildingModels": 40,
+      "upgrade": "h012",
+      "learnedAbility": "A04A"
+    },
+    {
+      "profession": "盗贼",
+      "buildingModels": 40,
+      "upgrade": "h04C",
+      "learnedAbility": "A08Q"
+    },
+    {
+      "profession": "术士",
+      "buildingModels": 40,
+      "upgrade": "h033",
+      "learnedAbility": "A062"
+    },
+    {
+      "profession": "游侠",
+      "buildingModels": 40,
+      "upgrade": "h042",
+      "learnedAbility": "A07D"
+    },
+    {
+      "profession": "魔剑士",
+      "buildingModels": 40,
+      "upgrade": "h076",
+      "learnedAbility": "A0EE"
+    }
+  ],
+  "errors": [],
+  "failedAssets": [],
+  "buffEffect": [
+    {
+      "path": "abilities/spells/orc/ensnare/ensnaretarget.mdx",
+      "phase": "playing",
+      "sequence": "birth",
+      "position": [
+        -21.5000174731249,
+        -0.0013940390199422836,
+        -18
+      ],
+      "frame": 3659.199999809265
+    },
+    {
+      "path": "abilities/spells/orc/lightningshield/lightningshieldtarget.mdx",
+      "phase": "playing",
+      "sequence": "birth",
+      "position": [
+        -21.5000174731249,
+        -0.0013940390199422836,
+        -18
+      ],
+      "frame": 493.6000003814697
+    },
+    {
+      "path": "abilities/spells/human/aerialshackles/aerialshacklestarget.mdx",
+      "phase": "playing",
+      "sequence": "birth",
+      "position": [
+        -21.497694163079803,
+        0.5254132845163939,
+        -17.988273424710535
+      ],
+      "frame": 3613.1000003814697
+    }
+  ],
+  "channelAnimationAndInterrupt": true,
+  "locustMissile": "abilities/weapons/locustmissile/locustmissile.mdx"
+}

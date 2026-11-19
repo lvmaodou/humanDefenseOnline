@@ -1,0 +1,8 @@
+Human Defense 3.0.0 listening on http://localhost:0
+{"profession":"YM","type":"h024","cliff":true,"preview":true,"construction":true,"neighbour":true}
+{"profession":"LR","type":"h010","cliff":true,"preview":true,"construction":true,"neighbour":true}
+{"profession":"DZ","type":"h04X","cliff":true,"preview":true,"construction":true,"neighbour":true}
+{"profession":"SS","type":"h02O","cliff":true,"preview":true,"construction":true,"neighbour":true}
+{"profession":"YX","type":"h041","cliff":true,"preview":true,"construction":true,"neighbour":true}
+{"profession":"MJS","type":"h06N","cliff":true,"preview":true,"construction":true,"neighbour":true}
+{"passed":true,"professions":6,"mobile":true,"errors":[],"failedAssets":[]}

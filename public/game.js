@@ -145,8 +145,8 @@ function renderDialogs(){const dialog=state.dialogs.find(d=>d.players.includes(m
 function renderItems(filter=''){
   const list=$('#item-list');if(!meta?.items||!list)return;
   const term=filter.trim().toLowerCase(),rows=Object.entries(meta.items).filter(([id,item])=>item.inMap&&(!term||`${id} ${item.name} ${item.description}`.toLowerCase().includes(term))).sort((a,b)=>(Number(a[1].cost)||0)-(Number(b[1].cost)||0));
-  $('#inventory-note').textContent=Object.values(meta.items).some(item=>item.purchasable)?'购买需靠近原图对应商店；掉落装备不能在图鉴直接购买。':'原图没有设置装备商店。套装道具通过击杀掉落获取，拾取后使用建塔并升级，集齐三座激活职业套装。';
-  list.innerHTML=rows.map(([id,item])=>`<div class="item-row" data-catalog-item="${id}"><div class="item-mark">✦</div><div><b>${esc(item.name)}</b><small>${esc(item.description)}</small></div><div class="item-actions">${item.purchasable?`<em>${item.cost||0} 金</em><button data-buy="${id}">购买</button>`:`<span class="item-source">${esc(item.sources.join(' / ')||'原图物品')}</span>`}</div></div>`).join('')||'<div class="empty-build">没有匹配的原图物品</div>';
+  $('#inventory-note').textContent=Object.values(meta.items).some(item=>item.purchasable)?'购买需靠近对应商店；掉落装备不能在图鉴直接购买。':'套装道具通过击杀掉落获取，拾取后使用建塔并升级，集齐三座激活职业套装。';
+  list.innerHTML=rows.map(([id,item])=>`<div class="item-row" data-catalog-item="${id}"><div class="item-mark">✦</div><div><b>${esc(item.name)}</b><small>${esc(item.description)}</small></div><div class="item-actions">${item.purchasable?`<em>${item.cost||0} 金</em><button data-buy="${id}">购买</button>`:`<span class="item-source">${esc(item.sources.join(' / ')||'装备')}</span>`}</div></div>`).join('')||'<div class="empty-build">没有匹配的物品</div>';
   list.querySelectorAll('[data-buy]').forEach(button=>button.onclick=()=>{const worker=state?.units.find(isPlayerWorker);if(worker)act({type:'buy',unit:worker.id,item:button.dataset.buy});});
 }
 function renderAbilities(){
@@ -162,7 +162,7 @@ function renderAbilities(){
     abilitySignature=signature;
     list.innerHTML=abilities.length?`<div class="ability-title">技能</div>${abilities.map((a,i)=>{const def=definitions.get(a.id);return `<button class="ability-button ${castingAbility===a.id?'active':''} ${a.id==='A098'?'toggle-skill':''} ${a.id==='A098'&&goldDrain?'toggle-active':''}" data-spell="${a.id}" title="${esc(def?.description||def?.name||a.id)}" ${a.id==='A098'?`aria-pressed="${goldDrain}"`:''}><span>${i+1}</span><b>${esc(def?.name||a.id)}</b><small></small></button>`;}).join('')}`:'';
     autoList.innerHTML=autos.map(a=>{const def=definitions.get(a.id);return `<button class="autocast-toggle" type="button" data-autocast="${a.id}" aria-pressed="${a.autocast}"><span>自动施放：${esc(def?.name||a.id)}</span><small>${a.autocast?'已开启':'已关闭'}</small></button>`;}).join('');
-    passiveList.innerHTML=passives.map(a=>{const def=definitions.get(a.id);return `<details class="passive-skill" data-passive="${a.id}"><summary>${esc(def.name||a.id)}<small>被动技能 · 按原版条件触发</small></summary><p>${esc(def.description||'随攻击或原图触发器自动生效')}</p></details>`;}).join('');
+    passiveList.innerHTML=passives.map(a=>{const def=definitions.get(a.id);return `<details class="passive-skill" data-passive="${a.id}"><summary>${esc(def.name||a.id)}<small>被动技能</small></summary>${def.description?`<p>${esc(def.description)}</p>`:''}</details>`;}).join('');
     list.querySelectorAll('[data-spell]').forEach(button=>button.onclick=()=>activateAbility(button.dataset.spell));
     autoList.querySelectorAll('[data-autocast]').forEach(button=>button.onclick=()=>{const selected=unitsById.get(selectedUnit),ability=selected?.abilities.find(a=>a.id===button.dataset.autocast);if(selected&&ability)act({type:'autocast',unit:selected.id,ability:ability.id,enabled:!ability.autocast});});
   }

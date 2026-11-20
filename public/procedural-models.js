@@ -124,7 +124,7 @@ export function createCentralKeep(){const root=new T.Group(),stone=mat(0x59665b)
   root.userData.beacon=beacon;root.userData.halo=halo;root.userData.isKeep=true;root.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});return root;
 }
 export function animateCentralKeep(root,time){if(root?.userData.isKeep){root.userData.beacon.rotation.y=time*.7;root.userData.beacon.rotation.x=time*.23;root.userData.halo.rotation.y=-time*.5;}}
-export function cueUnitAnimation(root,kind){const rig=root?.userData.rig;if(!rig)return;if(kind==='attack'){rig.attack=.42;}else if(kind==='cast'){rig.cast=.7;}else if(kind==='hit')rig.hit=.15;else if(kind==='death')rig.dying=0.001;}
+export function cueUnitAnimation(root,kind,timing=null){const rig=root?.userData.rig;if(!rig)return;if(kind==='attack'){rig.attack=Math.max(.05,Number(timing?.duration)||.42);}else if(kind==='cast'){rig.cast=.7;}else if(kind==='hit')rig.hit=.15;else if(kind==='death')rig.dying=0.001;}
 export function animateUnit(root,dt,time,selected=false,camera=null){const rig=root.userData.rig;if(!rig)return;const unit=root.userData.entity;rig.attack=Math.max(0,rig.attack-dt);rig.cast=Math.max(0,rig.cast-dt);rig.hit=Math.max(0,(rig.hit||0)-dt);const move=rig.move||0,phase=time*(move?8:2)+rig.phase;
   if(rig.body){rig.body.rotation.z=Math.sin(phase*.5)*.025*(move?2:1);if(!['tower','siege'].includes(rig.style.family))rig.body.position.y=(rig.body.userData.baseY??=rig.body.position.y)+Math.sin(phase)*(move?.035:.012);}
   for(const leg of rig.legs||[]){leg.joint.rotation.x=Math.sin(phase+(leg.index||0)*1.3+(leg.side>0?Math.PI:0))*.65*move;}

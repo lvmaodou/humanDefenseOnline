@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { Runtime, fourCC } from '../engine/runtime.js';
 import { abilityControls, abilityValue, spellOrders } from '../engine/ability-data.js';
 import { professionRoster, professionAudit } from '../tools/audit_professions.mjs';
+import { releaseTestAttack } from './support/attack.js';
 
 const root=new URL('../content/original-3.0/',import.meta.url);
 const data=JSON.parse(await readFile(new URL('data.json',root),'utf8'));
@@ -15,7 +16,7 @@ const create=(game,id='hfoo',x=300,y=0,owner=8)=>{
   const unit=game.createUnit(game.players[owner],fourCC(id),x,y);unit.hp=unit.maxHp=1e9;unit.stats.hpRegen=0;unit.cooldown=1e6;return unit;
 };
 const advance=(game,duration)=>{const end=game.time+duration;while(game.time<end-.000001){const dt=Math.min(.05,end-game.time);game.time+=dt;game.updateCombat(dt);}};
-const fire=(game,unit,target)=>{unit.target=target;unit.cooldown=0;game.time+=.001;game.updateCombat(.001);unit.cooldown=1e6;};
+const fire=(game,unit,target)=>{releaseTestAttack(game,unit,target);unit.cooldown=1e6;};
 const spellDamage=(game,unit,value)=>value*game.attackVsArmor.spells[data.units[unit.raw].defType];
 
 test('all original dummy-caster order IDs resolve to their actual native spell family',()=>{
@@ -51,7 +52,7 @@ test('warlock automatic casts require and consume the original mana cost',()=>{
   const game=make();game.start();game.tasks=[];game.timers=[];game.run('OpenTrigger',[4]);
   const caster=create(game,'h032',0,0,0),target=create(game,'hfoo',200,0),id=fourCC('A05Y'),cost=abilityValue(game.ability(id),'Cost');
   caster.mana=0;fire(game,caster,target);assert.equal(caster.castCooldown.has(id),false);
-  caster.mana=cost;fire(game,caster,target);assert.ok(caster.castCooldown.has(id));assert.ok(caster.mana<1);
+  caster.mana=cost;fire(game,caster,target);assert.ok(caster.castCooldown.has(id));assert.ok(caster.mana<cost,'the autocast spends its original mana cost after attack backswing');
 });
 
 test('ranger barrage launches original missiles at ground and air secondary targets',()=>{

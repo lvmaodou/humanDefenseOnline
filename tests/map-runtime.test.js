@@ -6,6 +6,7 @@ import { PathingGrid } from '../engine/pathing.js';
 import { checkBuildPlacement, originalBuildBlockers } from '../public/placement.js';
 import { sampleTerrainHeight } from '../public/terrain-height.js';
 import { originalItemSources } from '../engine/item-sources.js';
+import { advanceCombat, releaseTestAttack, resolveTestProjectiles } from './support/attack.js';
 
 const root=new URL('../content/original-3.0/',import.meta.url);
 const data=JSON.parse(await readFile(new URL('data.json',root),'utf8'));
@@ -304,6 +305,7 @@ test('enabled defender weapons use integer rolls and source waves retain disable
   const game=makeGame();
   const defender=game.createUnit(game.players[0],game.fourCC('hfoo'),0,0);
   const creep=game.createUnit(game.players[8],game.fourCC('nanc'),30,0);
+  creep.x=30;creep.y=0;creep.move=null;creep.target=null;creep.stats.hpRegen=0;game.syncSpatial(creep);
   const defenderHp=defender.hp,creepHp=creep.hp,seed=game.seed;
   const nextSeed=(Math.imul(1664525,seed)+1013904223)>>>0;
   const random=nextSeed/4294967296;
@@ -311,12 +313,23 @@ test('enabled defender weapons use integer rolls and source waves retain disable
   const rolledDamage=(Number(weapon.dmgplus1)||0)+(Number(weapon.dice1)||0)*(1+Math.floor(random*(Number(weapon.sides1)||1)));
   const armor=Number(data.units.nanc.def)||0;
   const expectedDamage=rolledDamage*(armor>=0?1/(1+.06*armor):2-Math.pow(.94,-armor));
-  const regeneration=(Number(data.units.nanc.regenHP)||0)*.05;
-  game.tick(.05);
+  const attackStart=game.time;
+  releaseTestAttack(game,defender,creep);
+  const regeneration=(creep.stats.hpRegen||0)*(game.time-attackStart);
   assert.ok(Math.abs((creepHp-creep.hp)-(expectedDamage-regeneration))<1e-9);
   assert.equal(defender.hp,defenderHp,'the source wave has weapsOn=0');
   assert.ok(defender.cooldown>0);
   assert.equal(creep.cooldown,0);
+});
+
+test('attack speed is applied once when the weapon cooldown starts',()=>{
+  const game=makeGame(),attacker=game.createUnit(game.players[0],game.fourCC('hfoo'),0,0),target=game.createUnit(game.players[8],game.fourCC('hfoo'),30,0);
+  attacker.buffs.push({kind:'power',speed:1,damage:0,regen:0,until:100});target.hp=target.maxHp=1e9;attacker.target=target;
+  for(let step=0;step<8&&!attacker.attackWindup;step++)advanceCombat(game,.05);
+  assert.ok(attacker.attackWindup,'the unit reaches its attack window');
+  assert.ok(Math.abs(attacker.cooldown-Number(data.units.hfoo.cool1)/2)<1e-9,'the initial cooldown uses the current doubled attack speed');
+  advanceCombat(game,.05);
+  assert.ok(Math.abs(attacker.cooldown-(Number(data.units.hfoo.cool1)/2-.05))<1e-9,'cooldown then advances in real seconds without applying haste twice');
 });
 
 test('weapon damage applies the current runtime attack-type versus armor-type multiplier',()=>{
@@ -394,7 +407,7 @@ test('source WPM pathing routes within a lane and rejects unreachable map region
 test('missile attacks resolve damage only when their original projectile flight completes',()=>{
   const game=makeGame([]),attacker=game.createUnit(game.players[0],game.fourCC('h01K'),0,0),target=game.createUnit(game.players[8],game.fourCC('hfoo'),600,0);
   target.hp=target.maxHp=1e9;attacker.target=target;
-  game.tick(.05);
+  releaseTestAttack(game,attacker,target);
   const before=target.hp,projectile=game.effects.findLast(effect=>effect.kind==='projectile');
   assert.equal(game.projectiles.length,1);
   assert.equal(projectile.flightTime,600/1800);
@@ -407,9 +420,25 @@ test('missile attacks resolve damage only when their original projectile flight 
   assert.equal(game.projectiles.length,0);
 });
 
+test('attacked events and attack animation begin before damage-point projectile release',()=>{
+  const game=makeGame([]),attacker=game.createUnit(game.players[0],game.fourCC('h01K'),0,0),target=game.createUnit(game.players[8],game.fourCC('hfoo'),600,0),events=[];
+  target.hp=target.maxHp=1e9;
+  const fire=game.fire.bind(game);game.fire=(event,context)=>{if(event.includes('UNIT_ATTACKED'))events.push(event);return fire(event,context);};
+  game.time=.05;game.updateCombat(.05);
+  const cue=game.effects.findLast(effect=>effect.kind==='attack');
+  assert.deepEqual(events,['EVENT_PLAYER_UNIT_ATTACKED','EVENT_UNIT_ATTACKED']);
+  assert.equal(target.hp,1e9);assert.equal(game.projectiles.length,0);
+  assert.equal(cue.time,.05);assert.equal(cue.damagePoint,Number(data.units.h01K.dmgpt1));
+  assert.equal(cue.duration,Number(data.units.h01K.dmgpt1)+Number(data.units.h01K.backSw1));
+  game.moveUnit(target,1400,0);game.time+=.05;game.updateCombat(.05);
+  assert.equal(game.projectiles.length,0,'a target that leaves weapon range cancels the pending shot');
+  assert.ok(game.effects.some(effect=>effect.kind==='attack-cancel'&&effect.sourceId===attacker.hid));
+  assert.equal(attacker.attackReleaseSerial,undefined);
+});
+
 test('homing missiles recalculate travel time and target coordinates after movement',()=>{
   const game=makeGame([]),attacker=game.createUnit(game.players[0],game.fourCC('h01K'),0,0),target=game.createUnit(game.players[8],game.fourCC('hfoo'),600,0);
-  target.hp=target.maxHp=1e9;attacker.target=target;game.tick(.05);game.moveUnit(target,800,0);
+  target.hp=target.maxHp=1e9;releaseTestAttack(game,attacker,target);game.moveUnit(target,800,0);
   game.tick(.25);
   assert.equal(target.hp,1e9);
   assert.ok(game.effects.some(effect=>effect.kind==='projectile-update'));
@@ -419,17 +448,18 @@ test('homing missiles recalculate travel time and target coordinates after movem
 
 test('missile bounce and concentric splash use the original weapon fields',()=>{
   const splashGame=makeGame([]),mage=splashGame.createUnit(splashGame.players[0],splashGame.fourCC('h02G'),0,0),primary=splashGame.createUnit(splashGame.players[8],splashGame.fourCC('hfoo'),200,0),full=splashGame.createUnit(splashGame.players[8],splashGame.fourCC('hfoo'),240,0),half=splashGame.createUnit(splashGame.players[8],splashGame.fourCC('hfoo'),270,0),quarter=splashGame.createUnit(splashGame.players[8],splashGame.fourCC('hfoo'),350,0);
-  for(const unit of [primary,full,half,quarter])unit.hp=unit.maxHp=1e9;
-  mage.target=primary;splashGame.time=.05;splashGame.updateCombat(.05);splashGame.time=.25;splashGame.updateCombat(0);
+  for(const unit of [primary,full,half,quarter]){unit.hp=unit.maxHp=1e9;unit.stats.hpRegen=0;}
+  releaseTestAttack(splashGame,mage,primary);resolveTestProjectiles(splashGame,mage);
   const losses=[primary,full,half,quarter].map(unit=>1e9-unit.hp);
   assert.ok(Math.abs(losses[1]/losses[0]-1)<1e-9);
   assert.ok(Math.abs(losses[2]/losses[0]-.5)<1e-9);
   assert.ok(Math.abs(losses[3]/losses[0]-.25)<1e-9);
 
   const bounceGame=makeGame([]),bouncer=bounceGame.createUnit(bounceGame.players[0],bounceGame.fourCC('h05P'),0,0),first=bounceGame.createUnit(bounceGame.players[8],bounceGame.fourCC('hfoo'),100,0),second=bounceGame.createUnit(bounceGame.players[8],bounceGame.fourCC('hfoo'),200,0);
-  first.hp=first.maxHp=second.hp=second.maxHp=1e9;bouncer.target=first;bounceGame.time=.05;bounceGame.updateCombat(.05);bounceGame.time=.25;bounceGame.updateCombat(0);
-  assert.equal(second.hp,1e9,'the bounce must travel from the first target');bounceGame.time=.5;bounceGame.updateCombat(0);
-  const firstLoss=1e9-first.hp,secondLoss=1e9-second.hp;
+  first.hp=first.maxHp=second.hp=second.maxHp=1e9;first.stats.hpRegen=second.stats.hpRegen=0;releaseTestAttack(bounceGame,bouncer,first);
+  const firstImpact=bounceGame.projectiles[0].impactAt;advanceCombat(bounceGame,Math.max(.05,firstImpact-bounceGame.time+.01));
+  assert.equal(second.hp,1e9,'the bounce must travel from the first target');
+  resolveTestProjectiles(bounceGame,bouncer);const firstLoss=1e9-first.hp,secondLoss=1e9-second.hp;
   assert.ok(firstLoss>0&&secondLoss>0);
   assert.ok(Math.abs(secondLoss/firstLoss-(1-data.units.h05P.damageLoss1))<1e-9);
 });
@@ -437,9 +467,9 @@ test('missile bounce and concentric splash use the original weapon fields',()=>{
 test('mline weapons damage targets along their fixed projectile path',()=>{
   const game=makeGame([]),swordsman=game.createUnit(game.players[0],game.fourCC('h06K'),0,0),primary=game.createUnit(game.players[8],game.fourCC('hfoo'),300,0),lineTarget=game.createUnit(game.players[8],game.fourCC('hfoo'),500,100),outside=game.createUnit(game.players[8],game.fourCC('hfoo'),500,350);
   for(const unit of [primary,lineTarget,outside])unit.hp=unit.maxHp=1e9;
-  swordsman.target=primary;game.time=.05;game.updateCombat(.05);
+  releaseTestAttack(game,swordsman,primary);
   assert.equal(game.projectiles.length,1);
-  game.time=1;game.updateCombat(0);
+  resolveTestProjectiles(game,swordsman);
   assert.ok(primary.hp<1e9);
   assert.ok(lineTarget.hp<1e9);
   assert.equal(outside.hp,1e9);
@@ -451,11 +481,11 @@ test('all six profession attacks run their passive and map-trigger effects',()=>
   const professions=[['barbarian','h01K','A040'],['hunter','h018','A091'],['rogue','h05T','A07F'],['mage','h02G','A00Q'],['ranger','h03G','A067'],['swordsman','h06K','A0D3']];
   const fixtures=professions.map(([name,unitId,abilityId],index)=>{
     const x=-6500+index*2400,tower=game.createUnit(game.players[0],game.fourCC(unitId),x,0),target=game.createUnit(game.players[8],game.fourCC('hfoo'),x+200,0);
-    target.hp=target.maxHp=1e9;target.move=null;tower.target=target;tower.cooldown=100;
+    target.hp=target.maxHp=1e9;target.stats.hpRegen=0;target.move=null;tower.target=target;tower.cooldown=100;
     assert.ok(tower.abilities.has(game.fourCC(abilityId)),`${name} has ${abilityId}`);
     let secondary=null;
     if(name==='hunter'||name==='swordsman'||name==='ranger'){
-      const raw=name==='ranger'?'hgry':'hfoo',secondaryX=name==='swordsman'?x+300:x+100;secondary=game.createUnit(game.players[8],game.fourCC(raw),secondaryX,20);secondary.hp=secondary.maxHp=1e9;secondary.move=null;
+      const raw=name==='ranger'?'hgry':'hfoo',secondaryX=name==='swordsman'?x+300:x+100;secondary=game.createUnit(game.players[8],game.fourCC(raw),secondaryX,20);secondary.hp=secondary.maxHp=1e9;secondary.stats.hpRegen=0;secondary.move=null;
     }
     return {name,tower,target,secondary,index};
   });
@@ -464,12 +494,12 @@ test('all six profession attacks run their passive and map-trigger effects',()=>
     fixture.target.x=fixture.tower.x+200;fixture.target.y=0;fixture.target.move=null;game.syncSpatial(fixture.target);
     if(fixture.secondary){fixture.secondary.x=fixture.tower.x+(fixture.name==='swordsman'?300:100);fixture.secondary.y=20;fixture.secondary.move=null;game.syncSpatial(fixture.secondary);}
     const goldBefore=fixture.tower.owner.gold;
-    fixture.tower.cooldown=0;game.globals.udg_playerzz[0]=fixture.index+1;game.time+=.05;game.updateCombat(.05);
+    fixture.tower.cooldown=0;game.globals.udg_playerzz[0]=fixture.index+1;releaseTestAttack(game,fixture.tower,fixture.target);
     const pending=game.projectiles.filter(projectile=>projectile.attacker===fixture.tower);
     const impactAt=Math.max(game.time,...pending.map(projectile=>projectile.impactAt));
-    game.time=impactAt+.001;game.updateCombat(.001);fixture.buffs=[...fixture.target.buffs];fixture.goldGain=fixture.tower.owner.gold-goldBefore;
+    advanceCombat(game,Math.max(.001,impactAt-game.time+.001));fixture.buffs=[...fixture.target.buffs];fixture.goldGain=fixture.tower.owner.gold-goldBefore;
   }
-  assert.ok(fixtures.find(f=>f.name==='barbarian').target.buffs.some(buff=>buff.kind==='stun'));
+  assert.ok(fixtures.find(f=>f.name==='barbarian').buffs.some(buff=>buff.kind==='stun'));
   assert.ok(fixtures.find(f=>f.name==='hunter').secondary.hp<1e9);
   assert.equal(fixtures.find(f=>f.name==='rogue').goldGain,2);
   assert.ok(fixtures.find(f=>f.name==='mage').buffs.some(buff=>buff.kind==='stun'));
@@ -478,7 +508,7 @@ test('all six profession attacks run their passive and map-trigger effects',()=>
   assert.equal(game.errors.length,0);
 
   const airGame=makeGame([]),ranger=airGame.createUnit(airGame.players[0],airGame.fourCC('h03G'),0,0),flying=airGame.createUnit(airGame.players[8],airGame.fourCC('hgry'),200,0);
-  flying.move=null;ranger.target=flying;airGame.updateCombat(.05);
+  flying.move=null;releaseTestAttack(airGame,ranger,flying);
   assert.equal(airGame.projectiles.length,1);
 });
 
@@ -500,21 +530,21 @@ test('every tower tier in all six professions completes an attack without runtim
 });
 
 test('advanced profession passives use source damage, duration, and summon fields',()=>{
-  const landAttack=(game,tower,target)=>{tower.target=target;tower.cooldown=0;game.time=.05;game.updateCombat(.05);game.time=5;game.updateCombat(0);};
+  const landAttack=(game,tower,target)=>{target.stats.hpRegen=0;releaseTestAttack(game,tower,target);resolveTestProjectiles(game,tower);};
 
   const pulverizeGame=makeGame([]);pulverizeGame.random=()=>0;
   const pulverizer=pulverizeGame.createUnit(pulverizeGame.players[0],pulverizeGame.fourCC('h01O'),0,0),primary=pulverizeGame.createUnit(pulverizeGame.players[8],pulverizeGame.fourCC('hfoo'),200,0),inner=pulverizeGame.createUnit(pulverizeGame.players[8],pulverizeGame.fourCC('hfoo'),800,0),outer=pulverizeGame.createUnit(pulverizeGame.players[8],pulverizeGame.fourCC('hfoo'),1000,0),outside=pulverizeGame.createUnit(pulverizeGame.players[8],pulverizeGame.fourCC('hfoo'),1150,0);
-  for(const unit of [primary,inner,outer,outside])unit.hp=unit.maxHp=1e9;
+  for(const unit of [primary,inner,outer,outside]){unit.hp=unit.maxHp=1e9;unit.stats.hpRegen=0;}
   landAttack(pulverizeGame,pulverizer,primary);
   assert.equal(1e9-inner.hp,500*pulverizeGame.attackVsArmor.spells[data.units.hfoo.defType]);
   assert.equal(1e9-outer.hp,250*pulverizeGame.attackVsArmor.spells[data.units.hfoo.defType]);
   assert.equal(outside.hp,1e9);
 
   const poisonGame=makeGame([]),poisoner=poisonGame.createUnit(poisonGame.players[0],poisonGame.fourCC('h03Q'),0,0),poisonTarget=poisonGame.createUnit(poisonGame.players[8],poisonGame.fourCC('hfoo'),200,0),cloudVictim=poisonGame.createUnit(poisonGame.players[8],poisonGame.fourCC('hfoo'),450,0);
-  for(const unit of [poisonTarget,cloudVictim])unit.hp=unit.maxHp=1e9;
+  for(const unit of [poisonTarget,cloudVictim]){unit.hp=unit.maxHp=1e9;unit.stats.hpRegen=0;}
   landAttack(poisonGame,poisoner,poisonTarget);
   const poisonBefore=cloudVictim.hp;
-  poisonGame.time=6;poisonGame.updateCombat(1);
+  advanceCombat(poisonGame,.4);
   assert.ok(poisonBefore-cloudVictim.hp>0&&poisonBefore-cloudVictim.hp<=300);
   assert.ok(poisonGame.effects.some(effect=>effect.kind==='area'&&effect.code==='Aapl'));
 
@@ -523,15 +553,16 @@ test('advanced profession passives use source damage, duration, and summon field
   landAttack(phoenixGame,phoenix,phoenixTarget);
   const afterFlame=phoenixTarget.hp;
   assert.ok(1e9-afterFlame>100);
-  assert.ok(phoenixTarget.buffs.some(buff=>buff.kind==='burn'&&buff.damage===500&&buff.until===10));
-  phoenixGame.time=6;phoenixGame.updateCombat(1);
+  const phoenixBurn=phoenixTarget.buffs.find(buff=>buff.kind==='burn'&&buff.damage===500);
+  assert.ok(phoenixBurn&&Math.abs(phoenixBurn.until-5.05)<1e-9,'the attack event starts the source five-second burn at time .05');
+  advanceCombat(phoenixGame,1);
   assert.ok(phoenixTarget.hp<afterFlame);
 
   const arrowGame=makeGame([]),archer=arrowGame.createUnit(arrowGame.players[0],arrowGame.fourCC('h03N'),0,0),doomed=arrowGame.createUnit(arrowGame.players[8],arrowGame.fourCC('hfoo'),200,0);
   doomed.hp=1;landAttack(arrowGame,archer,doomed);
   const skeletons=[...arrowGame.units.values()].filter(unit=>unit.raw==='ndr1'&&unit.summoner===archer);
   assert.equal(skeletons.length,1);
-  assert.equal(skeletons[0].expires,10);
+  assert.equal(skeletons[0].expires,arrowGame.time+5);
 });
 
 test('custom Afae profession casts run JASS effects without mana or generic slow',()=>{
@@ -639,7 +670,7 @@ test('usable and passive inventory items apply their original ability effects',(
   assert.equal(hero.itemStats.airAttack,true);
   const target=game.createUnit(game.players[8],game.fourCC('hfoo'),4050,50),nearby=game.createUnit(game.players[8],game.fourCC('hfoo'),4080,65);
   target.hp=target.maxHp=1e9;nearby.hp=nearby.maxHp=1e9;hero.hp=hero.maxHp-500;hero.target=target;hero.cooldown=0;
-  const heroBefore=hero.hp,nearbyBefore=nearby.hp;game.updateCombat(.05);
+  const heroBefore=hero.hp,nearbyBefore=nearby.hp;releaseTestAttack(game,hero,target);
   assert.ok(hero.hp>heroBefore);
   assert.ok(nearby.hp<nearbyBefore);
   assert.ok(target.buffs.some(buff=>buff.kind==='armor'&&buff.amount===5));
@@ -720,7 +751,7 @@ test('remaining active items apply level, blight, summon, and lightning-orb beha
 
   const orb=give('oli2');
   assert.equal(hero.itemStats.damage,5);
-  hero.target=enemy;hero.cooldown=0;game.time=.05;game.updateCombat(.05);
+  releaseTestAttack(game,hero,enemy);
   assert.ok(enemy.buffs.some(buff=>buff.kind==='slow'&&buff.factor===.65));
 
   const tome=give('tkno'),level=hero.level;

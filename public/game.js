@@ -95,7 +95,30 @@ function buildCliffs(groups){
   });
 }
 function buildWater(data){const positions=[],indices=[];let vertex=0;for(let y=0;y<data.height-1;y++)for(let x=0;x<data.width-1;x++){const cells=[[y*data.width+x,(y)*data.width+x+1,(y+1)*data.width+x,(y+1)*data.width+x+1]];for(const corners of cells){if(!corners.every(index=>data.waterHeights?.[index]!==null&&data.waterHeights?.[index]!==undefined))continue;for(const index of corners){const sx=data.offset[0]+index%data.width*data.tileSize,sy=data.offset[1]+Math.floor(index/data.width)*data.tileSize,[wx,wz]=sourceToWorld(sx,sy);positions.push(wx,data.waterHeights[index]/128*TERRAIN_RELIEF+.018,wz);}indices.push(vertex,vertex+1,vertex+2,vertex+1,vertex+3,vertex+2);vertex+=4;}}if(!indices.length)return;const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geometry.setIndex(indices);geometry.computeVertexNormals();const water=new THREE.Mesh(geometry,new THREE.MeshPhongMaterial({color:0x859ea0,transparent:true,opacity:.48,shininess:75,side:THREE.DoubleSide,depthWrite:false}));water.renderOrder=2;scene.add(water);objects.set('water',water);}
-function updateObjects(){if(!state)return;unitsById.clear();for(const u of state.units)unitsById.set(u.id,u);const present=new Set(state.units.map(u=>'u'+u.id));for(const [key,obj]of objects)if(key.startsWith('u')&&!present.has(key)){releaseUnitModel(obj);objects.delete(key);}for(const u of state.units){const key='u'+u.id;let obj=objects.get(key);const definition=meta.units[u.type]||{};if(obj&&(obj.userData.entity?.type!==u.type||assets?.has(definition.file)&&obj.userData.style?.representation!=='original-mdx')){releaseUnitModel(obj);objects.delete(key);obj=null;}if(!obj){obj=meshEntity(u);scene.add(obj);objects.set(key,obj);}const [x,z]=pos(u.x,u.y),y=effects.ground(u.x,u.y),previous=obj.userData.entity;if(!previous){obj.position.set(x,y,z);obj.userData.remoteMove=null;}else if(previous.x!==u.x||previous.y!==u.y){obj.userData.remoteMove={from:obj.position.clone(),to:new THREE.Vector3(x,y,z),elapsed:0,duration:.1};}else if(!obj.userData.remoteMove)obj.position.set(x,y,z);obj.userData.rig.move=u.moving?Number(u.moveSpeed)||0:0;obj.rotation.y=u.facing*Math.PI/180;obj.userData.entity=u;updateUnitConstruction(obj,u,meta.units[u.upgrade?.type]?.Animprops||'');obj.userData.selection.visible=u.id===selectedUnit&&u.owner===mySlot;obj.scale.setScalar(obj.userData.baseScale);if(u.dead&&!obj.userData.deathCue)cueUnitAnimation(obj,'death');}
+const normalizeFacing=degrees=>((degrees%360)+360)%360;
+function updateObjects(){
+  if(!state)return;
+  unitsById.clear();for(const unit of state.units)unitsById.set(unit.id,unit);
+  const present=new Set(state.units.map(unit=>'u'+unit.id));
+  for(const [key,obj]of objects)if(key.startsWith('u')&&!present.has(key)){releaseUnitModel(obj);objects.delete(key);}
+  for(const unit of state.units){
+    const key='u'+unit.id;let obj=objects.get(key);const definition=meta.units[unit.type]||{};
+    if(obj&&(obj.userData.entity?.type!==unit.type||assets?.has(definition.file)&&obj.userData.style?.representation!=='original-mdx')){releaseUnitModel(obj);objects.delete(key);obj=null;}
+    if(!obj){obj=meshEntity(unit);scene.add(obj);objects.set(key,obj);}
+    const [x,z]=pos(unit.x,unit.y),y=effects.ground(unit.x,unit.y),previous=obj.userData.entity;
+    if(!previous){obj.position.set(x,y,z);obj.userData.remoteMove=null;obj.rotation.y=unit.facing*Math.PI/180;}
+    else if(previous.x!==unit.x||previous.y!==unit.y)obj.userData.remoteMove={from:obj.position.clone(),to:new THREE.Vector3(x,y,z),elapsed:0,duration:.1};
+    else if(!obj.userData.remoteMove)obj.position.set(x,y,z);
+    const targetFacing=normalizeFacing(unit.facing);
+    if(previous&&previous.facing!==unit.facing){
+      const from=normalizeFacing(obj.rotation.y*180/Math.PI);
+      obj.userData.remoteFacing={from,to:targetFacing,elapsed:0,duration:.1};
+    }
+    obj.userData.rig.move=unit.moving?Number(unit.moveSpeed)||0:0;
+    obj.userData.entity=unit;updateUnitConstruction(obj,unit,meta.units[unit.upgrade?.type]?.Animprops||'');
+    obj.userData.selection.visible=unit.id===selectedUnit&&unit.owner===mySlot;obj.scale.setScalar(obj.userData.baseScale);
+    if(unit.dead&&!obj.userData.deathCue)cueUnitAnimation(obj,'death');
+  }
   const itemKeys=new Set(state.items.map(i=>'i'+i.id));for(const [key,obj]of objects)if(key.startsWith('i')&&!itemKeys.has(key)){releaseItemModel(obj);objects.delete(key);}for(const item of state.items){const key='i'+item.id,definition=meta.items[item.type]||{};let obj=objects.get(key);if(obj&&!obj.userData.nativeRequested&&assets?.has(definition.model)){releaseItemModel(obj);objects.delete(key);obj=null;}if(!obj){obj=createItemModel(item,definition,assets);scene.add(obj);objects.set(key,obj);}const [x,z]=pos(item.x,item.y);obj.position.set(x,terrainHeight(item.x,item.y),z);obj.userData.item=item;}}
 function renderHud(){
   if(!state)return;
@@ -117,6 +140,7 @@ function renderHud(){
     selectedUnit=replacement?.id||(previous?.building?state.units.find(unit=>unit.owner===mySlot&&unit.building&&!unit.dead&&Math.hypot(unit.x-previous.x,unit.y-previous.y)<1)?.id||null:null);
     targetMode=false;
   }
+  const botCount=state.botSlots?.length||0;$('#room-label').textContent=botCount?`${roomId} · 托管 ${botCount}`:roomId;$('#room-label').title=botCount?`${roomId}，${botCount} 个机器人托管席位`:roomId;
   renderBuildList(self);renderDialogs();updateObjects();renderUnitInspector();renderMobileUnitActions();renderPlayerControls();
   renderBattleResult();
   if(previewSourcePoint){const [x,z]=sourceToWorld(previewSourcePoint.x,previewSourcePoint.y);positionBuildPreview(new THREE.Vector3(x,0,z));}
@@ -548,11 +572,19 @@ addEventListener('keydown',e=>{
 $('#center').addEventListener('click',()=>setTimeout(()=>{followHero=true;zoom=1;},0));
 for(const [selector,delta]of [['#zoom-in',-.1],['#zoom-out',.1]])$(selector).addEventListener('click',e=>{e.stopImmediatePropagation();followHero=false;zoom=THREE.MathUtils.clamp(zoom+delta,.55,2.8);constrainCamera();},{capture:true});
 function advanceRemotePosition(obj,dt){const move=obj.userData.remoteMove;if(!move)return;move.elapsed=Math.min(move.elapsed+dt,move.duration);const progress=move.elapsed/move.duration;obj.position.lerpVectors(move.from,move.to,progress);if(progress===1)obj.userData.remoteMove=null;}
+function advanceRemoteFacing(obj,dt){
+  const turn=obj.userData.remoteFacing;if(!turn)return;
+  turn.elapsed=Math.min(turn.elapsed+dt,turn.duration);const progress=turn.elapsed/turn.duration;
+  const difference=((turn.to-turn.from+540)%360+360)%360-180;
+  obj.rotation.y=(turn.from+difference*progress)*Math.PI/180;
+  if(progress===1)obj.userData.remoteFacing=null;
+}
 function updateUnitViews(dt,time){
   for(const[key,obj]of objects){
     if(key.startsWith('i')){animateItem(obj,dt);continue;}
     if(!key.startsWith('u'))continue;
     advanceRemotePosition(obj,dt);
+    advanceRemoteFacing(obj,dt);
     const unit=obj.userData.entity,selected=unit?.id===selectedUnit&&unit?.owner===mySlot;
     obj.userData.forceDetail=unit?.id===targetUnit;
     animateUnit(obj,dt,time,selected,camera,frameFrustum);
@@ -576,7 +608,8 @@ function frame(){
       }
       if(fx.kind==='build')return true;
       const object=objects.get(`u${fx.sourceId}`);
-      if(object&&['projectile','spell','death'].includes(fx.kind))cueUnitAnimation(object,fx.kind==='projectile'?'attack':fx.kind==='spell'?'spell':fx.kind,fx.animationNames||'');
+      if(object&&(['attack','attack-cancel','spell','death'].includes(fx.kind)||fx.kind==='projectile'&&!fx.attackStarted))cueUnitAnimation(object,fx.kind==='projectile'?'attack':fx.kind,fx.animationNames||'',fx);
+      if(fx.kind==='attack'||fx.kind==='attack-cancel')return true;
       return originalEffects?.handle(fx)||false;
     });
     updateUnitViews(dt,gameClock);effects.update(dt,state.effects);originalEffects?.update(dt,objects,state.effects);

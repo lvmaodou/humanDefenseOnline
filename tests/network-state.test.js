@@ -5,6 +5,7 @@ import { RoomSessions } from '../engine/room-sessions.js';
 
 test('network snapshots keep player controls while trimming unused neutral unit details', () => {
   const state = {
+    botSlots: [2],
     units: [
       { owner: 0, id: 1, abilities: [{ id: 'A001' }], items: [{ id: 2 }], target: 3, merit: 4, hp: 100, moving: true, moveSpeed: 220, facing: 90, dead: false },
       { owner: 8, id: 2, abilities: [{ id: 'A002' }], items: [{ id: 5 }], target: 1, merit: 9, mana: 4, maxMana: 8, armor: 2, attackRange: 600, canMove: true, construct: 0, upgrade: null, itemBuild: null, hp: 200, maxHp: 300, moving: true, moveSpeed: 220, facing: 90, dead: false }
@@ -13,6 +14,7 @@ test('network snapshots keep player controls while trimming unused neutral unit 
   const rawEnemyBytes = JSON.stringify(state.units[1]).length;
 
   assert.equal(compactNetworkState(state), state);
+  assert.deepEqual(state.botSlots, [2]);
   assert.deepEqual(state.units[0].abilities, [{ id: 'A001' }]);
   assert.deepEqual(state.units[0].items, [{ id: 2 }]);
   assert.equal(state.units[0].target, 3);

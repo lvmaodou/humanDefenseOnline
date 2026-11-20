@@ -23,3 +23,5 @@
 - `node --test --test-reporter=tap`：150 项通过，其中新增 12 项成长回归测试，覆盖真实术士召唤技能、六职业全部有效晋升关系、两次连续晋升、套装技能、召唤链、升级暂存、归属失效和单次资源结算。日志：[progression-full-tests.log](../artifacts/progression-full-tests.log)。
 - `node tests/progression-smoke.mjs`：独立服务器上验证电脑与手机选择、功勋刷新、晋升后选中状态、资源升级提示及农民和水元素的生命显示；无页面或脚本错误。记录：[building-progression-browser.json](../artifacts/building-progression-browser.json)。
 - 界面截图：[电脑](../artifacts/building-progression-desktop.png)、[手机](../artifacts/building-progression-mobile.png)。
+
+> 建筑本身的价格、建造条件、技能、进阶阈值与手动升级速查见 [六职业建筑数据参考](building-data-reference.md)。

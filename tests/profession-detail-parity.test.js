@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {Runtime,fourCC} from '../engine/runtime.js';
+import {releaseTestAttack} from './support/attack.js';
 
 const data=JSON.parse(await readFile(new URL('../content/original-3.0/data.json',import.meta.url),'utf8'));
 const rules=JSON.parse(await readFile(new URL('../content/original-3.0/gameplay.json',import.meta.url),'utf8')).rules;
@@ -18,10 +19,10 @@ test('source ground summons remain ground weapon targets despite flying movement
     const game=make(),attacker=create(game,'hfoo'),summon=create(game,type,60,0,8);
     assert.equal(data.units[type].movetp,'fly',type);assert.equal(game.isFlying(summon),true,type);
     assert.equal(game.targetPlane(summon),'ground',type);
-    attacker.cooldown=0;advance(game,.01);assert.ok(summon.hp<1e14,type);
+    releaseTestAttack(game,attacker,summon);assert.ok(summon.hp<1e14,type);
   }
   const game=make(),attacker=create(game,'hfoo'),flying=create(game,'hgry',60,0,8);
-  attacker.cooldown=0;advance(game,.01);assert.equal(flying.hp,1e14);
+  attacker.cooldown=0;assert.equal(flying.hp,1e14);
 });
 
 test('hunter max slaughter respects the source nonhero mask on every original boss',()=>{

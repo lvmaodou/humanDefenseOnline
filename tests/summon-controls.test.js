@@ -34,7 +34,7 @@ test('summoned melee and ranged units acquire targets before weapon range and at
   game.time += .05; game.updateCombat(.05);
   assert.equal(treant.target, meleeTarget, 'acquisition uses the source 1500 range');
   assert.ok(treant.move, 'a mobile melee summon approaches a target outside weapon range');
-  advance(game, 1);
+  advance(game, 2);
   assert.ok(meleeTarget.hp < 1e9, 'the melee summon attacks after reaching its 100 range');
 
   const rangedGame = wide(), rangedCaster = rangedGame.createUnit(rangedGame.players[0], rangedGame.fourCC('h004'), 16, 300);

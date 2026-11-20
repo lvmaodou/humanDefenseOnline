@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Runtime } from '../engine/runtime.js';
 import { originalBuildBlockers } from '../public/placement.js';
+import { releaseTestAttack, resolveTestProjectiles } from './support/attack.js';
 
 const read = async file => JSON.parse(await readFile(new URL(file, import.meta.url), 'utf8'));
 const data = await read('../content/original-3.0/data.json'), terrain = await read('../content/original-3.0/terrain.json');
@@ -137,8 +138,8 @@ test('profession set auras affect armor, attack speed, mana recovery and enemy m
 test('the completed barbarian set applies its source bash damage and permanent leg-breaking stun',()=>{
   const game=make(),towers=upgradeSet(game,0,1),attacker=towers.find(unit=>unit.raw==='h05J');
   for(const id of attacker.abilities.keys())if(!['Avul',game.equipment[0].ability].map(game.fourCC).includes(id))attacker.abilities.delete(id);
-  const target=game.createUnit(game.players[8],game.fourCC('hfoo'),attacker.x+64,attacker.y);target.hp=target.maxHp=1e6;game.random=()=>0;
-  game.tick(.05);game.tick(.1);const bonus=10000*game.attackVsArmor.spells[data.units.hfoo.defType];assert.ok(target.hp<=target.maxHp-bonus);assert.ok(target.buffs.some(buff=>buff.kind==='stun'&&buff.until>=game.time+600));
+  const target=game.createUnit(game.players[8],game.fourCC('hfoo'),attacker.x+64,attacker.y);target.hp=target.maxHp=1e6;target.stats.hpRegen=0;game.random=()=>0;
+  releaseTestAttack(game,attacker,target);resolveTestProjectiles(game,attacker);const bonus=10000*game.attackVsArmor.spells[data.units.hfoo.defType];assert.ok(target.hp<=target.maxHp-bonus);assert.ok(target.buffs.some(buff=>buff.kind==='stun'&&buff.until>=game.time+600));
 });
 
 test('the completed rogue set increases source theft rewards by 50 percent', () => {

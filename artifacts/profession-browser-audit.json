@@ -45,33 +45,33 @@
       "phase": "playing",
       "sequence": "birth",
       "position": [
-        -21.5000174731249,
+        -21.5,
         -0.0013940390199422836,
-        -18
+        -17.9999825268751
       ],
-      "frame": 3659.199999809265
+      "frame": 3360.800000190735
     },
     {
       "path": "abilities/spells/orc/lightningshield/lightningshieldtarget.mdx",
       "phase": "playing",
       "sequence": "birth",
       "position": [
-        -21.5000174731249,
+        -21.5,
         -0.0013940390199422836,
-        -18
+        -17.9999825268751
       ],
-      "frame": 493.6000003814697
+      "frame": 162.80000019073486
     },
     {
       "path": "abilities/spells/human/aerialshackles/aerialshacklestarget.mdx",
       "phase": "playing",
       "sequence": "birth",
       "position": [
-        -21.497694163079803,
-        0.5254132845163939,
-        -17.988273424710535
+        -21.488539324507112,
+        0.5281548319266004,
+        -18.002305836094713
       ],
-      "frame": 3613.1000003814697
+      "frame": 3270.800000190735
     }
   ],
   "channelAnimationAndInterrupt": true,

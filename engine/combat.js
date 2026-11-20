@@ -2,6 +2,7 @@ import {fourCC,rawId} from './runtime.js';
 import {resolveAbility, abilityValue, spellOrders, abilityControls} from './ability-data.js';
 import {installNativeSpells} from './native-spells.js';
 import {matchesTargetMask, targetMask, targetPlane} from './targeting.js';
+import {attackSpeed,attackTiming,turnTowards} from './unit-timing.js';
 
 const passiveItemCodes=new Set(['AIab','AIat','AIas','AIva','AIfb','AIcb','AIpb','Apo2','AIsb']);
 export function installCombat(V){
@@ -22,6 +23,11 @@ export function installCombat(V){
   V.ability=id=>{const key=rawId(id);if(!abilityCache.has(key))abilityCache.set(key,resolveAbility(V.data,key));return abilityCache.get(key);};
   V.matchesTargetMask=(caster,target,mask,options)=>matchesTargetMask(V,caster,target,mask,options);
   V.targetPlane=unit=>targetPlane(V,unit);
+  V.cancelAttack=unit=>{
+    if(!unit)return;
+    if(unit.attackWindup||unit.attackBackswingEnd>V.time)V.effect('attack-cancel',unit,unit);
+    unit.attackWindup=null;unit.attackBackswingEnd=0;
+  };
   V.near=(point,radius,team,enemy=true)=>(V.nearbyUnits?.(point,radius)||[...V.units.values()]).filter(u=>!u.death&&!u.removed&&(enemy?u.owner.team!==team:u.owner.team===team)&&Math.hypot(u.x-point.x,u.y-point.y)<=radius);
   installNativeSpells(V);
   V.randomItem=(level,kind)=>{const entries=Object.entries(V.data.items).filter(([id,d])=>Number(kind?d.Level:d.oldLevel)===level&&Number(d.pickRandom)===1&&(!kind||kind==='ITEM_TYPE_ANY'||d.class===kind));return entries.length?fourCC(entries[Math.floor(V.random()*entries.length)][0]):0;};
@@ -134,6 +140,7 @@ export function installCombat(V){
       if(target&&!V.matchesTargetMask(u,target,targetMask(a,level),{magicImmune:code==='Auhf'}))return false;
     }
     if(u.casting===id)return false;
+    if(!['ANba','AHca','AHfa'].includes(code))V.cancelAttack(u);
     V.interruptChannel(u);
     if(!force)u.mana-=get('Cost');u.castCooldown.set(id,V.time+get('Cool'));u.casting=id;
     const ctx={unit:u,caster:u,ability:id,target,player:u.owner,point:p};
@@ -146,8 +153,8 @@ export function installCombat(V){
   const order=(u,id,target,point)=>{
     if(!u||u.removed)return false;
     if(id===851986||id===851971){if(point)V.setMove(u,point,id);return true;}
-    if(id===851972){V.interruptChannel(u);u.move=null;u.target=null;u.manualTarget=null;return true;}
-    if(id===851983){V.interruptChannel(u);u.target=target;return true;}
+    if(id===851972){V.cancelAttack(u);V.interruptChannel(u);u.move=null;u.target=null;u.manualTarget=null;return true;}
+    if(id===851983){if(u.target!==target)V.cancelAttack(u);V.interruptChannel(u);u.target=target;return true;}
     const code=spellOrders[id],ability=[...u.abilities.keys()].find(key=>V.ability(key).code===code);
     if(ability)return V.cast(u,ability,target,point);
     return false;
@@ -241,8 +248,31 @@ export function installCombat(V){
   const launchWeapon=(u,target,d,damage,passives,bonus,blackArrow=null,arrow=null,bounce=null)=>{
       const projectileSpeed=Number(String(d.Missilespeed||'').split(',')[0])||0,start=bounce?.start||{x:u.x+(Number(d.launchX)||0),y:u.y+(Number(d.launchY)||0)},aim={x:target.x,y:target.y},distance=Math.hypot(aim.x-start.x,aim.y-start.y),flightTime=projectileSpeed>0&&!['normal','instant'].includes(d.weapTp1)?distance/projectileSpeed:0;
       const projectile={attacker:u,target,damage,weapon:d,passives,bonus,blackArrow,arrow,bounceVisited:bounce?.visited,impactAt:V.time+flightTime,start,aim,position:{...start},speed:projectileSpeed,homing:!['artillery','mline','aline'].includes(d.weapTp1)&&String(d.MissileHoming??'1')!=='0',initialDistance:Math.max(1,distance),travelled:0,lastUpdateAt:V.time,lastVisualTarget:{...aim}};
-      const visual=V.effect('projectile',bounce?start:u,target,{model:String(d.Missileart||'').split(',')[0],weaponType:d.weapTp1,attackType:d.atkType1,unit:u.raw,targetId:target.hid,missileSpeed:projectileSpeed,missileArc:Number(d.Missilearc)||0,flightTime,launch:bounce?[0,0,Number(V.data.units[u.raw]?.impactZ)||0]:[Number(d.launchX)||0,Number(d.launchY)||0,Number(d.launchZ)||0],impactZ:Number(V.data.units[target.raw]?.impactZ)||0});projectile.visualId=visual.id;
+      const visual=V.effect('projectile',bounce?start:u,target,{attackStarted:true,model:String(d.Missileart||'').split(',')[0],weaponType:d.weapTp1,attackType:d.atkType1,unit:u.raw,targetId:target.hid,missileSpeed:projectileSpeed,missileArc:Number(d.Missilearc)||0,flightTime,launch:bounce?[0,0,Number(V.data.units[u.raw]?.impactZ)||0]:[Number(d.launchX)||0,Number(d.launchY)||0,Number(d.launchZ)||0],impactZ:Number(V.data.units[target.raw]?.impactZ)||0});projectile.visualId=visual.id;
       if(flightTime>0)V.projectiles.push(projectile);else{projectile.position={...aim};projectile.hitTarget=true;impact(projectile);}
+  };
+  const releaseAttack=(u,target,d,serial=u.attackSerial)=>{
+      if(u.removed||u.death||target.removed||target.death)return;
+      u.attackReleaseSerial=serial;
+      let damage=(weaponDamage(d)+(u.stats?.attackDamageBonus||0)+(u.itemStats?.damage||0)+(u.auraDamageFlat||0))*(1+(u.auraDamage||0));
+      let blackArrow=null,arrow=null;
+      for(const id of u.abilities.keys()){
+        const ability=V.ability(id);if(!['ANba','AHca','AHfa'].includes(ability.code))continue;
+        const paid=u.pendingArrow?.id===id&&u.pendingArrow.paid,level=u.abilities.get(id)||1,cost=abilityValue(ability,'Cost',level);
+        if(paid||u.autoCast?.has(id)&&u.mana>=cost&&(u.castCooldown.get(id)||0)<=V.time){arrow=id;if(ability.code==='ANba')blackArrow=id;damage+=abilityValue(ability,'DataA',level);if(!paid){u.mana-=cost;u.castCooldown.set(id,V.time+abilityValue(ability,'Cool',level));}u.pendingArrow=null;break;}
+      }
+      for(const b of u.buffs)if(b.kind==='power')damage*=1+b.damage;for(const b of u.buffs)if(b.kind==='damageDebuff')damage*=Math.max(0,Number(b.factor)||1);for(const b of u.buffs)if(b.kind==='weaken')damage*=Math.max(0,1-(Number(b.damage)||0));
+      const passives=[...u.abilities.keys()].map(id=>V.ability(id));
+      const eligible=a=>V.matchesTargetMask(u,target,targetMask(a,u.abilities.get(fourCC(a.alias))||1),{relation:'enemy',magicImmune:true});
+      for(const a of passives){const level=u.abilities.get(fourCC(a.alias))||1;if(a.code==='AOcr'&&eligible(a)&&V.random()*100<abilityValue(a,'DataA',level))damage*=abilityValue(a,'DataB',level,1);}
+      let bonus=null;for(const a of passives){const level=u.abilities.get(fourCC(a.alias))||1;if(a.code==='AHbh'&&eligible(a)&&abilityValue(a,'DataA',level)>0&&V.random()*100<abilityValue(a,'DataA',level)){bonus={ability:a};damage*=abilityValue(a,'DataB',level,1)||1;break;}}
+      const arrowVisual=arrow&&V.data.abilityStrings[rawId(arrow)];
+      launchWeapon(u,target,arrowVisual?.Missileart?{...d,Missileart:arrowVisual.Missileart,Missilespeed:arrowVisual.Missilespeed||d.Missilespeed}:d,damage,passives,bonus,blackArrow,arrow);
+      if(!arrow)for(const passive of passives.filter(ability=>ability.code==='Aroc')){
+        const level=u.abilities.get(fourCC(passive.alias))||1,count=abilityValue(passive,'DataC',level),radius=abilityValue(passive,'Area',level),visual=V.data.abilityStrings[passive.alias]||{};
+        const others=V.spellTargets(u,u,radius,passive,level).filter(enemy=>enemy!==target&&canTarget(u,enemy,d)).sort((a,b)=>Math.hypot(a.x-u.x,a.y-u.y)-Math.hypot(b.x-u.x,b.y-u.y)).slice(0,count);
+        for(const enemy of others)launchWeapon(u,enemy,{...d,Missileart:visual.Missileart||d.Missileart,Missilespeed:visual.Missilespeed||d.Missilespeed},damage,passives.filter(ability=>ability.code!=='Aroc'),null);
+      }
   };
   V.updateCombat=dt=>{
     updateProjectiles();
@@ -262,24 +292,36 @@ export function installCombat(V){
       for(const sanctuary of u.buffs.filter(b=>b.kind==='sanctuary')){while(sanctuary.next<=V.time&&u.hp<u.maxHp){sanctuary.next+=1;const healed=Math.min(sanctuary.rate,u.maxHp-u.hp);u.hp+=healed;V.effect('heal',u,u,{value:healed,kind:'sanctuary'});}if(u.hp>=u.maxHp)u.buffs=u.buffs.filter(buff=>buff!==sanctuary);}
       V.updateNativePassives(u);
       V.updateNativeAutocast(u);
-      if(u.channel||u.buffs.some(b=>b.kind==='stun'))continue;
+      if(hasWeapon(d))u.cooldown-=dt;
+      if(u.channel||u.buffs.some(b=>b.kind==='stun')){V.cancelAttack(u);continue;}
+      if(u.attackWindup){
+        const attack=u.attackWindup;
+        if(!canTarget(u,attack.target,d)||Math.hypot(attack.target.x-u.x,attack.target.y-u.y)>(stats.attackRange||100)+(Number(d.RngBuff1)||0))V.cancelAttack(u);
+        else{
+          turnTowards(u,d,attack.target,dt,Number(V.rules.AttackHalfAngle??.5)*180/Math.PI);
+          if(!u.turning&&V.time+.000001>=attack.launchAt){u.attackWindup=null;releaseAttack(u,attack.target,attack.weapon,attack.serial);}
+          continue;
+        }
+      }
       const movementSpeed=V.movementSpeed(u);
       if(u.move&&!u.buffs.some(b=>b.kind==='root')&&movementSpeed>0){
         const movement=u.move,pathfinder=V.pathingFor(u),flying=V.isFlying(u);
         if(!movement.path){const path=pathfinder?pathfinder.findPath(u,{x:movement.x,y:movement.y}):[{x:movement.x,y:movement.y}];if(!path?.length){u.move=null;continue;}movement.path=path;movement.index=0;movement.stalled=0;movement.escape=!!pathfinder&&!pathfinder.isWalkable(u.x,u.y);const end=path.at(-1);movement.x=end.x;movement.y=end.y;}
-        const path=movement.path,step=movementSpeed*dt;let remaining=step;
+        const path=movement.path;
+        while(movement.index<path.length&&Math.hypot(path[movement.index].x-u.x,path[movement.index].y-u.y)<.001)movement.index++;
+        const travelTime=movement.index<path.length?turnTowards(u,d,path[movement.index],dt):dt;
+        const step=movementSpeed*travelTime;let remaining=step;
         while(u.move===movement&&movement.index<path.length&&remaining>0){const waypoint=path[movement.index],dx=waypoint.x-u.x,dy=waypoint.y-u.y,distance=Math.hypot(dx,dy);if(distance<=Math.max(.001,remaining)){V.moveUnit(u,waypoint.x,waypoint.y);remaining-=distance;movement.index++;}else break;}
         if(u.move===movement&&movement.index>=path.length){V.moveUnit(u,movement.x,movement.y);if(u.move===movement)u.move=null;}
         else if(u.move===movement&&remaining>0){const waypoint=path[movement.index],dx=waypoint.x-u.x,dy=waypoint.y-u.y,distance=Math.hypot(dx,dy)||1,nx=dx/distance,ny=dy/distance,amount=Math.min(remaining,distance),radius=Math.max(16,Number(u.collision)*16),candidateList=[[nx,ny],[(nx-ny*.55)/1.12,(ny+nx*.55)/1.12],[(nx+ny*.55)/1.12,(ny-nx*.55)/1.12],[-ny,nx],[ny,-nx]];let moved=false,terrainOpen=false;
-          for(const [vx,vy]of candidateList){const x=u.x+vx*amount,y=u.y+vy*amount;if(pathfinder&&!movement.escape&&!pathfinder.segmentWalkable(u,{x,y}))continue;terrainOpen=true;const blocked=V.nearbyUnits({x,y},radius+32).some(other=>{if(u.swarm||other.swarm||other===u||other.removed||other.death||V.isFlying(other)!==flying)return false;const separation=radius+Math.max(16,Number(other.collision)*16),before=Math.hypot(other.x-u.x,other.y-u.y),after=Math.hypot(other.x-x,other.y-y);return after<separation&&(before>=separation||after<=before+.001);});if(blocked)continue;const oldX=u.x,oldY=u.y;V.moveUnit(u,x,y);if(pathfinder&&pathfinder.isWalkable(u.x,u.y))movement.escape=false;if(u.move===movement)u.facing=Math.atan2(y-oldY,x-oldX)*180/Math.PI;moved=true;movement.stalled=0;break;}
+          for(const [vx,vy]of candidateList){const x=u.x+vx*amount,y=u.y+vy*amount;if(pathfinder&&!movement.escape&&!pathfinder.segmentWalkable(u,{x,y}))continue;terrainOpen=true;const blocked=V.nearbyUnits({x,y},radius+32).some(other=>{if(u.swarm||other.swarm||other===u||other.removed||other.death||V.isFlying(other)!==flying)return false;const separation=radius+Math.max(16,Number(other.collision)*16),before=Math.hypot(other.x-u.x,other.y-u.y),after=Math.hypot(other.x-x,other.y-y);return after<separation&&(before>=separation||after<=before+.001);});if(blocked)continue;V.moveUnit(u,x,y);if(pathfinder&&pathfinder.isWalkable(u.x,u.y))movement.escape=false;moved=true;movement.stalled=0;break;}
           // Waiting for another unit is not a failed terrain path. Keep the
           // route and retry steering; rerunning the same A* cannot clear a crowd.
           if(!moved){movement.stalled=(movement.stalled||0)+dt;if(!terrainOpen&&movement.stalled>.5&&pathfinder&&(movement.repathAt||0)<=V.time){movement.repathAt=V.time+1;const path=pathfinder.findPath(u,{x:movement.x,y:movement.y});if(path?.length){movement.path=path;movement.index=0;movement.stalled=0;}else u.move=null;}}
         }
       }
       if(!hasWeapon(d)||u.removed)continue;
-      const attackSpeedFactor=u.buffs.filter(b=>b.kind==='attackSlow').reduce((factor,b)=>factor*Math.max(.05,Number(b.factor)||1),1);
-      u.cooldown-=dt*(1+(u.auraAttackSpeed||0)+u.buffs.filter(b=>b.kind==='power').reduce((sum,b)=>sum+Math.max(0,b.speed||0),0))*attackSpeedFactor;if(u.cooldown>0||u.move?.manual||u.swarm&&(u.swarmReturning||!u.swarmAssigned))continue;
+      if(u.cooldown>0||u.move?.manual||u.swarm&&(u.swarmReturning||!u.swarmAssigned))continue;
        const range=stats.attackRange||100;
       // Warcraft separates weapon range from acquisition range.  Summoned
       // units (and the hostile wave units) can notice a target before it is
@@ -287,6 +329,7 @@ export function installCombat(V){
       const acquire=Math.max(range,Number(d.acquire)||range),autonomous=Boolean(u.ai||u.summoner||u.owner.id>=8);
       let target=u.manualTarget||u.target;
       if(!canTarget(u,target,d)){if(target===u.target)u.target=null;u.manualTarget=null;target=null;}
+      if(!target&&u.attackBackswingEnd>V.time)continue;
       if(!target)target=V.near(u,acquire,u.owner.team).filter(e=>canTarget(u,e,d)).sort((a,b)=>Math.hypot(a.x-u.x,a.y-u.y)-Math.hypot(b.x-u.x,b.y-u.y))[0];
       if(!target){u.target=null;continue;}
       if(Math.hypot(target.x-u.x,target.y-u.y)>range){
@@ -302,28 +345,23 @@ export function installCombat(V){
       u.autoApproachAt=0;
       if(u.manualTarget)u.manualTargetApproachAt=0;
       u.target=target;
+      turnTowards(u,d,target,dt,Number(V.rules.AttackHalfAngle??.5)*180/Math.PI);
+      if(u.turning)continue;
+      if(u.attackBackswingEnd>V.time)continue;
       for(const id of [...u.abilities.keys()]){const a=V.ability(id);if(a.code==='Afae'&&u.autoCast?.has(id)&&(u.castCooldown.get(id)||0)<=V.time&&Math.hypot(target.x-u.x,target.y-u.y)<=Number(a.Rng1||Infinity))V.cast(u,id,target);}
+      if(u.removed||u.death||target.removed||target.death||u.move?.manual)continue;
+      const timing=attackTiming(u,d,V.time);
+      u.move=null;u.turning=false;u.cooldown=timing.cooldown;
+      u.attackSerial=(u.attackSerial||0)+1;
+      const attack={target,weapon:d,launchAt:V.time+timing.damagePoint,serial:u.attackSerial};
+      u.attackWindup=attack;
+      u.attackBackswingEnd=V.time+timing.damagePoint+timing.backswing;
+      V.effect('attack',u,target,{unit:u.raw,attackSerial:attack.serial,duration:timing.damagePoint+timing.backswing,damagePoint:timing.damagePoint,animationSpeed:timing.speed});
       V.fire('EVENT_PLAYER_UNIT_ATTACKED',{unit:target,attacker:u,player:target.owner});V.fire('EVENT_UNIT_ATTACKED',{unit:target,attacker:u,player:target.owner});
-      if(u.removed||target.removed||target.death)continue;let damage=(weaponDamage(d)+(u.stats?.attackDamageBonus||0)+(u.itemStats?.damage||0)+(u.auraDamageFlat||0))*(1+(u.auraDamage||0));
-      let blackArrow=null,arrow=null;
-      for(const id of u.abilities.keys()){
-        const ability=V.ability(id);if(!['ANba','AHca','AHfa'].includes(ability.code))continue;
-        const paid=u.pendingArrow?.id===id&&u.pendingArrow.paid,level=u.abilities.get(id)||1,cost=abilityValue(ability,'Cost',level);
-        if(paid||u.autoCast?.has(id)&&u.mana>=cost&&(u.castCooldown.get(id)||0)<=V.time){arrow=id;if(ability.code==='ANba')blackArrow=id;damage+=abilityValue(ability,'DataA',level);if(!paid){u.mana-=cost;u.castCooldown.set(id,V.time+abilityValue(ability,'Cool',level));}u.pendingArrow=null;break;}
-      }
-      for(const b of u.buffs)if(b.kind==='power')damage*=1+b.damage;for(const b of u.buffs)if(b.kind==='damageDebuff')damage*=Math.max(0,Number(b.factor)||1);for(const b of u.buffs)if(b.kind==='weaken')damage*=Math.max(0,1-(Number(b.damage)||0));
-      const passives=[...u.abilities.keys()].map(id=>V.ability(id));
-      const eligible=a=>V.matchesTargetMask(u,target,targetMask(a,u.abilities.get(fourCC(a.alias))||1),{relation:'enemy',magicImmune:true});
-      for(const a of passives){const level=u.abilities.get(fourCC(a.alias))||1;if(a.code==='AOcr'&&eligible(a)&&V.random()*100<abilityValue(a,'DataA',level))damage*=abilityValue(a,'DataB',level,1);}
-      let bonus=null;for(const a of passives){const level=u.abilities.get(fourCC(a.alias))||1;if(a.code==='AHbh'&&eligible(a)&&abilityValue(a,'DataA',level)>0&&V.random()*100<abilityValue(a,'DataA',level)){bonus={ability:a};damage*=abilityValue(a,'DataB',level,1)||1;break;}}
-      const arrowVisual=arrow&&V.data.abilityStrings[rawId(arrow)];
-      launchWeapon(u,target,arrowVisual?.Missileart?{...d,Missileart:arrowVisual.Missileart,Missilespeed:arrowVisual.Missilespeed||d.Missilespeed}:d,damage,passives,bonus,blackArrow,arrow);
-      if(!arrow)for(const passive of passives.filter(ability=>ability.code==='Aroc')){
-        const level=u.abilities.get(fourCC(passive.alias))||1,count=abilityValue(passive,'DataC',level),radius=abilityValue(passive,'Area',level),visual=V.data.abilityStrings[passive.alias]||{};
-        const others=V.spellTargets(u,u,radius,passive,level).filter(enemy=>enemy!==target&&canTarget(u,enemy,d)).sort((a,b)=>Math.hypot(a.x-u.x,a.y-u.y)-Math.hypot(b.x-u.x,b.y-u.y)).slice(0,count);
-        for(const enemy of others)launchWeapon(u,enemy,{...d,Missileart:visual.Missileart||d.Missileart,Missilespeed:visual.Missilespeed||d.Missilespeed},damage,passives.filter(ability=>ability.code!=='Aroc'),null);
-      }
-      u.cooldown=Math.max(.05,Number(d.cool1)||1);
+      if(u.removed||u.death||target.removed||target.death){if(u.attackWindup===attack)V.cancelAttack(u);continue;}
+      if(u.attackWindup!==attack)continue;
+      if(timing.damagePoint===0){u.attackWindup=null;releaseAttack(u,target,d,attack.serial);}
+
     }
   };
 }

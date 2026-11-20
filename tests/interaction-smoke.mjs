@@ -183,7 +183,7 @@ async function desktop() {
     await page.locator('#goods').click();assert.equal(await page.locator('#inventory').isVisible(), true);
     assert.equal(await page.locator('#item-list .item-row').count(), 19);
     assert.equal(await page.locator('#item-list [data-buy]').count(), 0, 'the map has no placed equipment shop');
-    assert.match(await page.locator('#inventory-note').textContent(), /没有设置装备商店/);
+    assert.match(await page.locator('#inventory-note').textContent(), /套装道具通过击杀掉落获取/);
     await page.locator('#inventory-close').click();
     await page.locator('#center').click();await page.waitForTimeout(2200);
     const destination = await project(page, hero.x + 512, hero.y, .03);
@@ -301,16 +301,22 @@ async function dense() {
   try {
     for (let i = 0; i < 4; i++) await page.locator('#zoom-out').click();await page.waitForTimeout(900);
     for (let index = 0; index < 3; index++) {
-      const x = -3008, y = 2816 + index * 128, ground = await project(page, x, y, .03);
+      const x = -3008 + index * 128, y = 2816, ground = await project(page, x, y, .03);
       await page.mouse.click(ground.x, ground.y);
       assert.equal(await page.locator('#build-list').isVisible(), true, 'a neighbour square opens construction instead of selecting the existing model');
       await page.locator('[data-unit="h00L"]').click();
       await page.mouse.click(ground.x, ground.y);
-      await page.waitForFunction(count => window.reviewState.units.filter(unit => unit.owner === window.reviewSlot && unit.type === 'h00L').length === count, index + 1);
+      try {
+        await page.waitForFunction(count => window.reviewState.units.filter(unit => unit.owner === window.reviewSlot && unit.type === 'h00L').length === count, index + 1);
+      } catch {
+        const state = await page.evaluate(() => ({ buildings: window.reviewState.units.filter(unit => unit.owner === window.reviewSlot && unit.type === 'h00L').map(unit => ({ x: unit.x, y: unit.y })), actions: window.reviewActions?.slice(-6), placement: document.querySelector('#placement-status')?.textContent }));
+        throw new Error(`dense placement ${index + 1} failed at ${ground.x},${ground.y}: ${JSON.stringify(state)}`);
+      }
       await page.waitForFunction(() => document.querySelector('#placement-controls').hidden);
     }
     const towers = await page.evaluate(() => window.reviewState.units.filter(unit => unit.owner === window.reviewSlot && unit.type === 'h00L').map(unit => ({ x: unit.x, y: unit.y })).sort((a, b) => a.y - b.y));
-    assert.deepEqual(towers, [{ x: -3008, y: 2816 }, { x: -3008, y: 2944 }, { x: -3008, y: 3072 }]);
+    towers.sort((a, b) => a.x - b.x);
+    assert.deepEqual(towers, [{ x: -3008, y: 2816 }, { x: -2880, y: 2816 }, { x: -2752, y: 2816 }]);
     await page.screenshot({ path: join(tmpdir(), 'human-defense-dense-buildings.png') });
     assert.deepEqual(errors, []);results.dense = { towers, errors };
   } finally { await context.close(); }

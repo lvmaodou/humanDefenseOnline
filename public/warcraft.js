@@ -96,6 +96,11 @@ export class WarcraftInstance {
   constructor(library, resource, definition) {
     this.library = library; this.resource = resource; this.definition = definition; this.pending = 0; this.action = 'stand'; this.hold = 0; this.dead = false;this.poseDirty = true;
     this.renderer = new ModelRenderer(resource.model);
+    this.effectsPending=0;
+    this.advanceParticles=this.renderer.particlesController.update.bind(this.renderer.particlesController);
+    this.advanceRibbons=this.renderer.ribbonsController.update.bind(this.renderer.ribbonsController);
+    this.renderer.particlesController.update=()=>{};
+    this.renderer.ribbonsController.update=()=>{};
     // Geometry, programs and immutable textures are shared between instances.
     // Animation state and emitter buffers remain private to each instance.
     const privateFields = new Set(['model','rendererData','interp','particlesController','ribbonsController']);
@@ -116,11 +121,16 @@ export class WarcraftInstance {
   }
   play(action, properties = '', restart = false) {
     const index = selectSequence(this.resource.model.Sequences, action, properties);
-    if (index >= 0 && (restart || this.renderer.getSequence() !== index)) { this.renderer.setSequence(index);this.poseDirty = true; }
+    if (index >= 0 && (restart || this.renderer.getSequence() !== index)) { this.renderer.setSequence(index);this.poseDirty = true;if(restart)this.pending=0; }
+    if(action!=='attack')this.actionSpeed=1;
     this.action = action;
     return index >= 0 ? this.resource.model.Sequences[index] : null;
   }
-  cue(kind, animationNames = '') {
+  cue(kind, animationNames = '', timing = null) {
+    if(kind==='attack-cancel'){
+      if(!this.dead&&!this.channel&&this.action==='attack'){this.hold=0;this.play('stand',this.definition.Animprops||'');}
+      return;
+    }
     const action = kind in cueAliases ? cueAliases[kind] : kind;
     if (!action || this.dead) return;
     if(this.channel&&action!=='spell'&&action!=='death')return;
@@ -134,6 +144,7 @@ export class WarcraftInstance {
     if (action !== 'death' && (selected < 0 || !animationTags(this.resource.model.Sequences[selected].Name).includes(requested))) return;
     const sequence = this.play(requested, properties, true);
     this.hold = sequence ? (sequence.Interval[1] - sequence.Interval[0]) / 1000 : .4;
+    if(requested==='attack'&&sequence&&timing?.duration>0){this.actionSpeed=this.hold/timing.duration;this.hold=timing.duration;}
   }
   setChannel(state) {
     if(this.dead||this.construction)state=null;
@@ -174,10 +185,11 @@ export class WarcraftInstance {
       }
     }
     const sequence = this.resource.model.Sequences[this.renderer.getSequence()];
-    let speed = 1;
+    let speed = this.action==='attack'?(this.actionSpeed||1):1;
     if (this.action === 'walk' && movement > 0 && sequence?.MoveSpeed > 0) speed = Math.max(.15, Math.min(4, movement / sequence.MoveSpeed));
     this.pending += dt * 1000 * speed;
   }
+  advanceEffects(dt) { this.effectsPending+=Math.max(0,dt); }
   draw(renderer, camera) {
     if (this.disposed) return;
     renderer.resetState();
@@ -204,6 +216,7 @@ export class WarcraftInstance {
     // A distant unit still draws its full model every frame. Reuse its last
     // pose between animation updates instead of recomputing every bone at dt=0.
     if (this.poseDirty || delta > .001) { this.renderer.update(Math.max(0, delta));this.poseDirty = false; }
+    if(this.effectsPending>0){this.advanceParticles(this.effectsPending);this.advanceRibbons(this.effectsPending);this.effectsPending=0;}
     this.pending = 0;
     this.renderer.render(modelView.elements, camera.projectionMatrix.elements, {});
     this.library.stats.rendered++;this.drawCount=(this.drawCount||0)+1;renderer.resetState();

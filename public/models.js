@@ -77,16 +77,17 @@ export function updateUnitConstruction(root,unit,properties='') {
   root.userData.warcraft?.setConstruction(root.userData.construction);
   root.userData.warcraft?.setChannel?.(unit.channel||null);
 }
-export function cueUnitAnimation(root,kind,animationNames='') {
+export function cueUnitAnimation(root,kind,animationNames='',timing=null) {
   if(kind==='death')root.userData.deathCue=true;
-  if(root.userData.warcraft)root.userData.warcraft.cue(kind,animationNames);
-  else if(root.userData.fallback)fallback.cueUnitAnimation(root.userData.fallback,kind);
+  if(root.userData.warcraft)root.userData.warcraft.cue(kind,animationNames,timing);
+  else if(root.userData.fallback)fallback.cueUnitAnimation(root.userData.fallback,kind,timing);
 }
 const inverse = new THREE.Quaternion();
 export function animateUnit(root,dt,time,selected=false,camera=null,frustum=null) {
   const unit=root.userData.entity, rig=root.userData.rig;
   const animation=root.userData.animationState??={elapsed:0};
   animation.elapsed+=dt;
+  root.userData.warcraft?.advanceEffects?.(dt);
   const construction=root.userData.construction;
   if(construction){construction.elapsed+=dt;root.userData.warcraft?.setConstruction({...construction,progress:Math.min(1,construction.progress+construction.elapsed/construction.duration)});}
   animation.culled=Boolean(!selected&&frustum?.planes.some(plane=>plane.distanceToPoint(root.position)<-12));

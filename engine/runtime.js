@@ -6,6 +6,7 @@ import { installEquipment } from './equipment.js';
 import { PathingGrid } from './pathing.js';
 import { abilityControls } from './ability-data.js';
 import { installProgression } from './progression.js';
+import {attackSpeed,attackTiming,angleDifference} from './unit-timing.js';
 
 export const fourCC = value => typeof value === 'number' ? value : [...value].reduce((n,c)=>n*256+c.charCodeAt(0),0);
 export const rawId = n => typeof n==='string'?n:String.fromCharCode((n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255);
@@ -27,6 +28,7 @@ export class Runtime {
     for(const [type,key] of [['pierce','DamageBonusPierce'],['spells','DamageBonusSpells']])for(const [index,value] of (this.rules[key]||[]).entries())if(armorOrder[index]&&Number.isFinite(Number(value)))this.attackVsArmor[type][armorOrder[index]]=Number(value);
     this.time=0;this.seed=seed>>>0;this.id=1;this.tasks=[];this.timers=[];this.triggers=[];this.units=new Map();this.items=new Map();this.handles=new Map();this.effects=[];this.projectiles=[];this.messages=[];this.quests=[];this.dialogs=new Map();this.errors=[];this.status='playing';this.ctx={};this.operations=0;this.nativeCalls={};this.spatial=new Map();this.spatialCell=256;this.startLocations=new Map();this.nightUntil=0;
     this.players=Array.from({length:16},(_,id)=>({id,color:id,name:members.find(m=>m.slot===id)?.name||`玩家 ${id+1}`,active:members.some(m=>m.slot===id)||id>=8&&id<=11,team:id<8?0:1,gold:0,lumber:0,food:0,cap:0,tech:{},handicap:1}));
+    for(const member of members){const player=this.players[member.slot];if(player){player.bot=Boolean(member.bot);player.connected=member.bot?false:true;}}
     const constants={PLAYER_NEUTRAL_AGGRESSIVE:12,PLAYER_NEUTRAL_PASSIVE:15,bj_lastDyingWidget:null,bj_UNIT_FACING:270,bj_PI:Math.PI,bj_DEGTORAD:Math.PI/180,bj_RADTODEG:180/Math.PI,bj_MAX_PLAYERS:12,bj_MAX_PLAYER_SLOTS:16,bj_forLoopAIndex:0,bj_forLoopBIndex:0,bj_forLoopAIndexEnd:0,bj_forLoopBIndexEnd:0};
     this.globals=new Proxy(constants,{get:(o,k)=>k in o?o[k]:typeof k==='string'&&(k===k.toUpperCase()||k.startsWith('bj_'))?k:null});this.functions={};this.natives={};
     this.fourCC=fourCC;installNatives(this);installCombat(this);installEquipment(this);installProgression(this);install(this);if(terrain)installActions(this,terrain);this.run('__globals');
@@ -69,8 +71,8 @@ export class Runtime {
     const d=this.data.units[unit.raw]||{},buffs=unit.buffs.filter(buff=>buff.until>this.time);
     const bonus=(unit.stats?.attackDamageBonus||0)+(unit.itemStats?.damage||0)+(unit.auraDamageFlat||0);
     const factor=buffs.reduce((factor,buff)=>factor*(buff.kind==='power'?1+(buff.damage||0):buff.kind==='damageDebuff'?buff.factor:buff.kind==='weaken'?1-(buff.damage||0):1),1+(unit.auraDamage||0));
-    const speed=(1+(unit.auraAttackSpeed||0)+buffs.filter(buff=>buff.kind==='power').reduce((sum,buff)=>sum+(buff.speed||0),0))*buffs.filter(buff=>buff.kind==='attackSlow').reduce((factor,buff)=>factor*buff.factor,1);
-    return {attackMin:((Number(d.dmgplus1)||0)+(Number(d.dice1)||0)+bonus)*factor,attackMax:((Number(d.dmgplus1)||0)+(Number(d.dice1)||0)*(Number(d.sides1)||1)+bonus)*factor,attackCooldown:(Number(d.cool1)||0)/Math.max(.05,speed)};
+    const timing=attackTiming(unit,d,this.time);
+    return {attackMin:((Number(d.dmgplus1)||0)+(Number(d.dice1)||0)+bonus)*factor,attackMax:((Number(d.dmgplus1)||0)+(Number(d.dice1)||0)*(Number(d.sides1)||1)+bonus)*factor,attackCooldown:(Number(d.cool1)||0)/attackSpeed(unit,this.time),attackDamagePoint:timing.damagePoint,attackBackswing:timing.backswing};
   }
   moveSpeed(unit){
     const speed=(unit.stats?.moveSpeed??this.unitStats(unit).moveSpeed)*(1+(unit.auraMove||0));if(speed<=0)return 0;
@@ -106,8 +108,10 @@ export class Runtime {
     if(!unit||unit.removed||unit.death||!destination||!Number.isFinite(destination.x)||!Number.isFinite(destination.y))return false;
     const pathfinder=this.pathingFor(unit),path=pathfinder?pathfinder.findPath(unit,destination):[{x:destination.x,y:destination.y}];if(!path?.length)return false;
     this.interruptChannel?.(unit);
+    this.cancelAttack?.(unit);
     const end=path.at(-1)||destination;unit.move={x:end.x,y:end.y,path,index:0,stalled:0,manual:order===851986||order===851971,escape:!!pathfinder&&!pathfinder.isWalkable(unit.x,unit.y)};if(order!==null)unit.order=order;
-    const next=path[0];unit.facing=Math.atan2(next.y-unit.y,next.x-unit.x)*180/Math.PI;return true;
+    const next=path.find(point=>Math.hypot(point.x-unit.x,point.y-unit.y)>.001)||end;
+    unit.turning=Math.abs(angleDifference(unit.facing,Math.atan2(next.y-unit.y,next.x-unit.x)*180/Math.PI))>=(Number(this.data.units[unit.raw]?.propWin)||0);return true;
   }
   moveUnit(unit,x,y){if(!unit)return;const previousX=unit.x,previousY=unit.y;unit.x=x;unit.y=y;this.syncSpatial(unit,previousX,previousY);this.enterRegions(unit);}
   guard(){if(++this.operations>300000)throw new Error('JASS instruction budget exceeded');return true;}
@@ -196,8 +200,9 @@ export class Runtime {
       time:this.time,status:this.status,wave:this.globals.udg_waves,lives:this.globals.udg_lives,environment:{nightUntil:this.nightUntil},
       mode:this.globals.udg_yxmode,difficulty:this.globals.udg_nandujibie,
       gameModes:{mode:this.globals.udg_yxmode,mode2:this.globals.udg_mode2anniu,mode3:this.globals.udg_mode3anniu,skillChance:this.globals.udg_jinengsjlv,difficulty:this.globals.udg_nandujibie},
+      botSlots:this.players.filter(player=>player.id<4&&player.bot).map(player=>player.id),
       players:this.players.filter(p=>p.id<4).map(p=>({slot:p.id,name:p.name,active:p.active,connected:p.connected??p.active,gold:p.gold,goldDrain:Boolean(this.globals.udg_baijia[p.id+1]),lumber:p.lumber,food:p.food,cap:p.cap,startX:p.startX,startY:p.startY,tech:{...p.tech},classId:this.globals.udg_playerzz[p.id],kills:this.globals.udg_Kills[p.id+1],sets:this.equipmentState(p.id)})),
-      units:[...this.units.values()].filter(u=>!u.removed||u.corpseUntil>this.time).map(u=>({id:u.hid,type:u.raw,owner:u.owner.id,ownerColor:u.owner.color,x:u.x,y:u.y,facing:u.facing,moving:Boolean(u.move&&!u.death&&!u.move.stalled&&this.movementSpeed(u)>0),moveSpeed:this.movementSpeed(u),canMove:this.canMove(u),dead:Boolean(u.death),deathDuration:Number(this.data.units[u.raw]?.deathDuration)||2.5,hp:u.hp,maxHp:u.maxHp,mana:u.mana,maxMana:u.maxMana,armor:this.currentArmor(u),...this.attackStats(u),selectable:![...u.abilities.keys()].some(id=>this.ability(id).code==='Aloc'),attackRange:u.stats?.attackRange??(Number(this.data.units[u.raw]?.rangeN1)||0),merit:u.data,growth:this.buildingProgression(u),replaces:u.replaces,building:u.building,...(u.channel?{channel:{ability:u.channel.ability,animationNames:u.channel.animationNames}}:{}),abilities:[...u.abilities].map(([id,level])=>({id:rawId(id),level,cost:Number(this.ability(id)[`Cost${level}`]??this.ability(id).Cost1)||0,cooldown:Math.max(0,(u.castCooldown.get(id)||0)-this.time),autocastSupported:abilityControls(this.data,u.raw,rawId(id),this.ability(id)).autocastSupported,autocast:Boolean(u.autoCast?.has(id))})),items:u.inventory.map(i=>({id:i.hid,type:i.raw,charges:i.charges})),target:u.target?.hid,construction:this.constructionState(u),construct:u.constructEnd?Math.max(0,u.constructEnd-this.time):0,upgrade:u.upgradeTo?{type:u.upgradeTo,remaining:Math.max(0,u.upgradeEnd-this.time)}:null,itemBuild:u.pendingItemBuild||null})),
+      units:[...this.units.values()].filter(u=>!u.removed||u.corpseUntil>this.time).map(u=>({id:u.hid,type:u.raw,owner:u.owner.id,ownerColor:u.owner.color,x:u.x,y:u.y,facing:u.facing,moving:Boolean(u.move&&!u.turning&&!u.death&&!u.move.stalled&&this.movementSpeed(u)>0),moveSpeed:this.movementSpeed(u),canMove:this.canMove(u),dead:Boolean(u.death),deathDuration:Number(this.data.units[u.raw]?.deathDuration)||2.5,hp:u.hp,maxHp:u.maxHp,mana:u.mana,maxMana:u.maxMana,armor:this.currentArmor(u),...this.attackStats(u),selectable:![...u.abilities.keys()].some(id=>this.ability(id).code==='Aloc'),attackRange:u.stats?.attackRange??(Number(this.data.units[u.raw]?.rangeN1)||0),merit:u.data,growth:this.buildingProgression(u),replaces:u.replaces,building:u.building,...(u.channel?{channel:{ability:u.channel.ability,animationNames:u.channel.animationNames}}:{}),abilities:[...u.abilities].map(([id,level])=>({id:rawId(id),level,cost:Number(this.ability(id)[`Cost${level}`]??this.ability(id).Cost1)||0,cooldown:Math.max(0,(u.castCooldown.get(id)||0)-this.time),autocastSupported:abilityControls(this.data,u.raw,rawId(id),this.ability(id)).autocastSupported,autocast:Boolean(u.autoCast?.has(id))})),items:u.inventory.map(i=>({id:i.hid,type:i.raw,charges:i.charges})),target:u.target?.hid,construction:this.constructionState(u),construct:u.constructEnd?Math.max(0,u.constructEnd-this.time):0,upgrade:u.upgradeTo?{type:u.upgradeTo,remaining:Math.max(0,u.upgradeEnd-this.time)}:null,itemBuild:u.pendingItemBuild||null})),
       items:[...this.items.values()].filter(i=>!i.carrier&&!i.removed).map(i=>({id:i.hid,type:i.raw,x:i.x,y:i.y})),
       dialogs:[...this.dialogs.values()].filter(d=>d.visible.size).map(d=>({id:d.hid,title:clean(d.title),players:[...d.visible],buttons:d.buttons.map(b=>({id:b.hid,text:clean(b.text)}))})),
       messages:this.messages,effects:this.effects,quests:this.quests,errors:this.errors.map(e=>({time:e.time,message:e.message.split('\n')[0]}))

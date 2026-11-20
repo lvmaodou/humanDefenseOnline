@@ -68,11 +68,13 @@ test('slow and root snapshots report real movement while a nearby swordsman towe
   game.setMove(enemy, { x: 400, y: 500 });
   enemy.buffs.push({ kind: 'slow', factor: .5, until: game.time + 5 });
   const before = enemy.y;game.tick(.05);
-  assert.equal(enemy.y - before, 350 * .5 * .05);
+  assert.equal(enemy.y,before,'a unit turns into its movement window before advancing');
+  advance(game,.25);
+  assert.ok(enemy.y>before);
   let snapshot = game.snapshot().units.find(unit => unit.id === enemy.hid);
   assert.equal(snapshot.moveSpeed, 175);assert.equal(snapshot.moving, true);
-  enemy.buffs.push({ kind: 'root', until: game.time + 2 });
-  const stopped = enemy.y;advance(game, 1.5);
+  enemy.buffs.push({ kind: 'root', until: game.time + 4 });
+  const stopped = enemy.y;advance(game, 3.5);
   snapshot = game.snapshot().units.find(unit => unit.id === enemy.hid);
   assert.equal(enemy.y, stopped);assert.equal(snapshot.moving, false);assert.equal(snapshot.moveSpeed, 0);
   assert.ok(game.effects.filter(effect => effect.kind === 'projectile' && effect.sourceId === tower.hid).length >= 3, 'control of the monster does not pause tower attacks');

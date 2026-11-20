@@ -9,6 +9,7 @@ import { originalBuildBlockers } from './public/placement.js';
 import { originalItemSources } from './engine/item-sources.js';
 import { originalEquipment, originalItemUse } from './engine/equipment.js';
 import { RoomSessions } from './engine/room-sessions.js';
+import { RoomBotDirector } from './engine/room-bots.js';
 import { compactNetworkState } from './engine/network-state.js';
 import { abilityControls, resolveAbility } from './engine/ability-data.js';
 
@@ -45,9 +46,10 @@ const visualUnits=Object.fromEntries(Object.entries(gameData.units).map(([id,u])
 }]));
 const send=(ws,data)=>{if(ws?.readyState===1)ws.send(JSON.stringify(data));};
 function broadcast(room){const state=compactNetworkState(room.game.snapshot()),payload=JSON.stringify({type:'state',room:room.id,state});for(const p of room.players.values())if(p.ws?.readyState===1)p.ws.send(payload);}
-const sessions=new RoomSessions({createGame:members=>new Runtime(gameData,members,undefined,terrain,gameRules),broadcast});
+const botDirector=new RoomBotDirector();
+const sessions=new RoomSessions({createGame:members=>new Runtime(gameData,members,undefined,terrain,gameRules),broadcast,botDirector});
 const rooms=sessions.rooms;
-function shutdown(){clearInterval(heartbeat);sessions.dispose();process.exit(0);}
+function shutdown(){clearInterval(heartbeat);clearInterval(maintenance);sessions.dispose();process.exit(0);}
 const server=createServer(async(req,res)=>{
   if(req.url==='/health'){res.writeHead(200,{'content-type':'application/json; charset=utf-8'});res.end(JSON.stringify({ok:true,rooms:rooms.size,map:meta.name,version:meta.version}));return;}
   const path=req.url==='/'?'index.html':decodeURIComponent(req.url.split('?')[0].slice(1)),vendor=path.startsWith('vendor/three');
@@ -97,7 +99,9 @@ const heartbeat=setInterval(()=>{
   sessions.sweep();
 },15000);
 heartbeat.unref();
-server.on('close',()=>{clearInterval(heartbeat);sessions.dispose();});
+const maintenance=setInterval(()=>sessions.sweep(),1000);
+maintenance.unref();
+server.on('close',()=>{clearInterval(heartbeat);clearInterval(maintenance);sessions.dispose();});
 server.listen(PORT,()=>console.log(`Human Defense ${meta.version} listening on http://localhost:${PORT}`));
 export { server, rooms, sessions };
 process.on('SIGINT',shutdown);process.on('SIGTERM',shutdown);

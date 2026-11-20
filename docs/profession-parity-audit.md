@@ -6,6 +6,8 @@
 
 后续按玩家需求增加了召唤物击杀向本体建筑返还功勋，并显示建筑成长进度。这是对原图“仅建筑本体击杀成长”规则的有意扩展，说明和验证见 [建筑成长说明](building-progression.md)。
 
+六职业全部建筑的价格、人口、建造条件、技能、功勋阈值与手动升级数据已整理为 [六职业建筑数据参考](building-data-reference.md)，逐形态全量字段见 [全量数据表](../artifacts/building-data-all-forms.csv)。
+
 游侠套装建筑的尺寸及攻击、施法切换问题另有 [模型与动画核查](ranger-tower-animation-audit.md)：保留原图模型缩放，修复技能动作覆盖升级形态和无对应动作时反复重置动画的问题。
 
 2026-11-19 再次核查全部 240 个建筑形态的占地、模型缩放、选择圈和持续动画属性。发现并修复游侠套装、魔剑士套装的实体底座超出 128 路径掩码后仍能悬空或与邻塔重叠的问题；建造预览、装备落位及升级均使用实际底座轮廓，详见 [建造占地核查](build-placement-alignment.md)。本轮完整单元及运行时回归为 166 项通过，见 [footprint-full-tests.log](../artifacts/footprint-full-tests.log)。

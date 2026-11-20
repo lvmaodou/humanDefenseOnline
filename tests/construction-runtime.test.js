@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Runtime } from '../engine/runtime.js';
+import { releaseTestAttack } from './support/attack.js';
 
 const read = async path => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const data = await read('../content/original-3.0/data.json'), terrain = await read('../content/original-3.0/terrain.json');
@@ -77,6 +78,7 @@ test('construction suppresses attacks and aura sources; completion enables comba
   assert.equal(game.constructionState(tower).kind, 'build');
   game.tick(.2);game.tick(.05);
   assert.ok(enemy.equipmentAuras.size > 0);
+  releaseTestAttack(game,tower,enemy);
   assert.ok(game.effects.some(effect => effect.kind === 'projectile' && effect.sourceId === tower.hid));
   assert.deepEqual(game.errors, []);
 });

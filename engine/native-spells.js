@@ -21,6 +21,7 @@ export function installNativeSpells(V) {
   };
   V.applyBuff = (unit, buff) => {
     if (!unit || unit.death || unit.removed) return;
+    if(buff.kind==='stun')V.cancelAttack(unit);
     const key = buff.key || buff.ability || buff.kind;
     const previous = unit.buffs.find(entry => entry.kind === buff.kind && (entry.key || entry.ability || entry.kind) === key && entry.until > V.time);
     if (previous) {
@@ -305,7 +306,7 @@ export function installNativeSpells(V) {
     }
   };
   V.updateNativeAutocast = unit => {
-    if(unit.channel)return;
+    if(unit.channel||unit.attackWindup)return;
     if(unit.buffs.some(buff=>['stun','doom','silence'].includes(buff.kind)&&buff.until>V.time))return;
     for(const id of unit.autoCast){
       const ability=V.ability(id),code=ability.code;

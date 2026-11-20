@@ -193,7 +193,15 @@ export function installCombat(V){
     if(items.orbSlowChance>0&&V.random()*100<items.orbSlowChance)V.applyBuff(target,{kind:'slow',key:'item-orb-slow',factor:1-items.orbSlowFactor,until:now+Math.max(.1,items.orbSlowDuration)});
     for(const passive of passives){
       const id=fourCC(passive.alias),level=attacker.abilities.get(id)||1,get=(key,fallback=0)=>abilityValue(passive,key,level,fallback);
-      if(passive.code==='ANca'){for(const enemy of V.near(target,get('Area',200),attacker.owner.team))if(enemy!==target&&V.matchesTargetMask(attacker,enemy,targetMask(passive,level),{relation:'enemy',magicImmune:true}))V.damage(attacker,enemy,baseDamage*get('DataA'),true,'DAMAGE_TYPE_NORMAL',weapon.atkType1);}
+      if(passive.code==='ANca'){
+        // The original half-moon descriptions measure Area forward from the attacker.
+        const angle=(Number(attacker.facing)||0)*Math.PI/180,forwardX=Math.cos(angle),forwardY=Math.sin(angle);
+        for(const enemy of V.near(attacker,get('Area',200),attacker.owner.team)){
+          const dx=enemy.x-attacker.x,dy=enemy.y-attacker.y;
+          if(enemy===target||dx*forwardX+dy*forwardY<0||!V.matchesTargetMask(attacker,enemy,targetMask(passive,level),{relation:'enemy',magicImmune:true}))continue;
+          V.damage(attacker,enemy,baseDamage*get('DataA'),true,'DAMAGE_TYPE_NORMAL',weapon.atkType1);
+        }
+      }
       else if(passive.code==='AHbh'&&bonus?.ability===passive){const extra=get('DataC');if(extra)V.damage(attacker,target,extra,false,'DAMAGE_TYPE_MAGIC','spells');const duration=V.spellDuration(passive,level,target);if(duration)V.applyBuff(target,{kind:'stun',key:passive.BuffID1||passive.alias,until:now+duration});}
       else if(passive.code==='Awar'&&V.random()*100<get('DataA')){
         const inner=get('DataC'),outer=get('DataD',inner),damage=get('DataB');

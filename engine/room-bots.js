@@ -1,6 +1,8 @@
 const CLASS_WORKERS = ['h001', 'h002', 'h000', 'h004', 'h003', 'h06C'];
 const CLASS_NAMES = ['野蛮人', '猎人', '盗贼', '术士', '游侠', '魔剑士'];
 const STARTS = [[-3008, 2432], [-3008, -2880], [2496, -3008], [2496, 2368]];
+const ROUTE_CROSSROADS = ['a4', 'b4', 'c4', 'd4'];
+const CROSSROAD_FALLBACKS = [[-1792, 1024], [-1792, -1664], [1152, -1664], [1152, 1024]];
 
 const rawIds = value => String(value || '').split(',').filter(id => id && id !== '_');
 
@@ -14,23 +16,36 @@ export class RoomBotDirector {
   step(room) {
     const game = room.game;
     if (!game || ['victory', 'defeat'].includes(game.status)) return;
-    if (Number(game.globals?.udg_waves) > 0) this.fillVacantSeats(room);
+    const wavePending = this.firstWavePending(game);
+    if (wavePending) this.fillVacantSeats(room);
     for (let slot = 0; slot < 4; slot++) {
       const player = game.players[slot];
       if (!player?.active || !player.bot) continue;
       this.resolveDialogs(room, slot);
-      if (Number(game.globals?.udg_waves) <= 0 || Number(game.globals?.udg_playerzz?.[slot]) > 0) continue;
+      if (!wavePending || Number(game.globals?.udg_playerzz?.[slot]) > 0) continue;
       this.chooseClass(room, slot);
     }
-    if (Number(game.globals?.udg_waves) <= 0) return;
+    if (!wavePending) return;
     for (let slot = 0; slot < 4; slot++) {
       const player = game.players[slot];
       if (!player?.active || !player.bot || !Number(game.globals?.udg_playerzz?.[slot])) continue;
       const state = this.state(room, slot);
       if (game.time < state.nextActionAt) continue;
       state.nextActionAt = game.time + 3;
+      const towerCount = this.towers(game, player).length;
+      if (towerCount < 4) {
+        if (this.build(room, slot, { uniqueOnly: true })) continue;
+        this.upgrade(room, slot);
+        continue;
+      }
       if (!this.upgrade(room, slot)) this.build(room, slot);
     }
+  }
+
+  firstWavePending(game) {
+    return Number(game.globals?.udg_waves) > 0 || game.timers?.some(timer =>
+      !timer.dead && timer.callback === 'fun_FirstRound_Actions'
+    );
   }
 
   fillVacantSeats(room) {
@@ -116,21 +131,33 @@ export class RoomBotDirector {
     return false;
   }
 
-  build(room, slot) {
+  build(room, slot, { uniqueOnly = false } = {}) {
     const game = room.game, player = game.players[slot], data = game.data.units;
     const builders = [...game.units.values()].filter(unit => unit.owner === player && !unit.removed && !unit.death && !unit.building && rawIds(data[unit.raw]?.Builds).length);
     if (!builders.length) return false;
-    const owned = [...game.units.values()].filter(unit => unit.owner === player && !unit.removed && !unit.death && unit.constructed);
+    const ownedUnits = [...game.units.values()].filter(unit => unit.owner === player && !unit.removed && !unit.death);
+    const owned = ownedUnits.filter(unit => unit.constructed);
     const buildable = new Set(builders.flatMap(builder => rawIds(data[builder.raw]?.Builds)));
     const candidates = [...buildable].map(id => ({ id, definition: data[id] })).filter(({ definition }) => {
       if (!definition?.isbldg || !(Number(definition.weapsOn) & 1) || !definition.weapTp1 || definition.weapTp1 === '_') return false;
       const gold = Number(definition.goldcost) || 0, lumber = Number(definition.lumbercost) || 0, food = Number(definition.fused) || 0;
       if (player.gold < gold || player.lumber < lumber || player.food + food > Math.min(Number(game.rules.FoodCeiling) || 65, player.cap)) return false;
       return rawIds(definition.Requires).every(id => player.tech[id] || owned.some(unit => unit.raw === id));
-    }).sort((a, b) => this.value(b.definition) - this.value(a.definition));
-    const center = [Number.isFinite(player.startX) ? player.startX : builders[0].x, Number.isFinite(player.startY) ? player.startY : builders[0].y];
-    for (const { id } of candidates.slice(0, 5)) {
-      for (const [x, y] of this.sites(center)) {
+    });
+    const towers = this.towers(game, player);
+    const existingTypes = new Set(towers.map(unit => unit.raw));
+    const fresh = candidates.filter(({ id }) => !existingTypes.has(id));
+    if (uniqueOnly && !fresh.length) return false;
+    const choices = fresh.length ? fresh : candidates;
+    const roleCounts = new Map();
+    for (const tower of towers) {
+      const role = this.role(data[tower.raw]);
+      roleCounts.set(role, (roleCounts.get(role) || 0) + 1);
+    }
+    choices.sort((a, b) => this.strategyValue(b.definition, roleCounts) - this.strategyValue(a.definition, roleCounts));
+    const center = this.crossroads(game, slot);
+    for (const { id } of choices) {
+      for (const [x, y] of this.sites(center, towers.length)) {
         try {
           const placement = game.canBuild(slot, id, x, y);
           if (game.action(slot, { type: 'build', unit: id, x: placement.x, y: placement.y })) return true;
@@ -140,6 +167,39 @@ export class RoomBotDirector {
     return false;
   }
 
+  towers(game, player) {
+    return [...game.units.values()].filter(unit => {
+      if (unit.owner !== player || unit.removed || unit.death || !unit.building) return false;
+      const definition = game.data.units[unit.raw];
+      return Boolean(definition && (Number(definition.weapsOn) & 1) && definition.weapTp1 && definition.weapTp1 !== '_');
+    });
+  }
+
+  crossroads(game, slot) {
+    const route = ROUTE_CROSSROADS[slot] || ROUTE_CROSSROADS[0];
+    const rect = game.globals?.[`gg_rct_${route}`];
+    if (rect && game.natives?.GetRectCenter) {
+      const center = game.natives.GetRectCenter(rect);
+      if (Number.isFinite(center.x) && Number.isFinite(center.y)) return [center.x, center.y];
+    }
+    return CROSSROAD_FALLBACKS[slot] || CROSSROAD_FALLBACKS[0];
+  }
+
+  role(definition) {
+    const weapon = String(definition?.weapTp1 || '');
+    const area = Math.max(Number(definition?.Farea1) || 0, Number(definition?.Harea1) || 0, Number(definition?.Qarea1) || 0);
+    const splash = area > 0 || Number(definition?.targCount1) > 1 || ['msplash', 'mbounce', 'mline', 'aline', 'artillery'].includes(weapon);
+    const range = Number(definition?.rangeN1) || 0;
+    return `${splash ? 'area' : 'single'}:${range >= 1000 ? 'long' : range >= 800 ? 'medium' : 'short'}`;
+  }
+
+  strategyValue(definition, roleCounts) {
+    const roleCount = roleCounts.get(this.role(definition)) || 0;
+    const range = Math.min(1400, Number(definition.rangeN1) || 0);
+    const area = Math.max(Number(definition.Farea1) || 0, Number(definition.Harea1) || 0, Number(definition.Qarea1) || 0);
+    return this.value(definition) * (1 + range / 7000 + Math.min(.2, area / 1000)) / (1 + roleCount * .35);
+  }
+
   value(definition) {
     const damage = (Number(definition.dmgplus1) || 0) + (Number(definition.dice1) || 0) * (1 + (Number(definition.sides1) || 1) / 2);
     const dps = damage / Math.max(.1, Number(definition.cool1) || 1);
@@ -147,12 +207,13 @@ export class RoomBotDirector {
     return dps / Math.max(100, cost) + (rawIds(definition.Upgrade).length ? .02 : 0);
   }
 
-  *sites([centerX, centerY]) {
-    for (let radius = 128; radius <= 1536; radius += 128) {
-      yield [centerX + radius, centerY];yield [centerX - radius, centerY];
-      yield [centerX, centerY + radius];yield [centerX, centerY - radius];
-      yield [centerX + radius, centerY + radius];yield [centerX + radius, centerY - radius];
-      yield [centerX - radius, centerY + radius];yield [centerX - radius, centerY - radius];
+  *sites([centerX, centerY], towerCount = 0) {
+    const firstQuadrant = towerCount % 4;
+    for (let radius = 768; radius <= 2048; radius += 128) {
+      for (let offset = 0; offset < 4; offset++) {
+        const angle = Math.PI / 4 + ((firstQuadrant + offset) % 4) * Math.PI / 2;
+        yield [centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius];
+      }
     }
   }
 }

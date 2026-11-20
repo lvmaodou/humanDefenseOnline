@@ -78,6 +78,17 @@ test('fallback spell positions use the same north/south transform and elevation 
   effects.dispose();
 });
 
+test('ordinary attack cues never fall through to generic ring effects',()=>{
+  const effects=new BattleEffects(new THREE.Scene());
+  effects.consume([
+    {id:1,kind:'attack',x:0,y:0,tx:128,ty:0},
+    {id:2,kind:'attack-cancel',x:0,y:0,tx:128,ty:0}
+  ]);
+  assert.equal(effects.stats().objects,0);
+  assert.equal(effects.stats().particles,0);
+  effects.dispose();
+});
+
 test('an oversized building model cannot select the neighbouring ground square',()=>{
   const building=new THREE.Group();building.userData.entity={id:1,x:0,y:0,building:true};
   const mesh=new THREE.Mesh(new THREE.BoxGeometry(5,8,5));building.add(mesh);

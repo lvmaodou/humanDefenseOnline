@@ -207,6 +207,17 @@ test('rogue map triggers toggle the gold drain and blink moves to the chosen poi
 });
 
 test('building direction follows original hunter skills rather than a universal turn action',()=>{
+  for(const workerId of ['h001','h002','h000','h004','h003','h06C']){
+    const pending=String(data.units[workerId].Builds||'').split(',').filter(Boolean),buildings=new Set();
+    while(pending.length){const id=pending.pop();if(buildings.has(id)||!data.units[id])continue;buildings.add(id);pending.push(...String(data.units[id].Upgrade||'').split(',').filter(Boolean));}
+    assert.equal(buildings.size,17,`${workerId} has eleven base buildings and six upgrades`);
+    for(const id of buildings){
+      const unit=data.units[id],abilities=String(unit.abilList||'').split(',');
+      assert.equal(abilities.includes('A096'),workerId==='h002',`${id} turn skill is profession-specific`);
+      assert.equal(abilities.some(ability=>data.abilityData[ability]?.code==='ANca'),workerId==='h002',`${id} facing-based cleave is profession-specific`);
+      assert.equal(Object.keys(unit).some(key=>/rot|orient|facing/i.test(key)),false,`${id} has no generic placement-rotation field`);
+    }
+  }
   const game=makeGame();game.start();
   for(let step=0;step<3;step++){
     const dialog=game.snapshot().dialogs.find(d=>d.players.includes(0));
@@ -475,6 +486,18 @@ test('mline weapons damage targets along their fixed projectile path',()=>{
   assert.equal(outside.hp,1e9);
 });
 
+test('hunter half-moon damage follows the tower facing and original forward radius',()=>{
+  const game=makeGame([]),hunter=game.createUnit(game.players[0],game.fourCC('h00L'),0,0);
+  hunter.facing=0;
+  const primary=game.createUnit(game.players[8],game.fourCC('hfoo'),200,0),forward=game.createUnit(game.players[8],game.fourCC('hfoo'),500,0),behind=game.createUnit(game.players[8],game.fourCC('hfoo'),-200,0),outside=game.createUnit(game.players[8],game.fourCC('hfoo'),0,601);
+  for(const unit of [primary,forward,behind,outside]){unit.hp=unit.maxHp=1e9;unit.stats.hpRegen=0;unit.move=null;}
+  releaseTestAttack(game,hunter,primary);resolveTestProjectiles(game,hunter);
+  assert.ok(primary.hp<1e9,'the selected target takes the direct weapon hit');
+  assert.ok(forward.hp<1e9,'the enemy in the 600-unit forward half-circle takes the half-moon damage');
+  assert.equal(behind.hp,1e9,'the enemy behind the tower is outside the forward half-circle');
+  assert.equal(outside.hp,1e9,'the enemy beyond the source Area radius is not hit');
+});
+
 test('all six profession attacks run their passive and map-trigger effects',()=>{
   const game=makeGame([]);game.start();game.random=()=>0;
   game.globals.udg_waves=4;game.globals.udg_biaozhuncs[0]=1;game.globals.udg_biaozhuncs[1]=2;
@@ -485,14 +508,14 @@ test('all six profession attacks run their passive and map-trigger effects',()=>
     assert.ok(tower.abilities.has(game.fourCC(abilityId)),`${name} has ${abilityId}`);
     let secondary=null;
     if(name==='hunter'||name==='swordsman'||name==='ranger'){
-      const raw=name==='ranger'?'hgry':'hfoo',secondaryX=name==='swordsman'?x+300:x+100;secondary=game.createUnit(game.players[8],game.fourCC(raw),secondaryX,20);secondary.hp=secondary.maxHp=1e9;secondary.stats.hpRegen=0;secondary.move=null;
+      const raw=name==='ranger'?'hgry':'hfoo',secondaryX=name==='hunter'?x+20:name==='swordsman'?x+300:x+100,secondaryY=name==='hunter'?-100:20;secondary=game.createUnit(game.players[8],game.fourCC(raw),secondaryX,secondaryY);secondary.hp=secondary.maxHp=1e9;secondary.stats.hpRegen=0;secondary.move=null;
     }
     return {name,tower,target,secondary,index};
   });
   for(const fixture of fixtures){
     for(const other of fixtures)other.tower.cooldown=100;
     fixture.target.x=fixture.tower.x+200;fixture.target.y=0;fixture.target.move=null;game.syncSpatial(fixture.target);
-    if(fixture.secondary){fixture.secondary.x=fixture.tower.x+(fixture.name==='swordsman'?300:100);fixture.secondary.y=20;fixture.secondary.move=null;game.syncSpatial(fixture.secondary);}
+    if(fixture.secondary){fixture.secondary.x=fixture.tower.x+(fixture.name==='hunter'?20:fixture.name==='swordsman'?300:100);fixture.secondary.y=fixture.name==='hunter'?-100:20;fixture.secondary.move=null;game.syncSpatial(fixture.secondary);}
     const goldBefore=fixture.tower.owner.gold;
     fixture.tower.cooldown=0;game.globals.udg_playerzz[0]=fixture.index+1;releaseTestAttack(game,fixture.tower,fixture.target);
     const pending=game.projectiles.filter(projectile=>projectile.attacker===fixture.tower);

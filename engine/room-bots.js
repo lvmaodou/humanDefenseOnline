@@ -209,10 +209,11 @@ export class RoomBotDirector {
 
   *sites([centerX, centerY], towerCount = 0) {
     const firstQuadrant = towerCount % 4;
-    for (let radius = 768; radius <= 2048; radius += 128) {
+    const corners = [[1, 1], [-1, 1], [-1, -1], [1, -1]];
+    for (let distance = 320; distance <= 768; distance += 64) {
       for (let offset = 0; offset < 4; offset++) {
-        const angle = Math.PI / 4 + ((firstQuadrant + offset) % 4) * Math.PI / 2;
-        yield [centerX + Math.cos(angle) * radius, centerY + Math.sin(angle) * radius];
+        const [xSign, ySign] = corners[(firstQuadrant + offset) % 4];
+        yield [centerX + xSign * distance, centerY + ySign * distance];
       }
     }
   }

@@ -173,8 +173,10 @@ test('bot towers spread around all four edges of their original route junction b
   const quadrants = new Set(built.map(tower => `${Math.sign(tower.x - center.x)},${Math.sign(tower.y - center.y)}`));
   assert.equal(quadrants.size, 4, 'the first four towers cover all four sides instead of clustering in the player lane');
   for (const tower of built) {
-    const distance = Math.hypot(tower.x - center.x, tower.y - center.y);
-    assert.ok(distance >= 700 && distance <= 900, `tower stays on the outer junction edge at ${distance.toFixed(0)} units`);
+    const dx = Math.abs(tower.x - center.x), dy = Math.abs(tower.y - center.y);
+    const distance = Math.hypot(dx, dy);
+    assert.ok(dx >= 300 && dx <= 450 && dy >= 300 && dy <= 450, 'tower uses one of the four green corner plots beside the road');
+    assert.ok(distance <= 640, `tower stays beside the junction at ${distance.toFixed(0)} units`);
   }
 });
 
@@ -225,8 +227,8 @@ test('each player lane assigns bots a separate road junction from the original m
     const tower = [...game.units.values()].find(unit => unit.owner === player && unit.building);
     assert.ok(tower);
     const dx = Math.abs(tower.x - center.x), dy = Math.abs(tower.y - center.y), distance = Math.hypot(dx, dy);
-    assert.ok(dx > 300 && dy > 300, `lane ${slot} tower uses a corner plot around its junction`);
-    assert.ok(distance >= 700 && distance <= 900, `lane ${slot} tower stays near the outer junction edge`);
+    assert.ok(dx >= 300 && dx <= 450 && dy >= 300 && dy <= 450, `lane ${slot} tower uses a green corner plot beside its junction`);
+    assert.ok(distance <= 640, `lane ${slot} tower stays beside its junction`);
   }
 });
 
